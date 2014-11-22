@@ -2,3 +2,11 @@
 *.iml
 *.ipr
 *.iws
+
+# backup and swap files
+*.*~
+*.swp
+*.tmp
+
+# out directory
+out/*
