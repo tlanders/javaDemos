@@ -45,7 +45,3 @@ public class Exercise6 {
     }
 }
 
-@FunctionalInterface
-interface RunnableEx {
-    void run() throws Exception;
-}
