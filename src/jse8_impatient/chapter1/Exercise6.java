@@ -25,6 +25,7 @@ public class Exercise6 {
 
         // uncheck catches checked exceptions and rethrows them as unchecked so that Runnable lambda
         // will compile.
+        // can't use Callable because Thread requires Runnable objects.
         new Thread(uncheck(() -> {
             for(int i = 0; i < 10; i++) {
                 System.out.println("uncheck running, i=" + i);
