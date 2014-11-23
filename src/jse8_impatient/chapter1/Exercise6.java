@@ -10,5 +10,42 @@ public class Exercise6 {
     public static void main(String [] args) {
         System.out.println("Exercise6");
 
+        // runnable lambda that catches checked exceptions
+        new Thread(() -> {
+            for(int i = 0; i < 10; i++) {
+                System.out.println("running, i=" + i);
+                try {
+                    Thread.sleep(500);
+                } catch(Exception e) {
+                    // do nothing
+                }
+            }
+            System.out.println("exiting");
+        }).start();
+
+        // uncheck catches checked exceptions and rethrows them as unchecked so that Runnable lambda
+        // will compile.
+        new Thread(uncheck(() -> {
+            for(int i = 0; i < 10; i++) {
+                System.out.println("uncheck running, i=" + i);
+                Thread.sleep(500);
+            }
+            System.out.println("uncheck exiting");
+        })).start();
     }
+
+    public static Runnable uncheck(RunnableEx runner) {
+        return () -> {
+            try {
+                runner.run();
+            } catch(Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+}
+
+@FunctionalInterface
+interface RunnableEx {
+    void run() throws Exception;
 }
