@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 
 /**
  * Created by tlanders on 11/23/2014.
+ *
+ * Interface with default method for exercise 9.
  */
 interface Collection2<T> extends Collection<T> {
     default void forEachIf(Consumer<T> action, Predicate<T> filter) {
