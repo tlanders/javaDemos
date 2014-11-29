@@ -1,6 +1,10 @@
 package jse8_impatient.chapter2;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -8,32 +12,32 @@ import java.util.List;
  */
 public class Exercise1 {
     public static void main(String [] args) throws Exception {
-        System.out.println("Exercise8");
+        System.out.println("Exercise1");
 
-        // runners using enhanced for loop
-        String[] names = { "Peter", "Paul", "Mary" };
-        List<Runnable> runners = new ArrayList<>();
-        for(String name : names) {
-            runners.add(() -> System.out.println("1: " + name));
+        if (args.length < 1) {
+            System.out.println("USAGE: java Exercise1 INPUT_FILE");
+            System.exit(1);
         }
 
-        for(Runnable r : runners) {
-            new Thread(r).start();
+        String contents = new String(Files.readAllBytes(
+                Paths.get(args[0])), StandardCharsets.UTF_8); // Read file into string
+        List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
+        // Split into words; nonletters are delimiters
+
+        long count = 0;
+        for (String w : words) {
+            System.out.println("  w=" + w);
+
+            if (w.length() > 12) count++;
         }
 
-        Thread.sleep(1000); // let these threads finish
+        System.out.println("Exercise1, for loop count=" + count);
 
-        // runners using standard for loop. have to use assignment inside for loop (i.e. not names2[i]) to
-        // make compiler happy.
-        String[] names2 = { "Peter", "Paul", "Mary" };
-        List<Runnable> runners2 = new ArrayList<>();
-        for(int i = 0; i < names2.length; i++) {
-            String n = names2[i];
-            runners2.add(() -> System.out.println("2: " + n));
-        }
+        // same as above but with parallel stream
+        count = words.parallelStream().filter(w -> w.length() > 12).count();
 
-        for(Runnable r : runners2) {
-            new Thread(r).start();
-        }
+        System.out.println("Exercise1, parallel stream count=" + count);
+
+
     }
 }
