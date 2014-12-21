@@ -14,11 +14,6 @@ public class Exercise4 {
     public static void main(String [] args) throws Exception {
         System.out.println("Exercise4");
 
-//        if (args.length < 1) {
-//            System.out.println("USAGE: java Exercise4 INPUT_FILE");
-//            System.exit(1);
-//        }
-
         int[] values = {1, 4, 9, 16};
         String[] strVals = {"a", "b", "c"};
 
