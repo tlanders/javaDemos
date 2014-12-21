@@ -24,6 +24,6 @@ public class Exercise2 {
         // filter with limit of 5
         long count = words.stream().filter(w -> w.length() > 12).peek(e -> System.out.println("filter called, word=" + e)).limit(5).count();
 
-        System.out.println("Exercise1, filter limit of 5 stream count=" + count);
+        System.out.println("Exercise2, filter limit of 5 stream count=" + count);
     }
 }
