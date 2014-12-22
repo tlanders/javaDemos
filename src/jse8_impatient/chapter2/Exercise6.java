@@ -1,5 +1,6 @@
 package jse8_impatient.chapter2;
 
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -7,12 +8,12 @@ import java.util.stream.Stream;
  */
 public class Exercise6 {
     public static void main(String [] args) throws Exception {
-        System.out.println("Chapter2 - Exercise5");
+        System.out.println("Chapter2 - Exercise6");
 
-        randomGenerator(25214903917L, 11L, (long) Math.pow(2,48), System.currentTimeMillis()).limit(10).forEach(System.out::println);
+        characterStream("blah chapter 2 exercise 6").forEach(System.out::println);
     }
 
-    public static Stream<Long> randomGenerator(long a, long c, long m, long seed) {
-        return Stream.iterate(seed, x -> (a * x + c) % m);
+    public static Stream<Character> characterStream(String s) {
+        return IntStream.range(0, s.length()).mapToObj(s::charAt);
     }
 }
