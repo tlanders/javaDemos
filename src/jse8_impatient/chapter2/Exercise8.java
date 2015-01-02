@@ -13,7 +13,7 @@ public class Exercise8 {
     public static void main(String [] args) throws Exception {
         System.out.println("Chapter2 - Exercise8");
 
-        zip(Stream.of("a", "b", "c", "d", "e"), Stream.of("1", "2", "3", "4")).forEach(System.out::println);
+        zip(Stream.of("a", "b", "c", "d"), Stream.of("1", "2", "3")).forEach(System.out::println);
     }
 
     public static <T> Stream<T> zip(Stream<T> s1, Stream<T> s2) {
