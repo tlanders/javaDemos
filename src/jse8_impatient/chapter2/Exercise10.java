@@ -1,6 +1,5 @@
 package jse8_impatient.chapter2;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 /**
@@ -10,30 +9,34 @@ public class Exercise10 {
     public static void main(String [] args) throws Exception {
         System.out.println("Chapter2 - Exercise10");
 
-        Stream<Double> sd = Stream.of(1.2, 2.3, 3.4, 4.5, 5.6);
+        Stream<Double> sd = Stream.of(9.0, 1.2, 2.3, 3.4, 4.5, -2.0);
 
-        System.out.println("  stream size=" + sd.count());
+        double avg = average(sd);
+
+        System.out.println("  stream avg=" + avg);
     }
 
-    /**
-     * Joins using reduce operation that takes identity, accumulator, and combiner parameters.
-     * In this case the identity is an empty ArrayList<T>.
-     * The accumulator and combiner functions are the same for this method because the return type is the
-     * same as the input parameters.
-     * @param s1
-     * @param <T>
-     * @return
-     */
-    public static <T> ArrayList<T> join3(Stream<ArrayList<T>> s1) {
-        return s1.reduce(new ArrayList<T>(),
-                (a1, a2) -> {
-                    ArrayList<T> a = new ArrayList<T>(a1);
-                    a.addAll(a2);
-                    return a; },
-                (a1, a2) -> {
-                    ArrayList<T> a = new ArrayList<T>(a1);
-                    a.addAll(a2);
-                    return a; }
-                );
+    public static double average(Stream<Double> sd) {
+        return sd.reduce(new Averager(),
+                (a1, d1) -> new Averager(a1.sum + d1.doubleValue(), a1.count + 1),
+                (a1, a2) -> new Averager(a1.sum + a2.sum, a1.count + a2.count)).average();
+    }
+
+    static class Averager {
+        public final double sum;
+        public final int count;
+
+        Averager() {
+            this(0,0);
+        }
+
+        Averager(double s, int c) {
+            sum = s;
+            count = c;
+        }
+
+        public double average() {
+            return sum / count;
+        }
     }
 }
