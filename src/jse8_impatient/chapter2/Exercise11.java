@@ -21,6 +21,22 @@ public class Exercise11 {
 
         System.out.println("  result size=" + doubleArrayList.size());
         doubleArrayList.forEach(System.out::println);
+
+        doubleArrayList = join2(Stream.of(4.03, 2.96, 5.61, 9.0, 1.2, 2.3, 3.4, 4.5, -2.0), capacity);
+        System.out.println("  join2 result size=" + doubleArrayList.size());
+        doubleArrayList.forEach(System.out::println);
+    }
+
+    public static <T> ArrayList<T> join2(Stream<T> resultStream, int capacity) {
+        ArrayList<T> resultArray = new ArrayList<>(Collections.nCopies(capacity, null));
+
+        AtomicInteger index = new AtomicInteger(0);
+
+        resultStream.parallel().forEach(item -> {
+            resultArray.set(index.getAndIncrement(), item);
+        });
+
+        return resultArray;
     }
 
     public static <T> ArrayList<T> join(Stream<T> s1, Stream<T> s2, int capacity) {
