@@ -16,7 +16,9 @@ public class Exercise2 {
     public static void main(String [] args) throws Exception {
         System.out.println("Exercise2");
 
-        withLock(new ReentrantLock(), () -> System.out.println("printing with lock"));
+        ReentrantLock lock = new ReentrantLock();
+        withLock(lock, () -> System.out.println("printing with lock"));
+        withLock(lock, () -> System.out.println("second printing with lock"));
 
         System.out.println("Exercise2, done");
     }
