@@ -27,10 +27,8 @@ public class Exercise1 {
     }
 
     public static void logIf(Level level, BooleanSupplier ifCondition, Supplier<String> message) {
-        if(logger.isLoggable(level)) {
-            if(ifCondition.getAsBoolean()) {
-                logger.log(level, message.get());
-            }
+        if(logger.isLoggable(level) && ifCondition.getAsBoolean()) {
+            logger.log(level, message.get());
         }
     }
 }
