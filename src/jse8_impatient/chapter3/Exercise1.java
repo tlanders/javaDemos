@@ -16,11 +16,12 @@ public class Exercise1 {
     public static void main(String [] args) throws Exception {
         System.out.println("Exercise1");
 
-        IntStream.iterate(0, i -> i + 1).limit(5).forEach(i -> {
-            logIf(Level.FINEST, () -> i >= 3, () -> "Finest log message, i=" + i);
-            logIf(Level.INFO, () -> i >= 3, () -> "Info log message, i=" + i);
-            logIf(Level.WARNING, () -> i >= 3, () -> "Warning log message, i=" + i);
-            logIf(Level.SEVERE, () -> i >= 3, () -> "Severe log message, i=" + i);
+        IntStream.range(0, 5).forEach(i -> {
+            BooleanSupplier condition = () -> i >= 3;
+            logIf(Level.FINEST, condition, () -> "Finest log message, i=" + i);
+            logIf(Level.INFO, condition, () -> "Info log message, i=" + i);
+            logIf(Level.WARNING, condition, () -> "Warning log message, i=" + i);
+            logIf(Level.SEVERE, condition, () -> "Severe log message, i=" + i);
         });
 
         System.out.println("Exercise1, done");
