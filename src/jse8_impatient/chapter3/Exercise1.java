@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 /**
- * Created by tlanders on 11/22/2014.
+ * Created by tlanders.
  */
 public class Exercise1 {
     private static Logger logger = Logger.getLogger(Exercise1.class.getName());
