@@ -20,6 +20,9 @@ public class Quiz2_1 {
         prettyPrintApples(apples, new AppleColorPrinter());
         prettyPrintApples(apples, new AppleWeightPrinter());
 
+        // lambda version of above
+        prettyPrintApples(apples, (Apple a) -> {return a.toString(); });
+
         System.out.println("main exiting.");
     }
 
@@ -30,6 +33,7 @@ public class Quiz2_1 {
 
     }
 
+    @FunctionalInterface
     interface ApplePrettyPrinter {
         String print(Apple a);
     }
