@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Quiz2_1 {
     public static void main(String [] args) {
-        System.out.print("main, args len=" + args.length);
+        System.out.println("main, args len=" + args.length);
 
         List<Apple> apples = new ArrayList<>();
         apples.add(new Apple("green", 150));
@@ -16,13 +16,34 @@ public class Quiz2_1 {
         apples.add(new Apple("red", 120));
         apples.add(new Apple("red", 170));
 
-        prettyPrintApple(apples);
+        prettyPrintApples(apples, new AppleColorPrinter());
+        prettyPrintApples(apples, new AppleWeightPrinter());
+
+        System.out.println("main exiting.");
     }
 
-    public static void prettyPrintApple(List<Apple> inventory) {
+    public static void prettyPrintApples(List<Apple> inventory, ApplePrettyPrinter printer) {
         for(Apple a : inventory) {
-            System.out.println("apple: " + a);
+            System.out.println(printer.print(a));
         }
 
+    }
+
+    interface ApplePrettyPrinter {
+        String print(Apple a);
+    }
+
+    static class AppleColorPrinter implements ApplePrettyPrinter {
+        @Override
+        public String print(Apple a) {
+            return "Apple color: " + a.getColor();
+        }
+    }
+
+    static class AppleWeightPrinter implements ApplePrettyPrinter {
+        @Override
+        public String print(Apple a) {
+            return "Apple weight: " + a.getWeight();
+        }
     }
 }
