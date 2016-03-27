@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by tlanders on 3/27/2016.
+ * Demonstrates behavior parameterization using old-style interface method.
  */
 public class Quiz2_1 {
     public static void main(String [] args) {
