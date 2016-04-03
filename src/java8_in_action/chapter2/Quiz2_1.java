@@ -21,7 +21,8 @@ public class Quiz2_1 {
         prettyPrintApples(apples, new AppleWeightPrinter());
 
         // lambda version of above
-        prettyPrintApples(apples, (Apple a) -> {return a.toString(); });
+//        prettyPrintApples(apples, (Apple a) -> a.toString());
+        prettyPrintApples(apples, Apple::toString);
 
         System.out.println("main exiting.");
     }
