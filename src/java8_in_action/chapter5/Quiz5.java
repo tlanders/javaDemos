@@ -13,6 +13,7 @@ public class Quiz5 {
 
         question1();
         question2();
+        question3();
 
         System.out.println("Quiz 5 done.");
     }
@@ -37,6 +38,27 @@ public class Quiz5 {
 
         List<int []> pairs = first.stream()
                 .flatMap(i -> second.stream().map(j -> new int[] {i, j}))
+                .collect(Collectors.toList());
+
+        pairs.stream().forEach(pair -> System.out.println(pair[0] + ":" + pair[1]));
+    }
+
+    /**
+     * Takes two arrays and outputs the pairs that add up to a multiple of 3 in the two lists.
+     * Example: (1,2) + (3,4) -> (2,4)
+     */
+    public static void question3() {
+        System.out.println("question 3");
+
+        List<Integer> first = Arrays.asList(1,2,3);
+        List<Integer> second = Arrays.asList(4,5);
+
+//        List<int []> pairs = first.stream()
+//                .flatMap(i -> second.stream().map(j -> new int[] {i, j}))
+//                .filter(pair -> (pair[0] + pair[1]) % 3 == 0)
+//                .collect(Collectors.toList());
+        List<int []> pairs = first.stream()
+                .flatMap(i -> second.stream().filter(j -> (i+j) % 3 == 0).map(j -> new int[] {i, j}))
                 .collect(Collectors.toList());
 
         pairs.stream().forEach(pair -> System.out.println(pair[0] + ":" + pair[1]));
