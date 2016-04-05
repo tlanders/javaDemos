@@ -1,5 +1,6 @@
 package java8_in_action.chapter5;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,13 @@ public class Quiz5 {
         List<Integer> squares = Arrays.asList(1, 2, 3, 4, 5).stream().map(n -> n * n).collect(Collectors.toList());
 
         squares.forEach(System.out::println);
+
+        // starts with an IntStream instead of a Stream so have to pass more args to collect
+        int [] nums = {1,3,5,7,9};
+        List<Integer> sq2 = Arrays.stream(nums).map(n -> n * n)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+        sq2.stream().forEach(System.out::println);
     }
 
     /**
