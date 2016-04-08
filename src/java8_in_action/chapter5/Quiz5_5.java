@@ -46,8 +46,22 @@ public class Quiz5_5 {
         uniqueCities.forEach(System.out::println);
 
         // 3.  Find all traders from Cambridge and sort them by name.
+        List<Trader> traders = Arrays.asList(raoul, mario, alan, brian).stream()
+                .filter(t -> t.getCity().equalsIgnoreCase("Cambridge"))
+                .sorted(Comparator.comparing(Trader::getName))
+                .collect(Collectors.toList());
+
+        System.out.println("q3 - traders from Cambridge");
+        traders.forEach(t -> System.out.println(t.getName()));
 
         // 4.  Return a string of all traders’ names sorted alphabetically.
+        String allNames = Arrays.asList(raoul, mario, alan, brian).stream()
+                .sorted(Comparator.comparing(Trader::getName))
+                .map(Trader::getName)
+                .reduce("", (a,b) -> a + " " + b);
+
+        System.out.println("q4 - combined trader names");
+        System.out.println("allNames=" + allNames);
 
         // 5.  Are any traders based in Milan?
 
