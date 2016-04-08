@@ -64,8 +64,20 @@ public class Quiz5_5 {
         System.out.println("allNames=" + allNames);
 
         // 5.  Are any traders based in Milan?
+        boolean isMilan = Arrays.asList(raoul, mario, alan, brian).stream()
+                .filter(t -> t.getCity().equalsIgnoreCase("Milan"))
+                .findAny()
+                .isPresent();
+
+        System.out.println("q5 - any traders in Milan");
+        System.out.println("answer=" + isMilan);
 
         // 6.  Print all transactions’ values from the traders living in Cambridge.
+        System.out.println("q6 - Cambridge transactions");
+        transactions.stream()
+                .filter(txn -> txn.getTrader().getCity().equalsIgnoreCase("Cambridge"))
+                .mapToInt(Transaction::getValue)
+                .forEach(System.out::println);
 
         // 7.  What’s the highest value of all the transactions?
 
