@@ -1,9 +1,6 @@
 package java8_in_action.chapter5;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -80,14 +77,17 @@ public class Quiz5_5 {
                 .forEach(System.out::println);
 
         // 7.  What’s the highest value of all the transactions?
+        int maxVal = transactions.stream()
+                .mapToInt(Transaction::getValue)
+                .reduce(Integer.MIN_VALUE, Integer::max);
+        System.out.println("q7 - highest txn value=" + maxVal);
 
         // 8.  Find the transaction with the smallest value.
+        int minVal = transactions.stream()
+                .mapToInt(Transaction::getValue)
+                .reduce(Integer.MAX_VALUE, Integer::min);
+        System.out.println("q7 - smallest txn value=" + minVal);
 
         System.out.println("Quiz 5_5 done.");
-    }
-
-    /**
-     */
-    public static void question1() {
     }
 }
