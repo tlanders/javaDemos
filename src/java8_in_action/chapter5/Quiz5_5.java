@@ -69,6 +69,12 @@ public class Quiz5_5 {
         System.out.println("q5 - any traders in Milan");
         System.out.println("answer=" + isMilan);
 
+        boolean isMilan2 = Arrays.asList(raoul, mario, alan, brian).stream()
+                .anyMatch(t -> t.getCity().equalsIgnoreCase("Milan"));
+
+        System.out.println("q5 method 2 - any traders in Milan");
+        System.out.println("answer=" + isMilan2);
+
         // 6.  Print all transactions’ values from the traders living in Cambridge.
         System.out.println("q6 - Cambridge transactions");
         transactions.stream()
@@ -87,6 +93,10 @@ public class Quiz5_5 {
                 .mapToInt(Transaction::getValue)
                 .reduce(Integer.MAX_VALUE, Integer::min);
         System.out.println("q7 - smallest txn value=" + minVal);
+
+        transactions.stream()
+                .min(Comparator.comparing(Transaction::getValue))
+                .ifPresent(txn -> System.out.println("minVal2=" + txn.getValue()));
 
         System.out.println("Quiz 5_5 done.");
     }
