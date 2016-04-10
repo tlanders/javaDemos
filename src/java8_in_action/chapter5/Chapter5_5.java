@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 /**
  * Created by tlanders on 4/6/2016.
  */
-public class Quiz5_5 {
+public class Chapter5_5 {
     public static void main(String [] args) {
-        System.out.println("Quiz 5_5");
+        System.out.println("Chapter 5_5");
 
         Trader raoul = new Trader("Raoul", "Cambridge");
         Trader mario = new Trader("Mario","Milan");
@@ -98,6 +98,6 @@ public class Quiz5_5 {
                 .min(Comparator.comparing(Transaction::getValue))
                 .ifPresent(txn -> System.out.println("minVal2=" + txn.getValue()));
 
-        System.out.println("Quiz 5_5 done.");
+        System.out.println("Chapter 5_5 done.");
     }
 }
