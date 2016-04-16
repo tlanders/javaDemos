@@ -1,5 +1,6 @@
 package biz.lci.stockfighter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -28,15 +29,25 @@ public class Heartbeat {
             throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
         }
 
-        // Get-Capture Complete application/xml body response
-        BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-        String output;
-        System.out.println("============Output:============");
+        ObjectMapper mapper = new ObjectMapper();
 
-        // Simply iterate through XML response and show on console.
-        while ((output = br.readLine()) != null) {
-            System.out.println(output);
+        // Get-Capture Complete application/xml body response
+        HeartbeatResponse hr = mapper.readValue(response.getEntity().getContent(), HeartbeatResponse.class);
+
+        System.out.println("Heartbeat Output: " + hr);
+
+        // calling test venue heartbeat
+        String venueUrl = "https://api.stockfighter.io/ob/api/venues/TESTEX/heartbeat";
+        HttpGet get2 = new HttpGet(venueUrl);
+
+        response = httpClient.execute(get2);
+        if (response.getStatusLine().getStatusCode() != 200) {
+            throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
         }
+
+        hr = mapper.readValue(response.getEntity().getContent(), HeartbeatResponse.class);
+
+        System.out.println("Venue Heartbeat Output: " + hr);
 
         System.out.println("Heartbeat done.");
     }
