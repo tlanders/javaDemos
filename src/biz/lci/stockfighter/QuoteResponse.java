@@ -3,8 +3,7 @@ package biz.lci.stockfighter;
 /**
  * Created by tlanders on 4/17/2016.
  */
-public class QuoteResponse {
-    private boolean ok;
+public class QuoteResponse extends BaseResponse {
     private String symbol;
     private String venue;
     private int bid;    // best price currently bid for the stock
@@ -22,6 +21,7 @@ public class QuoteResponse {
     public String toString() {
         return "QuoteResponse{" +
                 "ok=" + ok +
+                ", error=" + error +
                 ", symbol='" + symbol + '\'' +
                 ", venue='" + venue + '\'' +
                 ", bid=" + bid +

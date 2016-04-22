@@ -4,8 +4,8 @@ package biz.lci.stockfighter;
  * Created by tlanders on 4/16/2016.
  */
 public class Order {
-    public enum Direction {buy, sell};
-    public enum OrderType {limit, market};
+//    public enum Direction {buy, sell};
+//    public enum OrderType {limit, market};
 
     private String account;
     private String venue;
