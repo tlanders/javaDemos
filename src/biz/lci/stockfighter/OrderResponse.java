@@ -1,20 +1,13 @@
 package biz.lci.stockfighter;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tlanders on 4/17/2016.
  */
 public class OrderResponse extends BaseResponse {
-//            "fills":
-//            [
-//    {
-//        "price": 5050,
-//            "qty": 50
-//        "ts": "2015-07-05T22:16:18+00:00"
-//    }, ... // may have zero or multiple fills.  Note this order presumably has a total of 80 shares worth
-//            ],
-
+    private List<OrderFill> fills;
     private String symbol;
     private String venue;
     private Direction direction;
@@ -24,9 +17,17 @@ public class OrderResponse extends BaseResponse {
     private OrderType orderType;
     private String id;              // guaranteed unique *on this venue*
     private String account;
-    private Date ts;                // ISO-8601 timestamp for when we received order
+    private String ts;                // ISO-8601 timestamp for when we received order
     private int totalFilled;
     private boolean open;
+
+    public List<OrderFill> getFills() {
+        return fills;
+    }
+
+    public void setFills(List<OrderFill> fills) {
+        this.fills = fills;
+    }
 
     @Override
     public String toString() {
@@ -43,6 +44,7 @@ public class OrderResponse extends BaseResponse {
                 ", ts=" + ts +
                 ", totalFilled=" + totalFilled +
                 ", open=" + open +
+                ", fills=" + fills +
                 '}';
     }
 
@@ -118,11 +120,11 @@ public class OrderResponse extends BaseResponse {
         this.account = account;
     }
 
-    public Date getTs() {
+    public String getTs() {
         return ts;
     }
 
-    public void setTs(Date ts) {
+    public void setTs(String ts) {
         this.ts = ts;
     }
 

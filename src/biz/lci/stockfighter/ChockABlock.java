@@ -10,6 +10,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tlanders on 4/16/2016.
@@ -46,7 +48,7 @@ public class ChockABlock {
         placeOrder(stock, qty, 0, OrderType.market);
     }
 
-    private static void getOrderStatus(String orderId, String stock) throws Exception {
+    private static OrderResponse getOrderStatus(String orderId, String stock) throws Exception {
         String statusUrl = "https://api.stockfighter.io/ob/api/venues/"
                 + exchange + "/stocks/"
                 + stock + "/orders/"
@@ -63,17 +65,7 @@ public class ChockABlock {
             throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
         }
 
-//        {
-//            "ok": true,
-//                "symbol": "ROBO",
-//                "venue": "ROBUST",
-//                "direction": "buy",
-//                "originalQty": 85,
-//                "qty": 40,
-//                "price": 993,
-//                "orderType": "immediate-or-cancel",
-//                "id": 1,
-//                "account": "FOO123",
+        return mapper.readValue(new InputStreamReader(response.getEntity().getContent()), OrderResponse.class);
 //                "ts": "2015-08-10T16:10:32.987288+09:00",
 //                "fills": [
 //            {
@@ -82,9 +74,6 @@ public class ChockABlock {
 //                    "ts": "2015-08-10T16:10:32.987292+09:00"
 //            }
 //            ],
-//            "totalFilled": 85,
-//                "open": true
-//        }
 
     }
     private static OrderResponse placeOrder(String stock, int qty, int price, OrderType orderType) throws Exception {

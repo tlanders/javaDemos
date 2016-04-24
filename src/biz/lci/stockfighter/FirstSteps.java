@@ -56,8 +56,8 @@ public class FirstSteps {
         order.setStock("");
         order.setQty(100);
         order.setPrice(0);  // not relevant for market order
-        order.setDirection(Order.Direction.buy);
-        order.setOrderType(Order.OrderType.market);
+        order.setDirection(Direction.buy);
+        order.setOrderType(OrderType.market);
 
         ObjectMapper mapper = new ObjectMapper();
         String orderData = mapper.writeValueAsString(order);
