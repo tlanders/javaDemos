@@ -1,5 +1,8 @@
 package biz.lci.stockfighter;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -8,6 +11,8 @@ import java.util.Date;
 public class OrderFill extends BaseResponse {
     private int price;
     private int qty;
+
+    //@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private String ts;
 
     @Override
@@ -41,5 +46,9 @@ public class OrderFill extends BaseResponse {
 
     public void setTs(String ts) {
         this.ts = ts;
+    }
+
+    public Date getTimestamp() throws ParseException {
+        return convertToDate(ts);
     }
 }

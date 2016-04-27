@@ -1,5 +1,8 @@
 package biz.lci.stockfighter;
 
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  * Created by tlanders on 4/17/2016.
  */
@@ -133,11 +136,18 @@ public class QuoteResponse extends BaseResponse {
         this.lastTrade = lastTrade;
     }
 
+    public Date getLastTradeTimestamp() throws ParseException {
+        return convertToDate(lastTrade);
+    }
     public String getQuoteTime() {
         return quoteTime;
     }
 
     public void setQuoteTime(String quoteTime) {
         this.quoteTime = quoteTime;
+    }
+
+    public Date getQuoteTimestamp() throws ParseException {
+        return convertToDate(quoteTime);
     }
 }

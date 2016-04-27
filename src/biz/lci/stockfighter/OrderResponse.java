@@ -1,5 +1,6 @@
 package biz.lci.stockfighter;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -126,6 +127,10 @@ public class OrderResponse extends BaseResponse {
 
     public void setTs(String ts) {
         this.ts = ts;
+    }
+
+    public Date getTimestamp() throws ParseException {
+        return convertToDate(ts);
     }
 
     public int getTotalFilled() {
