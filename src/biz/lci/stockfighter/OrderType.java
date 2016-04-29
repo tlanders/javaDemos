@@ -11,7 +11,9 @@ import java.util.Arrays;
 public enum OrderType {
     limit("limit"),
     market("market"),
-    immediate_or_cancel("immediate-or-cancel");
+    fill_or_kill("fill-or-kill"),   // limit order that is either immediately fully filled or canceled
+    immediate_or_cancel("immediate-or-cancel"); // limit order that is immediately completely or partially filled
+                                                // and then the remainder is canceled
 
     private String value;
 
