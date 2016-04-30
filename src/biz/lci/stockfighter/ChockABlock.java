@@ -14,13 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by tlanders on 4/16/2016.
  */
 public class ChockABlock {
-    private static final String account = "KAH21267612";
-    private static final String exchange = "IQYPEX";
+    private static final String account = "BBS37846442";
+    private static final String exchange = "EQOKEX";
     private static final String apiKey = "83725b0407ce7fa3066aea6586fe49e1dc09dd6a";
 
     private static final HttpClient httpClient = HttpClientBuilder.create().build();
@@ -68,16 +69,8 @@ public class ChockABlock {
         }
 
         return mapper.readValue(new InputStreamReader(response.getEntity().getContent()), OrderResponse.class);
-//                "ts": "2015-08-10T16:10:32.987288+09:00",
-//                "fills": [
-//            {
-//                "price": 366,
-//                    "qty": 45,
-//                    "ts": "2015-08-10T16:10:32.987292+09:00"
-//            }
-//            ],
-
     }
+
     private static OrderResponse placeOrder(String stock, int qty, int price, OrderType orderType) throws Exception {
         String orderUrl = "https://api.stockfighter.io/ob/api/venues/"
                 + exchange + "/stocks/"
@@ -121,21 +114,16 @@ public class ChockABlock {
     public static void main(String [] args) throws Exception {
         System.out.println("Chock a block starting.");
 
-        String stock = "LRC";
+        if(args.length < 1) {
+            System.out.println("Chock a block needs target price");
+        }
 
-       // OrderResponse resp = placeOrder(stock, 100);
+        int targetPrice = Integer.parseInt(args[0]);
+        String stock = "OGUW";
 
         int sharesPurchased = 0;
         final int sharesDesired = 100000;
-        int targetPrice = 6248;
-//        while(initialPrice <= 0) {
-//            QuoteResponse initialQuote = getQuote(stock);
-//            if (initialQuote.isOk() && initialQuote.getAsk() > 0) {
-//                initialPrice = initialQuote.getAsk();
-//            } else {
-//                Thread.sleep(500);
-//            }
-//        }
+        Map<String, Integer> orderBook = new TreeMap<>();
 
         System.out.println("targetPrice=" + targetPrice);
 
@@ -144,23 +132,48 @@ public class ChockABlock {
             if(currentQuote != null && currentQuote.isOk()) {
                 if(currentQuote.getAsk() > 0 && currentQuote.getAskSize() > 0
                         && (currentQuote.getAsk() <= targetPrice
-                        || ((currentQuote.getAsk() - targetPrice) / ((float) targetPrice)) <= 0.05)) {
-                    // buy if the price is less than the initial price or if it is no higher than 5%
-                    // of the original price
-                    int sharesToBuy = Math.min(currentQuote.getBidSize(), sharesDesired - sharesPurchased) / 5;
+                        || ((currentQuote.getAsk() - targetPrice) / ((float) targetPrice)) <= 0.03)) {
+                    // buy if the price is less than the initial price or if it is no higher than 3%
+                    // of the target price
+                    int sharesToBuy = Math.min(currentQuote.getAskSize() / 3, sharesDesired - sharesPurchased);
 
                     if(sharesToBuy >= sharesDesired / 500) {
                         System.out.println("price looks good, current ask=" + currentQuote.getAsk()
+                                + ", askSize=" + currentQuote.getAskSize()
                                 + ", target=" + targetPrice
                                 + ", sharesToBuy=" + sharesToBuy);
 
-                        OrderResponse orderResponse = placeOrder(stock, sharesToBuy);
+                        OrderResponse orderResponse = placeOrder(stock, sharesToBuy,
+                                currentQuote.getAsk(), OrderType.ioc);
                         System.out.println("orderResponse=" + orderResponse);
 
-                        // XXX - assume all were purchased for now
-                        sharesPurchased += sharesToBuy;
+                        if(orderResponse.isOk()) {
+                            // add this order to the book so we can track its status
+                            orderBook.put(orderResponse.getId(), orderResponse.getTotalFilled());
+                        } else {
+                            System.out.println("chock a block: order error=" + orderResponse.getError());
+                        }
 
-                        Thread.sleep(1000);
+                        Thread.sleep(200);
+
+                        // calculate total shares purchased
+                        sharesPurchased = orderBook.keySet().stream().mapToInt(orderId -> {
+                            try {
+                                OrderResponse or = getOrderStatus(orderId, stock);
+                                if(or.isOk()) {
+                                    System.out.println("checking order status, id=" + orderId
+                                            + ", fills=" + or.getTotalFilled());
+                                    return or.getTotalFilled();
+                                }
+                            } catch(Exception ex) {
+                                ex.printStackTrace();
+                            }
+                            System.out.println("checking order status, error getting fills for id=" + orderId);
+                            return 0;
+                        }).sum();
+
+                        System.out.println("sharesPurchased=" + sharesPurchased);
+                        Thread.sleep(800);
                     } else {
                         System.out.println("don't like ask size, current ask=" + currentQuote.getAsk()
                                 + ", askSize=" + currentQuote.getAskSize()
@@ -177,23 +190,5 @@ public class ChockABlock {
 
             Thread.sleep(500);
         }
-
-//
-//
-//        // Check for HTTP response code: 200 = success
-//        if (response.getStatusLine().getStatusCode() != 200) {
-//            throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
-//        }
-//
-//        BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-//        String output = "";
-//
-//        System.out.println("quoteResponse:");
-//        while((output = br.readLine()) != null) {
-//            System.out.println(output);
-//        }
-//
-//
-//        System.out.println("Chock a block done.");
     }
 }
