@@ -25,11 +25,25 @@ public class Nodes {
                 nodes.add(n2);
             }
             return nodes;
-        }).distinct().flatMap(List::stream)
+        }).flatMap(List::stream)
                 .flatMap(m -> m.entrySet().stream())
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.counting())).entrySet().stream()
                 .forEach(entry -> System.out.println("Node " + entry.getKey() + " has a degree of " + entry.getValue()));
 
+        System.out.println("Nodes second method...");
+        Files.lines(Paths.get(args[0])).map(str -> {
+            String [] lineSplit = str.split(" ");
+            List<Node> nodes = new ArrayList<Node>();
+            if(lineSplit.length > 1) {
+                Node n = new Node(Integer.parseInt(lineSplit[0]), Integer.parseInt(lineSplit[1]));
+                nodes.add(n);
+                nodes.add(new Node(n.getY(), n.getX()));
+            }
+            return nodes;
+        }).flatMap(List::stream)
+                .collect(Collectors.groupingBy(Node::getX, Collectors.counting()))
+                .entrySet().stream()
+                .forEach(result -> System.out.println("Node " + result.getKey() + " has a degree of " + result.getValue()));
         //System.out.println("res=" + res + ", class=" + res.getClass().getName());
         /*
         Files.lines(Paths.get(args[0])).forEach(line -> {
