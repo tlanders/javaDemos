@@ -3,19 +3,19 @@ package misc.nodes;
 /**
  * Created by tlanders on 6/18/2016.
  */
-public class Node {
-    protected int x;
-    protected int y;
+public class Node<U,V> {
+    protected U x;
+    protected V y;
 
-    public int getX() {
+    public U getX() {
         return x;
     }
 
-    public int getY() {
+    public V getY() {
         return y;
     }
 
-    public Node(int x, int y) {
+    public Node(U x, V y) {
         this.x = x;
         this.y = y;
     }

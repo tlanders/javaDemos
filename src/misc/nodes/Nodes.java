@@ -33,11 +33,11 @@ public class Nodes {
         System.out.println("Nodes second method...");
         Files.lines(Paths.get(args[0])).map(str -> {
             String [] lineSplit = str.split(" ");
-            List<Node> nodes = new ArrayList<Node>();
+            List<Node<Integer, Integer>> nodes = new ArrayList<Node<Integer, Integer>>();
             if(lineSplit.length > 1) {
-                Node n = new Node(Integer.parseInt(lineSplit[0]), Integer.parseInt(lineSplit[1]));
+                Node<Integer,Integer> n = new Node<Integer, Integer>(new Integer(lineSplit[0]), new Integer(lineSplit[1]));
                 nodes.add(n);
-                nodes.add(new Node(n.getY(), n.getX()));
+                nodes.add(new Node<Integer, Integer>(n.getY(), n.getX()));
             }
             return nodes;
         }).flatMap(List::stream)
