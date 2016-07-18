@@ -11,7 +11,10 @@ public class Scrabble {
         System.out.println("Scrabble starting...");
 
         try {
-            playTiles("AEERTYOXMCNB_S");
+            //playTiles("AEERTYOXMCNB_S");
+            playTiles("PQAREIOURSTHGWIOAE_");
+            playTiles("LQTOONOEFFJZT");
+            playTiles("AXHDRUIOR_XHJZUQEE");
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -21,16 +24,17 @@ public class Scrabble {
 
     protected static void playTiles(String tiles) throws Exception {
         ScrabbleState gameState = new ScrabbleState();
-        System.out.print(gameState);
-//        System.out.println("playing tiles=" + tiles);
+        //System.out.print(gameState);
+        System.out.println("playing tiles=" + tiles);
 
         for(int i = 0; i < tiles.length(); i++) {
             char tile = tiles.charAt(i);
-            System.out.println("playing tile=" + tile);
+            //System.out.println("playing tile=" + tile);
 
             gameState.playTile(tile);
         }
         System.out.println("done playing tiles");
-        System.out.print(gameState);
+        //System.out.print(gameState);
+        gameState.outputState();
     }
 }

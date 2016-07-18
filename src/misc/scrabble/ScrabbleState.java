@@ -1,8 +1,6 @@
 package misc.scrabble;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by tlanders on 7/17/2016.
@@ -15,12 +13,38 @@ public class ScrabbleState {
     }
 
     public void playTile(char tile) throws Exception {
-        Integer tileCount = unplayedTiles.get(tile);
-        if(tileCount > 0) {
+        Integer tileCount = unplayedTiles.remove(tile);
+        if(tileCount != null && tileCount > 0) {
             unplayedTiles.put(tile, tileCount - 1);
         } else {
             System.out.println("Invalid input. More " + tile + "'s have been taken from the bag than possible.");
             throw new Exception();
+        }
+    }
+
+    public void outputState() {
+        Map<Integer, List<Character>> outputMap = new TreeMap<>(Collections.reverseOrder());
+        for(Character tile : unplayedTiles.keySet()) {
+            Integer count = unplayedTiles.get(tile);
+            if(count >= 0) {
+                List<Character> tileList = outputMap.get(count);
+                if (tileList == null) {
+                    tileList = new ArrayList<>();
+                    outputMap.put(count, tileList);
+                }
+                tileList.add(tile);
+            }
+        }
+
+        for(Integer tileCount : outputMap.keySet()) {
+            System.out.print(tileCount + " : ");
+            List<Character> tList = outputMap.get(tileCount);
+            System.out.print(tList.get(0));
+
+            for(int i = 1; i < tList.size(); i++) {
+                System.out.print(", " + tList.get(i));
+            }
+            System.out.print('\n');
         }
     }
 
