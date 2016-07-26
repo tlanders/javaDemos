@@ -1,5 +1,6 @@
 package misc.stockmarket;
 
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
@@ -13,26 +14,30 @@ import java.util.stream.Collector;
 public class TradeCollector implements Collector<Double, TradeAccumulator, Set<Trade>> {
     @Override
     public Supplier<TradeAccumulator> supplier() {
-        return null;
+        System.out.println("new accumulator");
+        return TradeAccumulator::new;
     }
 
     @Override
     public BiConsumer<TradeAccumulator, Double> accumulator() {
-        return null;
+        return (accum, price) -> {accum.add(price);};
     }
 
     @Override
     public BinaryOperator<TradeAccumulator> combiner() {
-        return null;
+        // combine two TradeAccumulators into one
+        return (accum1, accum2) -> {return accum1.addAll(accum2);};
     }
 
     @Override
     public Function<TradeAccumulator, Set<Trade>> finisher() {
-        return null;
+        // reduce TradeAccumulator to a set of trades
+        return (accum) -> {return accum.toSet();};
     }
 
     @Override
     public Set<Characteristics> characteristics() {
-        return null;
+        // can combine concurrently but incoming trades must be handled sequentially
+        return EnumSet.of(Characteristics.CONCURRENT);
     }
 }
