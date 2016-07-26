@@ -43,7 +43,7 @@ public class StockMarket {
 
         dumpTrades(tradePairs);
 
-        Optional<Trade> bestTrade = tradePairs.parallelStream().collect(Collectors.maxBy((t1,t2) -> {return Double.compare(t1.spread(), t2.spread());}));
+        Optional<Trade> bestTrade = tradePairs.parallelStream().collect(Collectors.maxBy((t1,t2) -> {return Double.compare(t1.gain(), t2.gain());}));
 
         if(bestTrade.isPresent()) {
             System.out.println("best trade: " + bestTrade.get());
@@ -57,56 +57,4 @@ public class StockMarket {
         trades.stream().forEach(System.out::println);
     }
 
-    protected static class Trade {
-        protected double buy;
-        protected double sell;
-
-        public double spread() {
-            return sell - buy;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Trade trade = (Trade) o;
-
-            if (Double.compare(trade.buy, buy) != 0) return false;
-            return Double.compare(trade.sell, sell) == 0;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result;
-            long temp;
-            temp = Double.doubleToLongBits(buy);
-            result = (int) (temp ^ (temp >>> 32));
-            temp = Double.doubleToLongBits(sell);
-            result = 31 * result + (int) (temp ^ (temp >>> 32));
-            return result;
-        }
-
-        public Trade(double b, double s) {
-            buy = b;
-            sell = s;
-        }
-
-        public double getBuy() {
-            return buy;
-        }
-
-        public double getSell() {
-            return sell;
-        }
-
-        @Override
-        public String toString() {
-            return "Trade{" +
-                    "buy=" + buy +
-                    ", sell=" + sell +
-                    '}';
-        }
-    }
 }
