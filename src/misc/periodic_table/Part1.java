@@ -1,5 +1,7 @@
 package misc.periodic_table;
 
+import java.util.List;
+
 /**
  * Created by tlanders on 9/10/2016.
  */
@@ -19,6 +21,13 @@ public class Part1 {
         sgen.isValidSymbol("Tullium", "Ty"); // -> false
         sgen.isValidSymbol("Tullium", "Tum"); // -> false
 
+        dumpSymbols("Abcd", sgen.generateSymbols("Abcd"));
+
         System.out.println("Part1 done.");
+    }
+
+    protected static void dumpSymbols(String elementName, List<String> symbols) {
+        System.out.println("symbols for " + elementName + ":");
+        symbols.stream().forEach(System.out::println);
     }
 }

@@ -1,9 +1,18 @@
 package misc.periodic_table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by tlanders on 9/10/2016.
  */
 public class SymbolGenerator {
+    public List<String> generateSymbols(String elementName) {
+        System.out.println("generateSymbols - " + elementName);
+        List<String> symbols = new ArrayList<>();
+        return symbols;
+    }
+
     public boolean isValidSymbol(String elementName, String symbolToTest) {
         boolean result = false;
         System.out.println(elementName + " : " + symbolToTest);
