@@ -35,7 +35,7 @@ public class SymbolGenerator {
             System.out.println("  not valid - first char=" + symbolToTest.charAt(0) + " not in element");
             return false;
         } else {
-            int secondIndex = elementNameLower.indexOf(symbolToTestLower.charAt(1), firstIndex);
+            int secondIndex = elementNameLower.indexOf(symbolToTestLower.charAt(1), firstIndex + 1);
             if(secondIndex < 0) {
                 System.out.println("  not valid - second char=" + symbolToTest.charAt(1) + " not in element");
                 return false;
