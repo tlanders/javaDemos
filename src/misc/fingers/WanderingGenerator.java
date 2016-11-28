@@ -17,8 +17,17 @@ public class WanderingGenerator {
         sequence = inputSequence;
         minimumLength = minLength;
 
-        sequenceList = generateSequences(sequence, minLength);
+        sequenceList = generateSequences();
         System.out.println(sequenceList);
+    }
+
+    protected List<String> generateSequences() {
+        List<String> seqList = generateSequences(sequence, minimumLength);
+
+        return seqList.stream()
+                .filter(str -> str.startsWith(sequence.substring(0, 1))
+                        && str.endsWith(sequence.substring(sequence.length() - 1)))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -32,12 +41,17 @@ public class WanderingGenerator {
     protected List<String> generateSequences(String input, int minLen) {
         List<String> sList = new ArrayList<>();
         if(input.length() > 1) {
+
             for(int i = 1; i < input.length(); i++) {
-                List<String> subList = generateSequences(input.substring(1), minLen > 2 ? minLen - 2 : 1);
+                String firstStr = input.substring(i - 1, i);
+                sList.add(firstStr);
+                sList.add(firstStr + firstStr);
+
+                List<String> subList = generateSequences(input.substring(i), minLen > 2 ? minLen - 2 : 1);
 
                 for(String str : subList) {
-                    sList.add(input.charAt(i - 1) + str);
-                    sList.add(input.substring(i - 1, i) + input.substring(i - 1, i) + str);
+                    sList.add(firstStr + str);
+                    sList.add(firstStr + firstStr + str);
                 }
             }
 
