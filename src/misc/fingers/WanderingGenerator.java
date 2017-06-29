@@ -22,12 +22,21 @@ public class WanderingGenerator {
     }
 
     protected List<String> generateSequences() {
-        List<String> seqList = generateSequences(sequence, minimumLength);
+        String firstChar = sequence.substring(0,1);
+        String lastChar = sequence.substring(sequence.length() - 1);
 
-        return seqList.stream()
-                .filter(str -> str.startsWith(sequence.substring(0, 1))
-                        && str.endsWith(sequence.substring(sequence.length() - 1)))
-                .collect(Collectors.toList());
+        List<String> seqList = generateSequences(sequence.substring(1, sequence.length() - 1),
+                minimumLength > 2 ? minimumLength - 2 : 1);
+
+        List<String> finalList = new ArrayList<>();
+        for(String str : seqList) {
+            finalList.add(firstChar + str + lastChar);
+            finalList.add(firstChar + firstChar + str + lastChar);
+            finalList.add(firstChar + str + lastChar + lastChar);
+            finalList.add(firstChar + firstChar + str + lastChar + lastChar);
+        }
+
+        return finalList;
     }
 
     /**
@@ -44,6 +53,7 @@ public class WanderingGenerator {
 
             for(int i = 1; i < input.length(); i++) {
                 String firstStr = input.substring(i - 1, i);
+                System.out.println("first=" + firstStr);
                 sList.add(firstStr);
                 sList.add(firstStr + firstStr);
 
@@ -54,6 +64,8 @@ public class WanderingGenerator {
                     sList.add(firstStr + firstStr + str);
                 }
             }
+
+            System.out.println("filtering, first=" + input.charAt(0) + ", sList=" + sList.size());
 
             return sList.stream().filter(item -> item.length() >= minLen).distinct().collect(Collectors.toList());
         } else {
