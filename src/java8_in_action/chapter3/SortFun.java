@@ -11,9 +11,9 @@ class AppleComparator implements Comparator<Apple> {
     }
 }
 
-public class Sort {
+public class SortFun {
     public static void main(String [] args) {
-        System.out.println("Sort starting.");
+        System.out.println("SortFun starting.");
 
         List<Apple> apples = new ArrayList<>();
         apples.add(new Apple("green", 121));
@@ -63,6 +63,6 @@ public class Sort {
                 .reversed());
         System.out.println("sorted by comparing and thenComparing and method reference, apples=" + apples);
 
-        System.out.println("Sort done.");
+        System.out.println("SortFun done.");
     }
 }
