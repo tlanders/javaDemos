@@ -16,13 +16,36 @@ public class Sort {
         System.out.println("Sort starting.");
 
         List<Apple> apples = new ArrayList<>();
+        apples.add(new Apple("green", 121));
         apples.add(new Apple("red", 101));
         apples.add(new Apple("pink", 112));
         apples.add(new Apple("yellow", 95));
         System.out.println("unsorted, apples=" + apples);
 
+        // first sort with Comparator class
         apples.sort(new AppleComparator());
-        System.out.println("sorted, apples=" + apples);
+        System.out.println("sorted by comparator, apples=" + apples);
+
+        // second reverse sort with anonymous class
+        apples.sort(new Comparator<Apple>() {
+            @Override
+            public int compare(Apple o1, Apple o2) {
+                return -o1.getWeight().compareTo(o2.getWeight());
+            }
+        });
+        System.out.println("reversed sorted by anonymous class, apples=" + apples);
+
+        // sort with lambda
+        apples.sort((a, b) -> a.getWeight().compareTo(b.getWeight()));
+        System.out.println("sorted by lambda, apples=" + apples);
+
+        // reverse sort with comparing and lambda
+        apples.sort(Comparator.comparing((Apple a) -> a.getWeight()).reversed());
+        System.out.println("reverse sorted by comparing and lambda, apples=" + apples);
+
+        // reverse sort with comparing and method reference
+        apples.sort(Comparator.comparing(Apple::getWeight));
+        System.out.println("sorted by comparing and method reference, apples=" + apples);
 
         System.out.println("Sort done.");
     }
