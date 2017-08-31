@@ -31,8 +31,32 @@ public class Exercise5_5_1 {
         System.out.println("2011 txns by value, list=" + txn2011ByValue);
 
         //2.  What are all the unique cities where the traders work?
+        List<String> uniqueCities = transactions.stream()
+                .map(Transaction::getTrader)
+                .map(Trader::getCity)
+                .distinct()
+                .collect(Collectors.toList());
+        System.out.println("unique cities=" + uniqueCities);
+
         //3.  Find all traders from Cambridge and sort them by name.
+        List<Trader> cambridgeTraders = transactions.stream()
+                .map(Transaction::getTrader)
+                .filter(trader -> trader.getCity().equalsIgnoreCase("cambridge"))
+                .distinct()
+                .sorted(Comparator.comparing(Trader::getName))
+                .collect(Collectors.toList());
+        System.out.println("Cambridge traders=" + cambridgeTraders);
+
         //4.  Return a string of all traders’ names sorted alphabetically.
+        String traders = transactions.stream()
+                .map(Transaction::getTrader)
+                .map(Trader::getName)
+                .distinct()
+                .sorted()
+                .reduce((s1,s2) -> s1 + " " + s2)
+                .toString();
+        System.out.println("trader names=" + traders);
+
         //5.  Are any traders based in Milan?
         //6.  Print all transactions’ values from the traders living in Cambridge.
         //7.  What’s the highest value of all the transactions?
