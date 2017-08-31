@@ -31,7 +31,7 @@ public class Dish {
 
     @Override
     public String toString() {
-        return name;
+        return name + ": " + calories + " calories, isVegetarian=" + vegetarian;
     }
 
     public enum Type { MEAT, FISH, OTHER }
