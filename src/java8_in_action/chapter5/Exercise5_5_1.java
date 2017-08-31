@@ -53,8 +53,7 @@ public class Exercise5_5_1 {
                 .map(Trader::getName)
                 .distinct()
                 .sorted()
-                .reduce((s1,s2) -> s1 + " " + s2)
-                .toString();
+                .collect(Collectors.joining(" "));
         System.out.println("trader names=" + traders);
 
         //5.  Are any traders based in Milan?
@@ -79,6 +78,11 @@ public class Exercise5_5_1 {
         transactions.stream()
                 .reduce((t1,t2) -> t1.getValue() <= t2.getValue() ? t1 : t2)
                 .ifPresent(t -> System.out.println("min val txn=" + t));
+
+        // same solution using min
+        transactions.stream()
+                .min(Comparator.comparing(Transaction::getValue))
+                .ifPresent(t -> System.out.println("#2 min val txn=" + t));
 
         System.out.println("exercise 5.5.1 done.");
     }
