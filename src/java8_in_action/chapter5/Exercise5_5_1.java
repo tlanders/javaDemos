@@ -58,9 +58,27 @@ public class Exercise5_5_1 {
         System.out.println("trader names=" + traders);
 
         //5.  Are any traders based in Milan?
+        boolean anyMilanTraders = transactions.stream().anyMatch(t -> t.getTrader().getCity().equalsIgnoreCase("milan"));
+
+        System.out.println("any milan traders=" + anyMilanTraders);
+
         //6.  Print all transactions’ values from the traders living in Cambridge.
+        List<Integer> txnVals = transactions.stream()
+                .filter(transaction -> transaction.getTrader().getCity().equalsIgnoreCase("cambridge"))
+                .map(Transaction::getValue)
+                .collect(Collectors.toList());
+        System.out.println("cambridge txn vals=" + txnVals);
+
         //7.  What’s the highest value of all the transactions?
+        transactions.stream().map(Transaction::getValue).max(Integer::compareTo)
+                .ifPresent(val -> System.out.println("max txn val=" + val));
+
+        // TODO - how to handle no max case?
+
         //8.  Find the transaction with the smallest value.
+        transactions.stream()
+                .reduce((t1,t2) -> t1.getValue() <= t2.getValue() ? t1 : t2)
+                .ifPresent(t -> System.out.println("min val txn=" + t));
 
         System.out.println("exercise 5.5.1 done.");
     }
