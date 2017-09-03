@@ -1,9 +1,6 @@
 package java8_in_action.chapter6;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.*;
@@ -35,6 +32,16 @@ public class Chapter6 {
                 .collect(summingInt(Dish::getCalories));
 
         System.out.println("total cals=" + totalCalories);
+
+        double avgCalories = menu.stream()
+                .collect(averagingInt(Dish::getCalories));
+
+        System.out.println("avg cals=" + avgCalories);
+
+        IntSummaryStatistics stats = menu.stream()
+                .collect(summarizingInt(Dish::getCalories));
+
+        System.out.println("stats=" + stats);
 
         System.out.println("main exiting.");
     }
