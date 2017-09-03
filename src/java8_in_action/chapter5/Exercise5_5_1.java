@@ -3,9 +3,8 @@ package java8_in_action.chapter5;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.function.LongSupplier;
+import java.util.stream.*;
 
 public class Exercise5_5_1 {
     public static void main(String... args) {
@@ -109,5 +108,32 @@ public class Exercise5_5_1 {
                 .limit(20)
                 .mapToInt(i -> i[0])
                 .forEach(System.out::println);
+
+        // 5.7 generate random numbers
+        DoubleStream.generate(Math::random)
+                .limit(5)
+                .forEach(System.out::println);
+
+        // 5.7 generate numbers using stateful supplier
+        LongStream.generate(new SquaresSupplier())
+                .limit(15)
+                .forEach(System.out::println);
+    }
+
+    public static class SquaresSupplier implements LongSupplier {
+        long initialVal;
+
+        public SquaresSupplier(long i) {
+            initialVal = i;
+        }
+        public SquaresSupplier() {
+            this(0);
+        }
+
+        @Override
+        public long getAsLong() {
+            // increment val and then square it
+            return ++initialVal * initialVal;
+        }
     }
 }
