@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Exercise5_5_1 {
     public static void main(String... args) {
@@ -85,5 +87,21 @@ public class Exercise5_5_1 {
                 .ifPresent(t -> System.out.println("#2 min val txn=" + t));
 
         System.out.println("exercise 5.5.1 done.");
+
+        // exercise from 5.6 to generate pythagorean triples
+        int max = 100;
+        IntStream.rangeClosed(1, max)
+                .boxed()
+                .flatMap(a ->
+                    IntStream.rangeClosed(a, max)
+                            .mapToObj( b -> new double[] {a, b, Math.sqrt(a*a + b*b)})
+                )
+                .filter(i -> i[2] % 1.0 == 0)
+                .forEach(i -> System.out.println("[" + (int) i[0] + "," + (int) i[1] + "," + (int) i[2] + "]"));
+
+        // 5.7 generate fibonacci tuples (0,1), (1,1), (1,2), (2,3), (3,5), (5,8)
+        Stream.iterate(new int[]{0,1}, i -> new int[]{i[1], i[0] + i[1]})
+                .limit(20)
+                .forEach(i -> System.out.println("(" + i[0] + "," + i[1] + ")"));
     }
 }
