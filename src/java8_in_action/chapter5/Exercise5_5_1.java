@@ -103,5 +103,11 @@ public class Exercise5_5_1 {
         Stream.iterate(new int[]{0,1}, i -> new int[]{i[1], i[0] + i[1]})
                 .limit(20)
                 .forEach(i -> System.out.println("(" + i[0] + "," + i[1] + ")"));
+
+        // same as above but only print Fibonacci series
+        Stream.iterate(new int[]{0,1}, i -> new int[]{i[1], i[0] + i[1]})
+                .limit(20)
+                .mapToInt(i -> i[0])
+                .forEach(System.out::println);
     }
 }
