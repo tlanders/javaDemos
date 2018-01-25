@@ -1,7 +1,11 @@
 package java8_in_action.chapter6;
 
 import java.util.*;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.*;
 
@@ -42,6 +46,17 @@ public class Chapter6 {
                 .collect(summarizingInt(Dish::getCalories));
 
         System.out.println("stats=" + stats);
+
+        // partition #'s into prime and non-prime
+        Predicate<Integer> isPrime = (num) -> IntStream.range(2, (int) Math.sqrt(num)).noneMatch(n -> num % n == 0);
+
+        System.out.println("30 prime? " + isPrime.test(30));
+        System.out.println("31 prime? " + isPrime.test(31));
+
+        Map<Boolean, List<Integer>> primeOrNot = IntStream.rangeClosed(2, 100).boxed().collect(partitioningBy(isPrime));
+
+        System.out.println("prime count: " + primeOrNot.get(true).size());
+        System.out.println("non-prime count: " + primeOrNot.get(false).size());
 
         System.out.println("main exiting.");
     }
