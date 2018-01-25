@@ -4,6 +4,10 @@
 *.iws
 .idea/*
 
+# eclipse files
+.classpath
+.project
+
 # backup and swap files
 *.*~
 *.swp
