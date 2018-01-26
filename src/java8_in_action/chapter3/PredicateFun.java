@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 public class PredicateFun {
     public static void main(String[] args) {
         System.out.println("PredicateFun starting.");
-
+    
+        new PredicateCommand<PredicateObject>(new PredicateObject(), x -> x.getCount() > 10).run();
+        
         List<Apple> apples = new ArrayList<>();
         apples.add(new Apple("green", 121));
         apples.add(new Apple("red", 101));
