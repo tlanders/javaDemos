@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class PredicateFun {
     public static void main(String[] args) {
-        System.out.println("PredicateFun starting.");
+        System.out.println("PredicateFun...");
     
         new PredicateCommand<PredicateObject>(new PredicateObject(), x -> x.getCount() > 10).run();
         
