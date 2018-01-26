@@ -9,8 +9,6 @@ import java.util.List;
  */
 public class Quiz2_1 {
     public static void main(String [] args) {
-        System.out.println("main, args len=" + args.length);
-
         List<Apple> apples = new ArrayList<>();
         apples.add(new Apple("green", 150));
         apples.add(new Apple("green", 200));
