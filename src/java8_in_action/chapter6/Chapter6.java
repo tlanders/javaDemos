@@ -6,6 +6,7 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
 
@@ -58,6 +59,18 @@ public class Chapter6 {
         System.out.println("prime count: " + primeOrNot.get(true).size());
         System.out.println("non-prime count: " + primeOrNot.get(false).size());
 
+        // use my collector instead of toList
+        List<Dish> dishList = Stream.of(menu.get(0), menu.get(2), menu.get(4), menu.get(6)).collect(new ToListCollector<>());
+        dumpList(dishList);
+        
         System.out.println("main exiting.");
     }
+    
+    protected static void dumpList(List l) {
+    	System.out.println("dumping list, size=" + l.size());
+    	for(Object o : l) {
+    		System.out.println(o);
+    	}
+    }
+    
 }
