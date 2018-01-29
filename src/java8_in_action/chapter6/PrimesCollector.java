@@ -17,17 +17,36 @@ public class PrimesCollector implements Collector<Integer, List<Integer>, List<I
 	@Override
 	public BiConsumer<List<Integer>, Integer> accumulator() {
 		return (primeList, candidate) -> {
-			if(isPrime(primeList, candidate)) {
+			System.out.println("candidate=" + candidate);
+			int candidateRoot = (int) Math.sqrt(candidate);
+			List<Integer> checkList = takeWhile(primeList, i -> i <= candidateRoot);
+			if(isPrime(checkList, candidate)) {
 				primeList.add(candidate);
 			}
-//			if(primeList.stream().noneMatch(i -> candidate % i == 0 )) {
-//				primeList.add(candidate);
-//			};
 		};
 	}
 
+	/**
+	 * Continues taking list items as long as the predicate returns true. When the predicate returns
+	 * false then the search stops and the list up to the last index is returned. 
+	 * @param theList
+	 * @param thePredicate
+	 * @return
+	 */
+	protected static List<Integer> takeWhile(List<Integer> theList, Predicate<Integer> thePredicate) {
+		for(int i = 0; i < theList.size(); i++) {
+			Integer currentInt = theList.get(i);
+			if(!thePredicate.test(currentInt)) {
+				return theList.subList(0, i);
+			}
+		}
+		return theList;
+	}
+	
 	protected boolean isPrime(List<Integer> primeList, Integer candidate) {
-		return primeList.stream().noneMatch(x -> candidate % x == 0);
+		return primeList.stream()
+				.peek(i -> System.out.println("  checking i=" + i))
+				.noneMatch(x -> candidate % x == 0);
 	}
 	
 	@Override
