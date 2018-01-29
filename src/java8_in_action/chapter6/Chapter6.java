@@ -63,6 +63,10 @@ public class Chapter6 {
         List<Dish> dishList = Stream.of(menu.get(0), menu.get(2), menu.get(4), menu.get(6)).collect(new ToListCollector<>());
         dumpList(dishList);
         
+        System.out.println("custom collector finding primes...");
+        List<Integer> primes = IntStream.rangeClosed(2, 30).boxed().collect(new PrimesCollector());
+        dumpList(primes);
+        
         System.out.println("main exiting.");
     }
     
