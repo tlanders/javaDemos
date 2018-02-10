@@ -23,13 +23,13 @@ public class Chapter7 {
         
         System.out.println("func sentence words=" + wc.getWordCount());
         
-        long [] nums = LongStream.rangeClosed(1, 60).toArray();
+        long [] nums = LongStream.rangeClosed(1, 100).toArray();
         
         ForkJoinPool pool = new ForkJoinPool();
         ForkJoinTask<Long> task = new ForkJoinSumCalculator(nums);
         Long sum = pool.invoke(task);
  
-        System.out.println("sum=" + sum);
+        System.out.println("sum=" + sum + ", created=" + ForkJoinSumCalculator.getNumCreated());
         
         System.out.println("main exiting.");
     }

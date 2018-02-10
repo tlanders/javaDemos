@@ -4,6 +4,10 @@ import java.util.concurrent.RecursiveTask;
 
 public class ForkJoinSumCalculator extends RecursiveTask<Long> {
 
+	protected static int numCreated = 0;
+	
+	public static int getNumCreated() { return numCreated; }
+	
 	protected final long [] numbersToSum;
 	protected final int startIndex;
 	protected final int endIndex;
@@ -14,6 +18,7 @@ public class ForkJoinSumCalculator extends RecursiveTask<Long> {
 	}
 	
 	public ForkJoinSumCalculator(long [] numbers, int start, int end) {
+		numCreated++;
 		System.out.println("ForkJoin [st, end, len] : " + start + ", " + end + ", " + numbers.length);
 		numbersToSum = numbers;
 		startIndex = start;
