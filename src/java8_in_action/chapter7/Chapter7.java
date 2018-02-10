@@ -1,6 +1,9 @@
 package java8_in_action.chapter7;
 
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public class Chapter7 {
@@ -8,7 +11,9 @@ public class Chapter7 {
     public static void main(String ... args) {
         System.out.println("chapter 7 main starting...");
         
-        final String SENTENCE = " Nel   mezzo del cammin  di nostra  vita mi  ritrovai in una  selva oscura ché la  dritta via era   smarrita ";
+        final String SENTENCE = " Nel   mezzo del cammin  di nostra  vita mi  ritrovai in una  selva oscura ché la  dritta via era   smarrita "
+        		+ " Nel   mezzo del cammin  di nostra  vita mi  ritrovai in una  selva oscura ché la  dritta via era   smarrita "
+        		+ " Nel   mezzo del cammin  di nostra  vita mi  ritrovai in una  selva oscura ché la  dritta via era";
        
         System.out.println("iterative sentence words=" + countWordsIteratively(SENTENCE));
        
@@ -17,6 +22,14 @@ public class Chapter7 {
         WordCounter wc = charStream.reduce(new WordCounter(0, true), WordCounter::accumulate, WordCounter::combine);
         
         System.out.println("func sentence words=" + wc.getWordCount());
+        
+        long [] nums = LongStream.rangeClosed(1, 60).toArray();
+        
+        ForkJoinPool pool = new ForkJoinPool();
+        ForkJoinTask<Long> task = new ForkJoinSumCalculator(nums);
+        Long sum = pool.invoke(task);
+ 
+        System.out.println("sum=" + sum);
         
         System.out.println("main exiting.");
     }
