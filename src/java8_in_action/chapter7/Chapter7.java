@@ -5,6 +5,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Chapter7 {
 	
@@ -20,17 +21,19 @@ public class Chapter7 {
         // functional word counter using streams
         Stream<Character> charStream = IntStream.range(0, SENTENCE.length()).mapToObj(SENTENCE::charAt);
         WordCounter wc = charStream.reduce(new WordCounter(0, true), WordCounter::accumulate, WordCounter::combine);
-        
         System.out.println("func sentence words=" + wc.getWordCount());
         
+        WordCounterSpliterator wcs = new WordCounterSpliterator(SENTENCE);
+        wc = StreamSupport.stream(wcs, true).reduce(new WordCounter(0,  true), WordCounter::accumulate, WordCounter::combine);
+        System.out.println("spliterator sentence words=" + wc.getWordCount());
+
         long [] nums = LongStream.rangeClosed(1, 100).toArray();
         
         ForkJoinPool pool = new ForkJoinPool();
         ForkJoinTask<Long> task = new ForkJoinSumCalculator(nums);
         Long sum = pool.invoke(task);
- 
         System.out.println("sum=" + sum + ", created=" + ForkJoinSumCalculator.getNumCreated());
-        
+            
         System.out.println("main exiting.");
     }
     
