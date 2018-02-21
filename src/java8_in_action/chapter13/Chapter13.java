@@ -20,6 +20,23 @@ public class Chapter13 {
 	}
 	
 	protected static List<List<Integer>> findSubsets(List<Integer> theList) {
-		return null;
+		System.out.println("find, theList=" + theList);
+		List<List<Integer>> subsets = new ArrayList<>();
+		if(theList.isEmpty()) {
+			subsets.add(theList);
+			return subsets;
+		}
+		
+		Integer i = theList.get(0);
+		List<List<Integer>> otherSubsets = findSubsets(theList.subList(1, theList.size()));
+		subsets.addAll(otherSubsets);
+		for(List<Integer> li : otherSubsets) {
+			List<Integer> newList = new ArrayList<>();
+			newList.add(i);
+			newList.addAll(li);
+			subsets.add(newList);
+		}
+		
+		return subsets;
 	}
 }
