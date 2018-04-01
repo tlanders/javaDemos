@@ -26,7 +26,7 @@ public class Exercise1 {
 
         System.out.println("Exercise1, done");
     }
-
+    
     public static void logIf(Level level, BooleanSupplier ifCondition, Supplier<String> message) {
         if(logger.isLoggable(level) && ifCondition.getAsBoolean()) {
             logger.log(level, message.get());

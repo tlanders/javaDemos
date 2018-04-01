@@ -1,6 +1,7 @@
 package java8_in_action.chapter6;
 
 import java.util.*;
+import java.util.function.BooleanSupplier;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
@@ -36,7 +37,7 @@ public class Chapter6 {
         int totalCalories = menu.stream()
                 .collect(summingInt(Dish::getCalories));
 
-        System.out.println("total cals=" + totalCalories);
+        System.out.println("total calories=" + totalCalories);
 
         double avgCalories = menu.stream()
                 .collect(averagingInt(Dish::getCalories));

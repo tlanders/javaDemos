@@ -33,7 +33,7 @@ public class Chapter7 {
         ForkJoinTask<Long> task = new ForkJoinSumCalculator(nums);
         Long sum = pool.invoke(task);
         System.out.println("sum=" + sum + ", created=" + ForkJoinSumCalculator.getNumCreated());
-            
+                    
         System.out.println("main exiting.");
     }
     
