@@ -45,7 +45,7 @@ public class WeighAnimalAction extends RecursiveAction {
 		Arrays.sort(w);
 		
 		ForkJoinPool pool = new ForkJoinPool();
-		pool.execute(new WeighAnimalAction(0, w.length, w));
+		pool.invoke(new WeighAnimalAction(0, w.length, w));
 
 		Thread.sleep(4000);
 		

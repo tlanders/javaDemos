@@ -37,6 +37,12 @@ public class Concurrency {
 				Collectors.groupingByConcurrent(String::length));
 		System.out.println(map2);
 		
+		System.out.println(Arrays.asList("ducky","chicken","flamingo","pelican")   
+				.parallelStream().parallel() // q1   
+				.reduce(0,      
+						(cnt, str) -> cnt + str.length(), // q2      
+						(cnt1, cnt2) -> cnt1 + cnt2)); // q3
+		
 		System.out.println("Concurrency done.");
 	}
 }
