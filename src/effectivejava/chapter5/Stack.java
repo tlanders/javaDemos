@@ -1,6 +1,7 @@
 package effectivejava.chapter5;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.Objects;
 
@@ -39,10 +40,25 @@ public class Stack<E> {
 		items[index++] = obj;
 	}
 	
+	@Override
+	public String toString() {
+		return "Stack [items=" + Arrays.toString(items) + ", index=" + index + "]";
+	}
+
 	public void pushAll(Iterable<? extends E> iter) {
 		for(E e : iter) {
 			push(e);
 		}
+	}
+	
+//	public void popAll(Collection<E> destinationColl) {
+//		while(!isEmpty()) {
+//			destinationColl.add(pop());
+//		}
+//	}
+	
+	public boolean isEmpty() {
+		return index <= 0;
 	}
 	
 	private void ensureCapacity() {
