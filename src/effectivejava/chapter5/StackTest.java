@@ -66,4 +66,23 @@ public class StackTest {
 			assertTrue(e instanceof NullPointerException);
 		}
 	}
+
+	@Test
+	public void testStackPushAllSimple() {
+		Stack<Integer> s = new Stack<>();
+
+		List<Integer> items = Arrays.asList(1, 3, 5, 7, 9, 8, 6, 4, 2);
+
+		s.pushAll(items);
+		
+		for(int i = items.size() - 1; i > 0; i--) {
+			assertEquals(items.get(i), s.pop());
+		}
+		
+		try {
+			s.pop();
+		} catch(Exception e) {
+			assertTrue(e instanceof EmptyStackException);
+		}
+	}
 }
