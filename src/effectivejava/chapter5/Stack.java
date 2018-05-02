@@ -4,16 +4,17 @@ import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.Objects;
 
-public class Stack {
-	private Object [] items;
+public class Stack<E> {
+	private E [] items;
 	private static final int DEFAULT_CAPACITY = 3;
 	private int index = 0;
 	
+	@SuppressWarnings("unchecked")
 	public Stack(int initialCapacity) {
 		if(initialCapacity > 0) {
-			items = new Object[DEFAULT_CAPACITY];
+			items = (E[]) new Object[DEFAULT_CAPACITY];
 		} else {
-			items = new Object[initialCapacity];
+			items = (E[]) new Object[initialCapacity];
 		}
 	}
 	
@@ -21,17 +22,17 @@ public class Stack {
 		this(DEFAULT_CAPACITY);
 	}
 	
-	public Object pop() {
+	public E pop() {
 		if(index <= 0) {
 			throw new EmptyStackException();
 		}
 		
-		Object item = items[--index];
+		E item = items[--index];
 		items[index] = null;
 		return item;
 	}
 	
-	public void push(Object obj) {
+	public void push(E obj) {
 		Objects.requireNonNull(obj);
 		
 		ensureCapacity();
