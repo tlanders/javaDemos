@@ -1,7 +1,6 @@
 package effectivejava.chapter5;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.Objects;
 
@@ -40,8 +39,8 @@ public class Stack<E> {
 		items[index++] = obj;
 	}
 	
-	public void pushAll(Collection<E> coll) {
-		for(E e : coll) {
+	public void pushAll(Iterable<? extends E> iter) {
+		for(E e : iter) {
 			push(e);
 		}
 	}
