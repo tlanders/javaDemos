@@ -51,7 +51,7 @@ public class Stack<E> {
 		}
 	}
 	
-	public void popAll(Collection<E> destinationColl) {
+	public void popAll(Collection<? super E> destinationColl) {
 		while(!isEmpty()) {
 			destinationColl.add(pop());
 		}

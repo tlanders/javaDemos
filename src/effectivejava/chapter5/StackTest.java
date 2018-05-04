@@ -146,5 +146,23 @@ public class StackTest {
 		Collections.reverse(items);
 		assertEquals(destList, items);
 	}
+	
+	@Test
+	public void testStackPopAllSubclass() {
+		Stack<Integer> s = new Stack<>();
+		assertTrue(s.isEmpty());
 
+		List<Integer> items = Arrays.asList(1, 3, 5, 7, 9, 8, 6, 4, 2);
+
+		s.pushAll(items);
+		
+		List<Number> destList = new ArrayList<>();
+
+		s.popAll(destList);
+		
+		assertTrue(s.isEmpty());
+		
+		Collections.reverse(items);
+		assertEquals(destList, items);
+	}
 }
