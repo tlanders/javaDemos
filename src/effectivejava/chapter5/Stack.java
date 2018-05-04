@@ -51,11 +51,11 @@ public class Stack<E> {
 		}
 	}
 	
-//	public void popAll(Collection<E> destinationColl) {
-//		while(!isEmpty()) {
-//			destinationColl.add(pop());
-//		}
-//	}
+	public void popAll(Collection<E> destinationColl) {
+		while(!isEmpty()) {
+			destinationColl.add(pop());
+		}
+	}
 	
 	public boolean isEmpty() {
 		return index <= 0;

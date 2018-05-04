@@ -6,7 +6,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.List;
 
@@ -125,4 +127,24 @@ public class StackTest {
 			assertTrue(e instanceof EmptyStackException);
 		}
 	}
+	
+	@Test
+	public void testStackPopAllSimple() {
+		Stack<Integer> s = new Stack<>();
+		assertTrue(s.isEmpty());
+
+		List<Integer> items = Arrays.asList(1, 3, 5, 7, 9, 8, 6, 4, 2);
+
+		s.pushAll(items);
+		
+		List<Integer> destList = new ArrayList<>();
+
+		s.popAll(destList);
+		
+		assertTrue(s.isEmpty());
+		
+		Collections.reverse(items);
+		assertEquals(destList, items);
+	}
+
 }
