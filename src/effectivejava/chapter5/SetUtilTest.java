@@ -12,12 +12,27 @@ import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Test;
 
 public class SetUtilTest {
 
+	@Test
+	public void testMaxSimple() {
+		Set<Integer> si1 = new HashSet<>();
+		si1.add(1);
+		si1.add(2);
+		si1.add(3);
+		si1.add(4);
+
+		Optional<Integer> optMax = SetUtil.max(si1);
+		
+		assertTrue(optMax.isPresent());
+		assertEquals(Integer.valueOf(4), optMax.get());
+	}
+	
 	@Test
 	public void testUnionSimple() {
 		Set<Integer> si1 = new HashSet<>();
