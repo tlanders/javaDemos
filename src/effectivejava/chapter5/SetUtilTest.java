@@ -6,14 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EmptyStackException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -32,7 +25,22 @@ public class SetUtilTest {
 		assertTrue(optMax.isPresent());
 		assertEquals(Integer.valueOf(4), optMax.get());
 	}
-	
+
+	@Test
+	public void testMaxSimpleComparator() {
+		Set<Number> si1 = new HashSet<>();
+		si1.add(1);
+		si1.add(2.2);
+		si1.add(3.3);
+		si1.add(4);
+
+		Optional<Number> optMax = SetUtil.max(si1, Comparator.comparing(Number::toString));
+//		Optional<Number> optMax = SetUtil.max(si1, (Number n1, Number n2) -> n1.toString().compareTo(n2.toString()));
+
+		assertTrue(optMax.isPresent());
+		assertEquals(Integer.valueOf(4), optMax.get());
+	}
+
 	@Test
 	public void testUnionSimple() {
 		Set<Integer> si1 = new HashSet<>();
