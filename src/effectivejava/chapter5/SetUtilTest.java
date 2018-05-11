@@ -27,13 +27,13 @@ public class SetUtilTest {
 		si1.add(4);
 		
 		Set<Integer> si2 = new HashSet<>();
-		si2.add(11);
+		si2.add(1);
 		si2.add(21);
 		si2.add(31);
 	
 		Set<Integer> sfinal = SetUtil.union(si1, si2);
 		
-		assertEquals(si1.size() + si2.size(), sfinal.size());
+		assertEquals(si1.size() + si2.size() - 1, sfinal.size());
 	}
 	
 	@Test
