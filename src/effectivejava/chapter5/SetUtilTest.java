@@ -35,4 +35,27 @@ public class SetUtilTest {
 		
 		assertEquals(si1.size() + si2.size(), sfinal.size());
 	}
+	
+	@Test
+	public void testUnionSubclass() {
+		Set<Integer> si1 = new HashSet<>();
+		si1.add(1);
+		si1.add(2);
+		si1.add(3);
+		si1.add(4);
+		
+		Set<Double> si2 = new HashSet<>();
+		si2.add(1.1);
+		si2.add(2.1);
+		si2.add(3.1);
+		si2.add(4.1);
+		
+		Set<Number> sfinal = SetUtil.union(si1, si2);
+		
+		// this is how to explicitly call the Number version if the compiler can't figure it out
+//		Set<Number> sfinal = SetUtil.<Number>union(si1, si2);
+		
+//		System.out.println(sfinal);
+		assertEquals(si1.size() + si2.size(), sfinal.size());
+	}	
 }
