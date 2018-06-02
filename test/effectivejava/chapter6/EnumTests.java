@@ -1,15 +1,19 @@
 package effectivejava.chapter6;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 public class EnumTests {
 	@Test
 	public void planetTest() {
-		Planet p = Planet.EARTH;
-		assertEquals(Planet.EARTH, p);
-		assertNotEquals(Planet.MARS, p);
+		Planet e = Planet.EARTH;
+		assertEquals(Planet.EARTH, e);
+		assertNotEquals(Planet.MARS, e);
+		
+		Planet j = Planet.JUPITER;
+		
+		assertTrue(j.mass() > e.mass());
+		assertTrue(j.surfaceWeight(100.0) > 0);
 	}
 }
