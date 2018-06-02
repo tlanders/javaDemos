@@ -7,9 +7,9 @@ import java.util.Random;
  * From http://javarevisited.blogspot.com/2015/04/fizzbuzz-solution-in-java-8.html.
  *
  * Problem : For a given natural number greater than zero return:
- * “Fizz” if the number is dividable by 3
- * “Buzz” if the number is dividable by 5
- * “FizzBuzz” if the number is dividable by 15
+ * "Fizz" if the number is dividable by 3
+ * "Buzz" if the number is dividable by 5
+ * "FizzBuzz" if the number is dividable by 15
  * the same number if number is neither divisible by 3 nor 5.
  *
  * Created by tlanders on 1/3/2016.

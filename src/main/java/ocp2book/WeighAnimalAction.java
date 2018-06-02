@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 public class WeighAnimalAction extends RecursiveAction {
 	protected final int start;
 	protected final int end;
