@@ -56,15 +56,7 @@ public class EnumTests {
 		assertEquals(5, BasicOperation.ADD.apply(2, 3), .0001);
 		assertEquals(-1, BasicOperation.SUBTRACT.apply(2, 3), .0001);
 		
-		double a = 1.23;
-		double b = -2.34;
-		for(BasicOperation op : BasicOperation.values()) {
-			System.out.printf("%f %s %f = %f\n", a, op, b, op.apply(a, b));
-		}
-		
-		for(BasicOperation op : BasicOperation.values()) {
-			assertEquals(op, BasicOperation.valueOf(op.name()));
-		}
+		testIOperation(BasicOperation.class, 1.23, -2.34);
 	}
 
 	@Test
@@ -72,14 +64,19 @@ public class EnumTests {
 		assertEquals(8, ExtendedOperation.POWER.apply(2, 3), .0001);
 		assertEquals(2, ExtendedOperation.MODULUS.apply(11, 3), .0001);
 		
-		double a = 15.23;
-		double b = -2.34;
+		testIOperation(ExtendedOperation.class, 8.23, 2.45);
+	}
+	
+	/**
+	 * This method tests all enums that implement IOperation
+	 * @param opType
+	 * @param a
+	 * @param b
+	 */
+	protected <T extends Enum<T> & IOperation> void testIOperation(Class<T> opType, double a, double b) {
 		for(ExtendedOperation op : ExtendedOperation.values()) {
 			System.out.printf("%f %s %f = %f\n", a, op, b, op.apply(a, b));
-		}
-		
-		for(ExtendedOperation op : ExtendedOperation.values()) {
 			assertEquals(op, ExtendedOperation.valueOf(op.name()));
-		}
+		}		
 	}
 }
