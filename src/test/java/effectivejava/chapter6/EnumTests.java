@@ -66,4 +66,20 @@ public class EnumTests {
 			assertEquals(op, BasicOperation.valueOf(op.name()));
 		}
 	}
+
+	@Test
+	public void testExtendedOperation() {
+		assertEquals(8, ExtendedOperation.POWER.apply(2, 3), .0001);
+		assertEquals(2, ExtendedOperation.MODULUS.apply(11, 3), .0001);
+		
+		double a = 15.23;
+		double b = -2.34;
+		for(ExtendedOperation op : ExtendedOperation.values()) {
+			System.out.printf("%f %s %f = %f\n", a, op, b, op.apply(a, b));
+		}
+		
+		for(ExtendedOperation op : ExtendedOperation.values()) {
+			assertEquals(op, ExtendedOperation.valueOf(op.name()));
+		}
+	}
 }
