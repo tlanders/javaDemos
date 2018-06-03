@@ -1,11 +1,11 @@
 package effectivejava.chapter6;
 
 public enum Operation {
-	PLUS("+") { 
+	ADD("+") { 
 		@Override
 		public double apply(double term1, double term2) { return term1 + term2; } 
 		},
-	MINUS("-") {
+	SUBTRACT("-") {
 		@Override
 		public double apply(double term1, double term2) {
 			return term1 - term2;

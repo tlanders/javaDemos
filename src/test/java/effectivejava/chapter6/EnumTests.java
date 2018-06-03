@@ -24,4 +24,14 @@ public class EnumTests {
 				+ ", weight(lbs)=" + (w * .22));
 		}
 	}
+	
+	@Test
+	public void testOperation() {
+		Operation add = Operation.ADD;
+		
+		assertEquals(5, add.apply(2, 3), .0001);
+		assertEquals(-1, Operation.SUBTRACT.apply(2, 3), .0001);
+		assertEquals(6, Operation.MULTIPLY.apply(2, 3), .0001);
+		assertEquals(.6666666, Operation.DIVIDE.apply(2, 3), .0001);
+	}
 }
