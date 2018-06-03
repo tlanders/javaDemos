@@ -50,4 +50,20 @@ public class EnumTests {
 			assertFalse(Operation.fromSymbol(op.name()).isPresent());
 		}
 	}
+
+	@Test
+	public void testBasicOperation() {
+		assertEquals(5, BasicOperation.ADD.apply(2, 3), .0001);
+		assertEquals(-1, BasicOperation.SUBTRACT.apply(2, 3), .0001);
+		
+		double a = 1.23;
+		double b = -2.34;
+		for(BasicOperation op : BasicOperation.values()) {
+			System.out.printf("%f %s %f = %f\n", a, op, b, op.apply(a, b));
+		}
+		
+		for(BasicOperation op : BasicOperation.values()) {
+			assertEquals(op, BasicOperation.valueOf(op.name()));
+		}
+	}
 }
