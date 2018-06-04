@@ -20,4 +20,7 @@ public class SimpleTestSample {
 	public static void m7() { throw new RuntimeException("thrown by m7"); }	// should fail
 	
 	public static void m8() { } // not a test
+	
+	@SimpleTest
+	public static void m9(int a, double b) { }	// should fail because has parameters
 }
