@@ -16,11 +16,17 @@ public class SimpleTestSample {
 	
 	public static void m6() { }	// not a test
 	
-	@SimpleTest
-	public static void m7() { throw new RuntimeException("thrown by m7"); }	// should fail
+	@SimpleExceptionTest(RuntimeException.class)
+	public static void m7() { throw new RuntimeException("thrown by m7"); }	// should pass
 	
 	public static void m8() { } // not a test
 	
 	@SimpleTest
 	public static void m9(int a, double b) { }	// should fail because has parameters
+	
+	@SimpleExceptionTest(IllegalStateException.class)
+	public static void m10() { throw new RuntimeException("thrown by m10"); }	// should fail
+	
+	@SimpleExceptionTest(ArithmeticException.class)
+	public static void m11() { int i = 0; i = i / i; }	// should pass
 }
