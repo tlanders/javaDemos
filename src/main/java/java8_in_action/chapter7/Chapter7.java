@@ -9,7 +9,7 @@ import java.util.stream.StreamSupport;
 
 public class Chapter7 {
     public static void main(String ... args) {
-        System.out.println("chapter 7 main starting...");
+        ystem.out.println("chapter 7 main starting...");
         
         final String SENTENCE = " Nel   mezzo del cammin  di nostra  vita mi  ritrovai in una  selva oscura che la  dritta via era   smarrita "
         		+ " Nel   mezzo del cammin  di nostra  vita mi  ritrovai in una  selva oscura che la  dritta via era   smarrita "
