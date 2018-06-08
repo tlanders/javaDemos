@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public class Chapter7 {
-	
     public static void main(String ... args) {
         System.out.println("chapter 7 main starting...");
         
