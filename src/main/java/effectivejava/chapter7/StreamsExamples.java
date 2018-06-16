@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -20,8 +21,9 @@ public class StreamsExamples {
 		Map<String, Long> freqMap = Files.lines(Paths.get(args[0])).collect(Collectors.groupingBy(String::toLowerCase, Collectors.counting()));
 		System.out.println(freqMap);
 		
+		// sort by highest frequency and then by alpha order of the keys
 		List<String> topKeys = freqMap.keySet().stream()
-				.sorted(comparing(freqMap::get).reversed())
+				.sorted(comparing((Function<String,Long>) freqMap::get).reversed().thenComparing(Comparator.naturalOrder()))
 				.limit(10)
 				.collect(toList());
 		
