@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class ParallelTests {
 	/**
-	 * pi(n) function returns all primes that are less than n.
+	 * pi(n) function returns all primes that are <= n.
 	 * @param n
 	 * @return
 	 */
@@ -22,6 +22,11 @@ public class ParallelTests {
 				.count();
 	}
 
+	/**
+	 * pip(n) function returns all primes that are <= n using a parallel stream.
+	 * @param n
+	 * @return
+	 */
 	public long pip(long n) {
 		return LongStream.rangeClosed(2, n)
 				.parallel()
