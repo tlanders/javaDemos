@@ -28,5 +28,18 @@ public class StreamsExamples {
 				.collect(toList());
 		
 		topKeys.forEach(System.out::println);
+		System.out.println();
+		
+		// sort by highest frequency and then by alpha order of the keys
+		List<String> topKeys2 = freqMap.keySet().stream()
+				.sorted(comparing(keyExtractor(freqMap)).reversed().thenComparing(Comparator.naturalOrder()))
+				.limit(10)
+				.collect(toList());
+		
+		topKeys2.forEach(System.out::println);
+	}
+	
+	public static <T,U> Function<T,U> keyExtractor(Map<T,U> map) {
+		return map::get;
 	}
 }

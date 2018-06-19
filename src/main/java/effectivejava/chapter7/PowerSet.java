@@ -21,6 +21,11 @@ public class PowerSet {
 				return o instanceof Set && src.containsAll((Set)o);
 			}
 			
+			/**
+			 * Returns power set item corresponding to the index.
+			 * Index is used as a bit vector to decide which items are in the 
+			 * returned set.
+			 */
 			@Override 
 			public Set<E> get(int index) {            
 				Set<E> result = new HashSet<>();
