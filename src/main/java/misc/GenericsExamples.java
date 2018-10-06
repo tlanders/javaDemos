@@ -3,6 +3,8 @@ package misc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Based on examples in https://nofluffjuststuff.com/magazine/2016/09/time_to_really_learn_generics_a_java_8_perspective.
@@ -27,8 +29,27 @@ public class GenericsExamples {
 		printList(nums);
 		System.out.println("nums sum=" + sumList(nums));
 
-		System.out.println("main done.");
+		List<Number> doubled = doubleList(ints);
+        printList(doubled);
+        System.out.println("doubled sum=" + sumList(doubled));
+
+        List<Number> upTo = new ArrayList<>();
+        numsUpTo(5, upTo);
+        printList(upTo);
+
+        System.out.println("main done.");
 	}
+
+	protected static void numsUpTo(int num, List<? super Number> destList) {
+        IntStream.rangeClosed(1, num).forEach(destList::add);
+    }
+
+    /**
+     * Doubles each element in a List
+     */
+    protected static List<Number> doubleList(List<? extends Number> theList) {
+        return theList.stream().mapToDouble(Number::doubleValue).map(d -> d * 2).boxed().collect(Collectors.toList());
+    }
 
     /**
      * Uses wildcard to allow any List.
