@@ -1,19 +1,25 @@
 package algorithms.sort;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 public class SortTests {
-    public static void main(String [] args) {
-        Integer [] nums = {1, 6, 3, 8, 12, 5, 34, 2, 6, 23, 7, 2, 99, 6};
+    @Test
+    public void insertionSortTest() {
+        Integer [] nums = {6, 8, 3, 12, 5, 34, 2, 6, 1, 23, 7, 2, 99, 6};
 
         printArray(nums, "unsorted");
 
         (new InsertionSort<Integer>()).sort(nums);
 
         printArray(nums, "after insertion sort");
+        Assert.assertTrue(InsertionSort.isSorted(nums));
 
         String[] sArray = {"abc", "def", "zxy", "bed", "yur", "rxy", "fre"};
 
         (new InsertionSort<String>()).sort(sArray);
         printArray(sArray, "after insertion sort");
+        Assert.assertTrue(InsertionSort.isSorted(sArray));
     }
 
     protected static void printArray(Object[] items) {

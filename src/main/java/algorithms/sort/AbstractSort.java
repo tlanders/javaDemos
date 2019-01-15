@@ -8,7 +8,7 @@ public abstract class AbstractSort<T> implements Sort<T> {
         items[b] = temp;
     }
 
-    protected boolean isSorted(Comparable<T>[] items) {
+    protected static boolean isSorted(Comparable[] items) {
         for (int i = 0; i < items.length - 1; i++) {
             if(!lessOrEqual(items[i], items[i+1])) {
                 System.out.println("isSorted failed at i=" + i + ", a=" + items[i] + ", b=" + items[i+1]);
@@ -18,11 +18,11 @@ public abstract class AbstractSort<T> implements Sort<T> {
         return true;
     }
 
-    protected boolean less(Comparable<T> a, Comparable<T> b) {
-        return a.compareTo((T) b) < 0;
+    protected static boolean less(Comparable a, Comparable b) {
+        return a.compareTo(b) < 0;
     }
 
-    protected boolean lessOrEqual(Comparable<T> a, Comparable<T> b) {
-        return a.compareTo((T) b) <= 0;
+    protected static boolean lessOrEqual(Comparable a, Comparable b) {
+        return a.compareTo(b) <= 0;
     }
 }
