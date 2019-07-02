@@ -20,7 +20,6 @@ public class RectangleIntoSquaresTest {
         assertSqInRectangleResults(new int[]{2,1,1}, sqInRect(2, 3));
         assertSqInRectangleResults(new int[]{3,2,1,1}, sqInRect(3, 5));
         assertSqInRectangleResults(new int[]{3,2,1,1}, sqInRect(5, 3));
-//        assertSqInRectangleResults(new int[]{3,2,1,1}, sqInRect(1, 10000));
     }
 
     private void assertSqInRectangleResults(int[] expected, List<Integer> actual) {
