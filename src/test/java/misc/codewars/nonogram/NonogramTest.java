@@ -30,8 +30,8 @@ public class NonogramTest {
             List<NonogramRow> rows = new ArrayList<>();
             for(int i = 0; i < nonogramSize - runLengths[0] + 1; i++) {
                 boolean [] row = new boolean[nonogramSize];
-                for(int rowIndex = i; rowIndex < runLengths[0]; rowIndex++) {
-                    row[i + rowIndex] = true;
+                for(int rowIndex = i; rowIndex < runLengths[0] + i; rowIndex++) {
+                    row[rowIndex] = true;
                 }
                 rows.add(new NonogramRow(row));
             }
