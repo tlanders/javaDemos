@@ -2,37 +2,43 @@ package misc.codewars.nonogram;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertTrue;
 
 public class NonogramTest {
     @Test
     public void testFindPossibleRows() {
-        assertTrue(compareArrays(findPossibleRows(0, null), null));
-        assertTrue(compareArrays(findPossibleRows(1, null), null));
-        assertTrue(compareArrays(findPossibleRows(1, 1), new boolean[] {true}));
-        assertTrue(compareArrays(findPossibleRows(1, 0), new boolean[] {false}));
+        assertTrue(compareListsOfArrays(findPossibleRows(0, null), null));
+        assertTrue(compareListsOfArrays(findPossibleRows(1, null), null));
+        assertTrue(compareListsOfArrays(findPossibleRows(1, 1), new Boolean[] {true}));
+        assertTrue(compareListsOfArrays(findPossibleRows(1, 0), new Boolean[] {false}));
+        //assertTrue(compareListsOfArrays(findPossibleRows(2, 1), new boolean[] {true, false}, new boolean[] {false, true}));
     }
 
-    public boolean [] findPossibleRows(int nonogramSize, int... rowSpec) {
+    public List<Boolean[]> findPossibleRows(int nonogramSize, int... rowSpec) {
         if(rowSpec == null || rowSpec.length <= 0) {
             return null;
         } else {
-            boolean [] row = new boolean[nonogramSize];
+            List<Boolean[]> rows = new ArrayList<>();
+            Boolean [] row = new Boolean[nonogramSize];
             for(int i = 0; i < nonogramSize; i++) {
                 row[i] = rowSpec[0] > 0;
             }
-            return row;
+            rows.add(row);
+            return rows;
         }
     }
 
-    public boolean compareArrays(boolean [] arr1, boolean [] arr2) {
-        if(arr1 == null && arr2 == null) {
+    public boolean compareListsOfArrays(List<Boolean[]> listOfArrays1, Boolean[]... arr2) {
+        if(listOfArrays1 == null && arr2 == null) {
             return true;
         }
 
-        if(arr1 != null && arr2 != null && arr1.length == arr2.length) {
-            for(int i = 0; i < arr1.length; i++) {
-                if(arr1[i] != arr2[i]) {
+        if(listOfArrays1 != null && arr2 != null && listOfArrays1.size() == arr2.length) {
+            for(int arrayIndexToTest = 0; arrayIndexToTest < listOfArrays1.size(); arrayIndexToTest++) {
+                if(!compareArray(arr2[arrayIndexToTest], listOfArrays1.get(arrayIndexToTest))) {
                     return false;
                 }
             }
@@ -41,5 +47,14 @@ public class NonogramTest {
         } else {
             return false;
         }
+    }
+
+    private boolean compareArray(Boolean[] arr1, Boolean[] arr2) {
+        for(int i = 0; i < arr1.length; i++) {
+            if (arr1[i] != arr2[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
