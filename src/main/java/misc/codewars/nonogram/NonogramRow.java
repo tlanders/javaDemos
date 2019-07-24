@@ -18,13 +18,24 @@ public class NonogramRow {
         return Arrays.hashCode(row);
     }
 
+    public NonogramRow(int rowWidth) {
+        row = new boolean[rowWidth];
+    }
+
     public NonogramRow(boolean... rowValues) {
-        row = new boolean[rowValues.length];
+        this(rowValues.length);
 
         for(int i = 0; i < rowValues.length; i++) {
             row[i] = rowValues[i];
         }
 
+//        System.out.println(this);
+    }
 
+    @Override
+    public String toString() {
+        return "NonogramRow{" +
+                Arrays.toString(row) +
+                '}';
     }
 }
