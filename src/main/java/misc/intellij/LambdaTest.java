@@ -1,4 +1,4 @@
-package misc.misc.intellij;
+package misc.intellij;
 
 import java.util.List;
 import java.util.stream.Stream;
