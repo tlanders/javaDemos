@@ -9,14 +9,14 @@ import static org.junit.Assert.assertTrue;
 public class NonogramTest {
     @Test
     public void testFindPossibleRows() {
-        assertTrue(compareListsOfArrays(findPossibleRows(0, null), null));
-        assertTrue(compareListsOfArrays(findPossibleRows(1, null), null));
-        assertTrue(compareListsOfArrays(findPossibleRows(1, 1), new NonogramRow(true)));
-        assertTrue(compareListsOfArrays(findPossibleRows(1, 0), new NonogramRow(false)));
-        assertTrue(compareListsOfArrays(findPossibleRows(2, 2), new NonogramRow(true, true)));
-        assertTrue(compareListsOfArrays(findPossibleRows(2, 0), new NonogramRow(false, false)));
-//        assertTrue(compareListsOfArrays(findPossibleRows(2, 1),
-//                new Boolean[] {true, false}, new Boolean[] {false, true}));
+        assertTrue(compareNonogramRows(findPossibleRows(0, null), null));
+        assertTrue(compareNonogramRows(findPossibleRows(1, null), null));
+        assertTrue(compareNonogramRows(findPossibleRows(1, 1), new NonogramRow(true)));
+        assertTrue(compareNonogramRows(findPossibleRows(1, 0), new NonogramRow(false)));
+        assertTrue(compareNonogramRows(findPossibleRows(2, 2), new NonogramRow(true, true)));
+        assertTrue(compareNonogramRows(findPossibleRows(2, 0), new NonogramRow(false, false)));
+//        assertTrue(compareNonogramRows(findPossibleRows(2, 1),
+//                new NonogramRow(true, false), new NonogramRow(false, true)));
     }
 
     public List<NonogramRow> findPossibleRows(int nonogramSize, int... rowSpec) {
@@ -33,14 +33,14 @@ public class NonogramTest {
         }
     }
 
-    public boolean compareListsOfArrays(List<NonogramRow> listOfArrays1, NonogramRow... arr2) {
-        if(listOfArrays1 == null && arr2 == null) {
+    public boolean compareNonogramRows(List<NonogramRow> rowList, NonogramRow... rowArray) {
+        if(rowList == null && rowArray == null) {
             return true;
         }
 
-        if(listOfArrays1 != null && arr2 != null && listOfArrays1.size() == arr2.length) {
-            for(int arrayIndexToTest = 0; arrayIndexToTest < listOfArrays1.size(); arrayIndexToTest++) {
-                if(!arr2[arrayIndexToTest].equals(listOfArrays1.get(arrayIndexToTest))) {
+        if(rowList != null && rowArray != null && rowList.size() == rowArray.length) {
+            for(int arrayIndexToTest = 0; arrayIndexToTest < rowList.size(); arrayIndexToTest++) {
+                if(!rowArray[arrayIndexToTest].equals(rowList.get(arrayIndexToTest))) {
                     return false;
                 }
             }
