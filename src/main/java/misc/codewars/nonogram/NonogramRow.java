@@ -18,11 +18,19 @@ public class NonogramRow {
         return Arrays.hashCode(row);
     }
 
-    public NonogramRow(int rowWidth) {
+    public static NonogramRow makeRow(boolean... rowValues) {
+        return new NonogramRow(rowValues);
+    }
+
+    public static NonogramRow makeRow(int width) {
+        return new NonogramRow(width);
+    }
+
+    private NonogramRow(int rowWidth) {
         row = new boolean[rowWidth];
     }
 
-    public NonogramRow(boolean... rowValues) {
+    private NonogramRow(boolean... rowValues) {
         this(rowValues.length);
 
         for(int i = 0; i < rowValues.length; i++) {
