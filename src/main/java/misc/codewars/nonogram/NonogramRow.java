@@ -12,6 +12,7 @@ public class NonogramRow {
 
         NonogramRow row = new NonogramRow(this.size() + rowToAppend.size());
         row.setRow(0, this.row);
+        row.setRow(this.row.length, rowToAppend.row);
         return row;
     }
 
