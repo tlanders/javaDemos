@@ -17,7 +17,7 @@ public class NonogramRow {
     }
 
     private void setRow(int startIndex, boolean [] rowValues) {
-        for(int i = startIndex; i < rowValues.length; i++) {
+        for(int i = startIndex; i < rowValues.length + startIndex; i++) {
             row[i] = rowValues[i - startIndex];
         }
     }

@@ -35,6 +35,7 @@ public class NonogramTest {
         assertTrue(compareRows(makeRow(false).mergeRow(makeRow(false)), makeRow(false, false)));
         assertTrue(compareRows(makeRow(true).mergeRow(makeRow(false)), makeRow(true, false)));
         assertTrue(compareRows(makeRow(false).mergeRow(makeRow(true)), makeRow(false, true)));
+        assertTrue(compareRows(makeRow(true).mergeRow(makeRow(true)), makeRow(true, true)));
     }
 
     public boolean compareRows(NonogramRow row1, NonogramRow row2) {
