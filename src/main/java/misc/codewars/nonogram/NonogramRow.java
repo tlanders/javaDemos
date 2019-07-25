@@ -1,9 +1,29 @@
 package misc.codewars.nonogram;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class NonogramRow {
     protected boolean [] row;
+
+    public static List<NonogramRow> findRows(int nonogramSize, int... runLengths) {
+        if(runLengths == null || runLengths.length <= 0) {
+            return null;
+        } else if(runLengths[0] == 0) {
+            List<NonogramRow> rows = new ArrayList<>();
+            rows.add(makeRow(nonogramSize));
+            return rows;
+        } else {
+            List<NonogramRow> rows = new ArrayList<>();
+            for(int i = 0; i < nonogramSize - runLengths[0] + 1; i++) {
+                boolean [] row = new boolean[nonogramSize];
+                for(int rowIndex = i; rowIndex < runLengths[0] + i; rowIndex++) {
+                    row[rowIndex] = true;
+                }
+                rows.add(makeRow(row));
+            }
+            return rows;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
