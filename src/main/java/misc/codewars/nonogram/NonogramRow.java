@@ -6,7 +6,16 @@ public class NonogramRow {
     protected boolean [] row;
 
     public NonogramRow mergeRow(NonogramRow rowToAppend) {
-        return this;
+        if(rowToAppend == null || rowToAppend.size() <= 0) {
+            return new NonogramRow(this.row);
+        }
+
+        NonogramRow row = new NonogramRow(this.size() + rowToAppend.size());
+        return row;
+    }
+
+    public int size() {
+        return row.length;
     }
 
     public static List<NonogramRow> findRows(int nonogramSize, int... runLengths) {
