@@ -25,6 +25,16 @@ public class NonogramTest {
                 makeRow(true, true, false), makeRow(false, true, true)));
         assertTrue(compareRows(findRows(3, 1),
                 makeRow(true, false, false), makeRow(false, true, false), makeRow(false, false, true)));
+        //assertTrue(compareRows(findRows(3, 1, 1), makeRow(true, false, true)));
+    }
+
+    @Test
+    public void testMergeRows() {
+        assertTrue(compareRows(makeRow(false).mergeRow(null), makeRow(false)));
+    }
+
+    public boolean compareRows(NonogramRow row1, NonogramRow row2) {
+        return row1.equals(row2);
     }
 
     public boolean compareRows(List<NonogramRow> rowList, NonogramRow... rowArray) {
@@ -36,7 +46,7 @@ public class NonogramTest {
 
         if(rowList != null && rowArray != null && rowList.size() == rowArray.length) {
             for(int arrayIndexToTest = 0; arrayIndexToTest < rowList.size(); arrayIndexToTest++) {
-                if(!rowArray[arrayIndexToTest].equals(rowList.get(arrayIndexToTest))) {
+                if(!compareRows(rowArray[arrayIndexToTest], rowList.get(arrayIndexToTest))) {
                     return false;
                 }
             }

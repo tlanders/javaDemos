@@ -5,6 +5,10 @@ import java.util.*;
 public class NonogramRow {
     protected boolean [] row;
 
+    public NonogramRow mergeRow(NonogramRow rowToAppend) {
+        return this;
+    }
+
     public static List<NonogramRow> findRows(int nonogramSize, int... runLengths) {
         if(runLengths == null || runLengths.length <= 0) {
             return null;
@@ -19,6 +23,8 @@ public class NonogramRow {
                 for(int rowIndex = i; rowIndex < runLengths[0] + i; rowIndex++) {
                     row[rowIndex] = true;
                 }
+
+
                 rows.add(makeRow(row));
             }
             return rows;
