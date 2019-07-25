@@ -30,12 +30,19 @@ public class NonogramTest {
 
     @Test
     public void testMergeRows() {
-        assertTrue(compareRows(makeRow(false).mergeRow(null), makeRow(false)));
-        assertTrue(compareRows(makeRow(true).mergeRow(null), makeRow(true)));
-        assertTrue(compareRows(makeRow(false).mergeRow(makeRow(false)), makeRow(false, false)));
-        assertTrue(compareRows(makeRow(true).mergeRow(makeRow(false)), makeRow(true, false)));
-        assertTrue(compareRows(makeRow(false).mergeRow(makeRow(true)), makeRow(false, true)));
-        assertTrue(compareRows(makeRow(true).mergeRow(makeRow(true)), makeRow(true, true)));
+        assertTrue(compareRows(makeRow(false).mergeRow((NonogramRow) null), makeRow(false)));
+        assertTrue(compareRows(makeRow(true).mergeRow((NonogramRow) null), makeRow(true)));
+        assertTrue(compareRows(makeRow(false).mergeRow(false), makeRow(false, false)));
+        assertTrue(compareRows(makeRow(true).mergeRow(false), makeRow(true, false)));
+        assertTrue(compareRows(makeRow(false).mergeRow(true), makeRow(false, true)));
+        assertTrue(compareRows(makeRow(true).mergeRow(true), makeRow(true, true)));
+        assertTrue(compareRows(makeRow(false, false).mergeRow(false), makeRow(false, false, false)));
+        assertTrue(compareRows(makeRow(true, false).mergeRow(true), makeRow(true, false, true)));
+        assertTrue(compareRows(makeRow(true).mergeRow(false, true), makeRow(true, false, true)));
+        assertTrue(compareRows(makeRow(true, false).mergeRow(false, true), makeRow(true, false, false, true)));
+        assertTrue(compareRows(makeRow(true, true).mergeRow(true, true), makeRow(true, true, true, true)));
+        assertTrue(compareRows(makeRow(true, true).mergeRow(false, false).mergeRow(true, false),
+                makeRow(true, true, false, false, true, false)));
     }
 
     public boolean compareRows(NonogramRow row1, NonogramRow row2) {

@@ -16,6 +16,10 @@ public class NonogramRow {
         return row;
     }
 
+    public NonogramRow mergeRow(boolean... rowValues) {
+        return mergeRow(new NonogramRow(rowValues));
+    }
+
     private void setRow(int startIndex, boolean [] rowValues) {
         for(int i = startIndex; i < rowValues.length + startIndex; i++) {
             row[i] = rowValues[i - startIndex];
