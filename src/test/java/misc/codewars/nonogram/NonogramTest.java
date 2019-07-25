@@ -11,8 +11,8 @@ import static org.junit.Assert.assertTrue;
 public class NonogramTest {
     @Test
     public void testFindPossibleRows() {
-        assertTrue(compareRows(findRows(0, null), null));
-        assertTrue(compareRows(findRows(1, null), null));
+        assertRows(findRows(0, null), null);
+        assertRows(findRows(1, null), null);
         assertTrue(compareRows(findRows(1, 1), makeRow(true)));
         assertTrue(compareRows(findRows(1, 0), makeRow(false)));
         assertTrue(compareRows(findRows(2, 0), makeRow(false, false)));
@@ -23,9 +23,14 @@ public class NonogramTest {
         assertTrue(compareRows(findRows(3, 3), makeRow(true, true, true)));
         assertTrue(compareRows(findRows(3, 2),
                 makeRow(true, true, false), makeRow(false, true, true)));
-        assertTrue(compareRows(findRows(3, 1),
-                makeRow(true, false, false), makeRow(false, true, false), makeRow(false, false, true)));
-        //assertTrue(compareRows(findRows(3, 1, 1), makeRow(true, false, true)));
+        List<NonogramRow> possibleRows = findRows(3, 1);
+        NonogramRow [] expectedRows = new NonogramRow[] {makeRow(true, false, false), makeRow(false, true, false), makeRow(false, false, true)};
+        assertRows(possibleRows, expectedRows);
+//        assertTrue(compareRows(findRows(3, 1, 1), makeRow(true, false, true)));
+    }
+
+    private void assertRows(List<NonogramRow> possibleRows, NonogramRow[] expectedRows) {
+        assertTrue(compareRows(possibleRows, expectedRows));
     }
 
     @Test
