@@ -11,7 +11,14 @@ public class NonogramRow {
         }
 
         NonogramRow row = new NonogramRow(this.size() + rowToAppend.size());
+        row.setRow(0, this.row);
         return row;
+    }
+
+    private void setRow(int startIndex, boolean [] rowValues) {
+        for(int i = startIndex; i < rowValues.length; i++) {
+            row[i] = rowValues[i - startIndex];
+        }
     }
 
     public int size() {
