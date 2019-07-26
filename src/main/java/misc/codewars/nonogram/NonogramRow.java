@@ -6,7 +6,7 @@ public class NonogramRow {
     protected boolean [] row;
 
     public NonogramRow mergeRow(NonogramRow rowToAppend) {
-        if(rowToAppend == null || rowToAppend.size() <= 0) {
+        if(isEmptyRow(rowToAppend)) {
             return new NonogramRow(this.row);
         }
 
@@ -14,6 +14,10 @@ public class NonogramRow {
         row.setRow(0, this.row);
         row.setRow(this.row.length, rowToAppend.row);
         return row;
+    }
+
+    private boolean isEmptyRow(NonogramRow rowToAppend) {
+        return rowToAppend == null || rowToAppend.size() <= 0;
     }
 
     public NonogramRow mergeRow(boolean... rowValues) {
@@ -94,8 +98,6 @@ public class NonogramRow {
         for(int i = 0; i < rowValues.length; i++) {
             row[i] = rowValues[i];
         }
-
-//        System.out.println(this);
     }
 
     @Override
