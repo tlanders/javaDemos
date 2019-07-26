@@ -39,14 +39,25 @@ public class NonogramRow {
             return rows;
         } else {
             List<NonogramRow> rows = new ArrayList<>();
-            for(int i = 0; i < nonogramSize - runLengths[0] + 1; i++) {
-                boolean [] row = new boolean[nonogramSize];
+            int occupiedSpots = 0;
+            if(runLengths.length > 1) {
+                occupiedSpots = runLengths[1] + 1;
+            }
+            for(int i = 0; i < nonogramSize - runLengths[0] + 1 - occupiedSpots; i++) {
+                boolean [] row = new boolean[nonogramSize - occupiedSpots];
                 for(int rowIndex = i; rowIndex < runLengths[0] + i; rowIndex++) {
                     row[rowIndex] = true;
                 }
 
-
-                rows.add(makeRow(row));
+                if(runLengths.length > 1) {
+                    List<NonogramRow> suffixRows = new ArrayList<>();
+                    suffixRows.addAll(findRows(occupiedSpots - 1, runLengths[1]));
+                    for (NonogramRow suffixRow : suffixRows) {
+                        rows.add(makeRow(row).mergeRow(false).mergeRow(suffixRow));
+                    }
+                } else {
+                    rows.add(makeRow(row));
+                }
             }
             return rows;
         }
