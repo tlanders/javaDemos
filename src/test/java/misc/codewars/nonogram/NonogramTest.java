@@ -46,8 +46,7 @@ public class NonogramTest {
         assertRow(makeRow(true).mergeRow(false, true), makeRow(true, false, true));
         assertRow(makeRow(true, false).mergeRow(false, true), makeRow(true, false, false, true));
         assertRow(makeRow(true, true).mergeRow(true, true), makeRow(true, true, true, true));
-        assertRow(makeRow(true, true).mergeRow(false, false).mergeRow(true, false),
-                makeRow(true, true, false, false, true, false));
+        assertRow(makeRow(true, true).mergeRow(false, false).mergeRow(true, false), makeRow(true, true, false, false, true, false));
     }
 
     private boolean compareRow(NonogramRow row1, NonogramRow row2) {
