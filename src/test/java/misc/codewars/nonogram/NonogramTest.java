@@ -13,49 +13,49 @@ public class NonogramTest {
     public void testFindPossibleRows() {
         assertRows(findRows(0, null), null);
         assertRows(findRows(1, null), null);
-        assertTrue(compareRows(findRows(1, 1), makeRow(true)));
-        assertTrue(compareRows(findRows(1, 0), makeRow(false)));
-        assertTrue(compareRows(findRows(2, 0), makeRow(false, false)));
-        assertTrue(compareRows(findRows(2, 1),
-                makeRow(true, false), makeRow(false, true)));
-        assertTrue(compareRows(findRows(2, 2), makeRow(true, true)));
-        assertTrue(compareRows(findRows(3, 0), makeRow(false, false, false)));
-        assertTrue(compareRows(findRows(3, 3), makeRow(true, true, true)));
-        assertTrue(compareRows(findRows(3, 2),
-                makeRow(true, true, false), makeRow(false, true, true)));
-        List<NonogramRow> possibleRows = findRows(3, 1);
-        NonogramRow [] expectedRows = new NonogramRow[] {makeRow(true, false, false), makeRow(false, true, false), makeRow(false, false, true)};
-        assertRows(possibleRows, expectedRows);
-//        assertTrue(compareRows(findRows(3, 1, 1), makeRow(true, false, true)));
+        assertRows(findRows(1, 1), makeRow(true));
+        assertRows(findRows(1, 0), makeRow(false));
+        assertRows(findRows(2, 0), makeRow(false, false));
+        assertRows(findRows(2, 1), makeRow(true, false), makeRow(false, true));
+        assertRows(findRows(2, 2), makeRow(true, true));
+        assertRows(findRows(3, 0), makeRow(false, false, false));
+        assertRows(findRows(3, 3), makeRow(true, true, true));
+        assertRows(findRows(3, 2), makeRow(true, true, false), makeRow(false, true, true));
+        assertRows(findRows(3, 1), makeRow(true, false, false), makeRow(false, true, false), makeRow(false, false, true));
+//        assertRows(findRows(3, 1, 1), makeRow(true, false, true)));
     }
 
-    private void assertRows(List<NonogramRow> possibleRows, NonogramRow[] expectedRows) {
+    private void assertRows(List<NonogramRow> possibleRows, NonogramRow... expectedRows) {
         assertTrue(compareRows(possibleRows, expectedRows));
     }
 
-    @Test
-    public void testMergeRows() {
-        assertTrue(compareRows(makeRow(false).mergeRow((NonogramRow) null), makeRow(false)));
-        assertTrue(compareRows(makeRow(true).mergeRow((NonogramRow) null), makeRow(true)));
-        assertTrue(compareRows(makeRow(false).mergeRow(false), makeRow(false, false)));
-        assertTrue(compareRows(makeRow(true).mergeRow(false), makeRow(true, false)));
-        assertTrue(compareRows(makeRow(false).mergeRow(true), makeRow(false, true)));
-        assertTrue(compareRows(makeRow(true).mergeRow(true), makeRow(true, true)));
-        assertTrue(compareRows(makeRow(false, false).mergeRow(false), makeRow(false, false, false)));
-        assertTrue(compareRows(makeRow(true, false).mergeRow(true), makeRow(true, false, true)));
-        assertTrue(compareRows(makeRow(true).mergeRow(false, true), makeRow(true, false, true)));
-        assertTrue(compareRows(makeRow(true, false).mergeRow(false, true), makeRow(true, false, false, true)));
-        assertTrue(compareRows(makeRow(true, true).mergeRow(true, true), makeRow(true, true, true, true)));
-        assertTrue(compareRows(makeRow(true, true).mergeRow(false, false).mergeRow(true, false),
-                makeRow(true, true, false, false, true, false)));
+    private void assertRow(NonogramRow row, NonogramRow expectedRow) {
+        assertTrue(compareRow(row, expectedRow));
     }
 
-    public boolean compareRows(NonogramRow row1, NonogramRow row2) {
+    @Test
+    public void testMergeRow() {
+        assertRow(makeRow(false).mergeRow((NonogramRow) null), makeRow(false));
+        assertRow(makeRow(true).mergeRow((NonogramRow) null), makeRow(true));
+        assertRow(makeRow(false).mergeRow(false), makeRow(false, false));
+        assertRow(makeRow(true).mergeRow(false), makeRow(true, false));
+        assertRow(makeRow(false).mergeRow(true), makeRow(false, true));
+        assertRow(makeRow(true).mergeRow(true), makeRow(true, true));
+        assertRow(makeRow(false, false).mergeRow(false), makeRow(false, false, false));
+        assertRow(makeRow(true, false).mergeRow(true), makeRow(true, false, true));
+        assertRow(makeRow(true).mergeRow(false, true), makeRow(true, false, true));
+        assertRow(makeRow(true, false).mergeRow(false, true), makeRow(true, false, false, true));
+        assertRow(makeRow(true, true).mergeRow(true, true), makeRow(true, true, true, true));
+        assertRow(makeRow(true, true).mergeRow(false, false).mergeRow(true, false),
+                makeRow(true, true, false, false, true, false));
+    }
+
+    private boolean compareRow(NonogramRow row1, NonogramRow row2) {
         System.out.println("comparing " + row1 + " to " + row2);
         return row1.equals(row2);
     }
 
-    public boolean compareRows(List<NonogramRow> rowList, NonogramRow... rowArray) {
+    private boolean compareRows(List<NonogramRow> rowList, NonogramRow... rowArray) {
         System.out.println("comparing " + rowList + " to " + Arrays.toString(rowArray));
 
         if(rowList == null && rowArray == null) {
@@ -64,7 +64,7 @@ public class NonogramTest {
 
         if(rowList != null && rowArray != null && rowList.size() == rowArray.length) {
             for(int arrayIndexToTest = 0; arrayIndexToTest < rowList.size(); arrayIndexToTest++) {
-                if(!compareRows(rowArray[arrayIndexToTest], rowList.get(arrayIndexToTest))) {
+                if(!compareRow(rowArray[arrayIndexToTest], rowList.get(arrayIndexToTest))) {
                     return false;
                 }
             }
