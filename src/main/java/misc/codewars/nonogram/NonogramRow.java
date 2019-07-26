@@ -54,10 +54,15 @@ public class NonogramRow {
                 }
 
                 if(runLengths.length > 1) {
+                    NonogramRow prefixRow = makeRow(row);
                     List<NonogramRow> suffixRows = new ArrayList<>();
-                    suffixRows.addAll(findRows(occupiedSpots - 1, runLengths[1]));
+                    suffixRows.addAll(findRows(prefixRow.last() ? occupiedSpots - 1 : occupiedSpots, runLengths[1]));
                     for (NonogramRow suffixRow : suffixRows) {
-                        rows.add(makeRow(row).mergeRow(false).mergeRow(suffixRow));
+                        if(prefixRow.last()) {
+                            rows.add(prefixRow.mergeRow(false).mergeRow(suffixRow));
+                        } else {
+                            rows.add(prefixRow.mergeRow(suffixRow));
+                        }
                     }
                 } else {
                     rows.add(makeRow(row));
@@ -65,6 +70,10 @@ public class NonogramRow {
             }
             return rows;
         }
+    }
+
+    private boolean last() {
+        return row[row.length - 1];
     }
 
     @Override
