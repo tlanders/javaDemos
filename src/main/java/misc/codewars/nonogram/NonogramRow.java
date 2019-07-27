@@ -47,22 +47,18 @@ public class NonogramRow {
             if(runLengths.length > 1) {
                 occupiedSpots = runLengths[1] + 1;
             }
-            for(int i = 0; i < nonogramSize - runLengths[0] + 1 - occupiedSpots; i++) {
+            for(int i = 0; i < nonogramSize - (runLengths[0] - 1) - occupiedSpots; i++) {
                 boolean [] row = new boolean[nonogramSize - occupiedSpots];
                 for(int rowIndex = i; rowIndex < runLengths[0] + i; rowIndex++) {
                     row[rowIndex] = true;
                 }
 
                 if(runLengths.length > 1) {
-                    NonogramRow prefixRow = makeRow(row);
+                    NonogramRow prefixRow = makeRow(row).trim(false);
                     List<NonogramRow> suffixRows = new ArrayList<>();
-                    suffixRows.addAll(findRows(prefixRow.last() ? occupiedSpots - 1 : occupiedSpots, runLengths[1]));
+                    suffixRows.addAll(findRows(nonogramSize - prefixRow.size() - 1, runLengths[1]));
                     for (NonogramRow suffixRow : suffixRows) {
-                        if(prefixRow.last()) {
-                            rows.add(prefixRow.mergeRow(false).mergeRow(suffixRow));
-                        } else {
-                            rows.add(prefixRow.mergeRow(suffixRow));
-                        }
+                        rows.add(prefixRow.mergeRow(false).mergeRow(suffixRow));
                     }
                 } else {
                     rows.add(makeRow(row));
@@ -72,8 +68,14 @@ public class NonogramRow {
         }
     }
 
-    private boolean last() {
-        return row[row.length - 1];
+    public NonogramRow trim(boolean valToTrim) {
+        for(int i = row.length - 1; i >= 0; i--) {
+            if(row[i] != valToTrim) {
+                return new NonogramRow(Arrays.copyOf(row, i + 1));
+            }
+        }
+
+        return new NonogramRow();
     }
 
     @Override

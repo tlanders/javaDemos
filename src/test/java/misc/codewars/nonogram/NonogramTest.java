@@ -6,6 +6,7 @@ import java.util.*;
 
 import static misc.codewars.nonogram.NonogramRow.findRows;
 import static misc.codewars.nonogram.NonogramRow.makeRow;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class NonogramTest {
@@ -29,6 +30,13 @@ public class NonogramTest {
                 makeRow(true, false, true, false),
                 makeRow(true, false, false, true),
                 makeRow(false, true, false, true));
+        assertRows(findRows(5, 1, 1),
+                makeRow(true, false, true, false, false),
+                makeRow(true, false, false, true, false),
+                makeRow(true, false, false, false, true),
+                makeRow(false, true, false, true, false),
+                makeRow(false, true, false, false, true),
+                makeRow(false, false, true, false, true));
     }
 
     private void assertRows(List<NonogramRow> possibleRows, NonogramRow... expectedRows) {
@@ -37,6 +45,23 @@ public class NonogramTest {
 
     private void assertRow(NonogramRow row, NonogramRow expectedRow) {
         assertTrue(compareRow(row, expectedRow));
+    }
+
+    @Test
+    public void testTrimRow() {
+        assertEquals(makeRow(false).trim(false), makeRow());
+        assertEquals(makeRow(true).trim(false), makeRow(true));
+        assertEquals(makeRow(true,false).trim(false), makeRow(true));
+        assertEquals(makeRow(false,true,false).trim(false), makeRow(false,true));
+        assertEquals(makeRow(false,true,false,true).trim(false), makeRow(false,true,false,true));
+        assertEquals(makeRow(true,true).trim(false), makeRow(true,true));
+
+        assertEquals(makeRow(false).trim(true), makeRow(false));
+        assertEquals(makeRow(true).trim(true), makeRow());
+        assertEquals(makeRow(true,false).trim(true), makeRow(true, false));
+        assertEquals(makeRow(false,true,false).trim(true), makeRow(false,true,false));
+        assertEquals(makeRow(false,true,false,true).trim(true), makeRow(false,true,false));
+        assertEquals(makeRow(false,false).trim(true), makeRow(false,false));
     }
 
     @Test
