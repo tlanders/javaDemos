@@ -46,10 +46,10 @@ public class NonogramTest {
                 makeRow(true, true, false, false, true, true),
                 makeRow(false, true, true, false, true, true));
         assertRows(findRows(6, 1, 2),
+                makeRow(false, true, false, true, true, false),
                 makeRow(true, false, true, true, false, false),
                 makeRow(true, false, false, true, true, false),
                 makeRow(true, false, false, false, true, true),
-                makeRow(false, true, false, true, true, false),
                 makeRow(false, true, false, false, true, true),
                 makeRow(false, false, true, false, true, true));
     }
@@ -60,6 +60,15 @@ public class NonogramTest {
 
     private void assertRow(NonogramRow row, NonogramRow expectedRow) {
         assertTrue(compareRow(row, expectedRow));
+    }
+
+    @Test
+    public void testRowValueComparator() {
+        assertTrue(NonogramRow.VALUE_COMPARATOR.compare(makeRow(false), makeRow(true)) < 0);
+        assertTrue(NonogramRow.VALUE_COMPARATOR.compare(makeRow(true), makeRow(false)) > 0);
+        assertTrue(NonogramRow.VALUE_COMPARATOR.compare(makeRow(false), makeRow(false)) == 0);
+        assertTrue(NonogramRow.VALUE_COMPARATOR.compare(makeRow(false, false), makeRow(false, true)) < 0);
+        assertTrue(NonogramRow.VALUE_COMPARATOR.compare(makeRow(false, true, false), makeRow(false, true, true)) < 0);
     }
 
     @Test
@@ -109,6 +118,8 @@ public class NonogramTest {
         }
 
         if(rowList != null && rowArray != null && rowList.size() == rowArray.length) {
+            rowList.sort(NonogramRow.VALUE_COMPARATOR);
+            Arrays.sort(rowArray, NonogramRow.VALUE_COMPARATOR);
             for(int arrayIndexToTest = 0; arrayIndexToTest < rowList.size(); arrayIndexToTest++) {
                 if(!compareRow(rowArray[arrayIndexToTest], rowList.get(arrayIndexToTest))) {
                     return false;

@@ -3,6 +3,19 @@ package misc.codewars.nonogram;
 import java.util.*;
 
 public class NonogramRow {
+    public static final Comparator<? super NonogramRow> VALUE_COMPARATOR = Comparator.comparing(NonogramRow::getValue);
+
+    private Integer getValue() {
+        int val = 0;
+        for(int i = 0; i < row.length; i++) {
+            if(row[i]) {
+                val += Math.pow(2, i);
+            }
+        }
+        System.out.println(this + " - val=" + val);
+        return val;
+    }
+
     protected boolean [] row;
 
     public NonogramRow mergeRow(NonogramRow rowToAppend) {
