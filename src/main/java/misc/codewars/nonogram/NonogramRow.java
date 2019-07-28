@@ -57,26 +57,38 @@ public class NonogramRow {
         } else {
             List<NonogramRow> prefixRows = findPrefixRows(nonogramSize, getOccupiedSpots(runLengths), runLengths[0]);
 
-            if(runLengths.length > 1) {
-                List<NonogramRow> rows = new ArrayList<>();
-                for(NonogramRow prefixRow : prefixRows) {
-                    NonogramRow trimmedRow = prefixRow.trim(false);
-                    List<NonogramRow> suffixRows = new ArrayList<>();
-                    suffixRows.addAll(findRows(nonogramSize - trimmedRow.size() - 1, Arrays.copyOfRange(runLengths, 1, runLengths.length)));
-                    for (NonogramRow suffixRow : suffixRows) {
-                        rows.add(trimmedRow.mergeRow(false).mergeRow(suffixRow));
-                    }
-                }
-                return rows;
+            if(hasMultipleRunRows(runLengths)) {
+                return findMultipleRunRows(nonogramSize, prefixRows, runLengths);
             } else {
                 return prefixRows;
             }
         }
     }
 
+    private static List<NonogramRow> findMultipleRunRows(int nonogramSize, List<NonogramRow> prefixRows, int[] runLengths) {
+        List<NonogramRow> rows = new ArrayList<>();
+        for(NonogramRow prefixRow : prefixRows) {
+            addSuffixRows(nonogramSize, runLengths, rows, prefixRow);
+        }
+        return rows;
+    }
+
+    private static void addSuffixRows(int nonogramSize, int[] runLengths, List<NonogramRow> rows, NonogramRow prefixRow) {
+        NonogramRow trimmedRow = prefixRow.trim(false);
+        List<NonogramRow> suffixRows = new ArrayList<>();
+        suffixRows.addAll(findRows(nonogramSize - trimmedRow.size() - 1, Arrays.copyOfRange(runLengths, 1, runLengths.length)));
+        for (NonogramRow suffixRow : suffixRows) {
+            rows.add(trimmedRow.mergeRow(false).mergeRow(suffixRow));
+        }
+    }
+
+    private static boolean hasMultipleRunRows(int[] runLengths) {
+        return runLengths.length > 1;
+    }
+
     private static int getOccupiedSpots(int[] runLengths) {
         int spots = 0;
-        if(runLengths.length > 1) {
+        if(hasMultipleRunRows(runLengths)) {
             for (int i = 1; i < runLengths.length; i++) {
                 spots += runLengths[i] + 1;
             }

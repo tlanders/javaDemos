@@ -11,6 +11,11 @@ import static org.junit.Assert.assertTrue;
 
 public class NonogramTest {
     @Test
+    public void testEvaluateRow() {
+        assertTrue(true);
+    }
+
+    @Test
     public void testFindPossibleRows() {
         assertRows(findRows(0, null), null);
         assertRows(findRows(1, null), null);
@@ -113,7 +118,7 @@ public class NonogramTest {
     }
 
     private boolean compareRow(NonogramRow row1, NonogramRow row2) {
-        System.out.println("comparing " + row1 + " to " + row2);
+//        System.out.println("comparing " + row1 + " to " + row2);
         return row1.equals(row2);
     }
 
