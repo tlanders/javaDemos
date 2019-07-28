@@ -159,11 +159,28 @@ public class NonogramRow {
                 '}';
     }
 
+    private static int findIndexOf(boolean [] arr, boolean val, int startIndex) {
+        for(int i = 0; i < arr.length; i++) {
+            if(arr[i] == val) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public boolean matchesSpecification(int... runLengths) {
-        if(getValue() > 0) {
+        int trueIndex = findIndexOf(row, true, 0);
+
+        if(trueIndex == row.length - 1) {
+            return runLengths[0] == 1;
+        } else if(trueIndex >= 0) {
+            int falseIndex = findIndexOf(row, false, trueIndex + 1);
+            if(falseIndex < 0) {
+                return runLengths[0] == (row.length - trueIndex);
+            }
             return true;
         } else {
-            return false;
+            return runLengths[0] == 0;
         }
     }
 }
