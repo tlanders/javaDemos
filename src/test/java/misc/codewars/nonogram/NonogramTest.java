@@ -13,16 +13,13 @@ import static org.junit.Assert.assertTrue;
 public class NonogramTest {
     @Test
     public void testEvaluateRow() {
-        assertTrue(evaluateRow(makeRow(true), 1));
-        assertFalse(evaluateRow(makeRow(false), 1));
-    }
+        assertTrue(makeRow(true).matchesSpecification(1));
+        assertTrue(makeRow(true, false).matchesSpecification(1));
+        assertTrue(makeRow(false, true).matchesSpecification(1));
 
-    public boolean evaluateRow(NonogramRow row, int... runLengths) {
-        if(row.getValue() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        assertFalse(makeRow(false).matchesSpecification(1));
+        assertFalse(makeRow(false, false).matchesSpecification(1));
+//        assertFalse(makeRow(true, true).matchesSpecification(1));
     }
 
     @Test

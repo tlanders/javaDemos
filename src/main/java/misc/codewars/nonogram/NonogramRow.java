@@ -158,4 +158,12 @@ public class NonogramRow {
                 Arrays.toString(row) +
                 '}';
     }
+
+    public boolean matchesSpecification(int... runLengths) {
+        if(getValue() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
