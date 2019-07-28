@@ -52,6 +52,7 @@ public class NonogramTest {
                 makeRow(true, false, false, false, true, true),
                 makeRow(false, true, false, false, true, true),
                 makeRow(false, false, true, false, true, true));
+//        assertRows(findRows(5, 1, 1, 1), makeRow(true, false, true, false, true));
     }
 
     private void assertRows(List<NonogramRow> possibleRows, NonogramRow... expectedRows) {

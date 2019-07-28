@@ -12,7 +12,7 @@ public class NonogramRow {
                 val += Math.pow(2, i);
             }
         }
-        System.out.println(this + " - val=" + val);
+//        System.out.println(this + " - val=" + val);
         return val;
     }
 
@@ -55,30 +55,40 @@ public class NonogramRow {
             rows.add(makeRow(nonogramSize));
             return rows;
         } else {
-            List<NonogramRow> rows = new ArrayList<>();
             int occupiedSpots = 0;
             if(runLengths.length > 1) {
                 occupiedSpots = runLengths[1] + 1;
             }
-            for(int i = 0; i < nonogramSize - (runLengths[0] - 1) - occupiedSpots; i++) {
-                boolean [] row = new boolean[nonogramSize - occupiedSpots];
-                for(int rowIndex = i; rowIndex < runLengths[0] + i; rowIndex++) {
-                    row[rowIndex] = true;
-                }
 
-                if(runLengths.length > 1) {
-                    NonogramRow prefixRow = makeRow(row).trim(false);
+            List<NonogramRow> prefixRows = findPrefixRows(nonogramSize, occupiedSpots, runLengths[0]);
+
+            if(runLengths.length > 1) {
+                List<NonogramRow> rows = new ArrayList<>();
+                for(NonogramRow prefixRow : prefixRows) {
+                    NonogramRow trimmedRow = prefixRow.trim(false);
                     List<NonogramRow> suffixRows = new ArrayList<>();
-                    suffixRows.addAll(findRows(nonogramSize - prefixRow.size() - 1, runLengths[1]));
+                    suffixRows.addAll(findRows(nonogramSize - trimmedRow.size() - 1, runLengths[1]));
                     for (NonogramRow suffixRow : suffixRows) {
-                        rows.add(prefixRow.mergeRow(false).mergeRow(suffixRow));
+                        rows.add(trimmedRow.mergeRow(false).mergeRow(suffixRow));
                     }
-                } else {
-                    rows.add(makeRow(row));
                 }
+                return rows;
+            } else {
+                return prefixRows;
             }
-            return rows;
         }
+    }
+
+    private static List<NonogramRow> findPrefixRows(int nonogramSize, int occupiedSpots, int runLength) {
+        List<NonogramRow> prefixRows = new ArrayList<>();
+        for(int i = 0; i < nonogramSize - (runLength - 1) - occupiedSpots; i++) {
+            boolean[] row = new boolean[nonogramSize - occupiedSpots];
+            for (int rowIndex = i; rowIndex < runLength + i; rowIndex++) {
+                row[rowIndex] = true;
+            }
+            prefixRows.add(makeRow(row));
+        }
+        return prefixRows;
     }
 
     public NonogramRow trim(boolean valToTrim) {
