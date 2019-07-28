@@ -31,7 +31,7 @@ public class NonogramTest {
         assertFalse(makeRow(false, false).matchesSpecification(1));
         assertFalse(makeRow(true, true).matchesSpecification(1));
         assertFalse(makeRow(true, true).matchesSpecification(3));
-//        assertFalse(makeRow(true, false, true).matchesSpecification(1));
+        assertFalse(makeRow(true, false, true).matchesSpecification(1));
     }
 
     @Test

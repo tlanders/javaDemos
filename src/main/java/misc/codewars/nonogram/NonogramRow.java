@@ -57,7 +57,7 @@ public class NonogramRow {
         } else {
             List<NonogramRow> prefixRows = findPrefixRows(nonogramSize, getOccupiedSpots(runLengths), runLengths[0]);
 
-            if(hasMultipleRunRows(runLengths)) {
+            if(hasMultipleRunLengths(runLengths)) {
                 return findMultipleRunRows(nonogramSize, prefixRows, runLengths);
             } else {
                 return prefixRows;
@@ -82,13 +82,13 @@ public class NonogramRow {
         }
     }
 
-    private static boolean hasMultipleRunRows(int[] runLengths) {
+    private static boolean hasMultipleRunLengths(int[] runLengths) {
         return runLengths.length > 1;
     }
 
     private static int getOccupiedSpots(int[] runLengths) {
         int spots = 0;
-        if(hasMultipleRunRows(runLengths)) {
+        if(hasMultipleRunLengths(runLengths)) {
             for (int i = 1; i < runLengths.length; i++) {
                 spots += runLengths[i] + 1;
             }
@@ -160,7 +160,7 @@ public class NonogramRow {
     }
 
     private static int findIndexOf(boolean [] arr, boolean val, int startIndex) {
-        for(int i = 0; i < arr.length; i++) {
+        for(int i = startIndex; i < arr.length; i++) {
             if(arr[i] == val) {
                 return i;
             }
@@ -169,16 +169,25 @@ public class NonogramRow {
     }
 
     public boolean matchesSpecification(int... runLengths) {
-        int trueIndex = findIndexOf(row, true, 0);
+        return matchesSpecification(0, runLengths);
+    }
 
-        if(trueIndex == row.length - 1) {
-            return runLengths[0] == 1;
-        } else if(trueIndex >= 0) {
+    private boolean matchesSpecification(int startIndex, int... runLengths) {
+        int trueIndex = findIndexOf(row, true, startIndex);
+
+        if(trueIndex >= 0) {
             int falseIndex = findIndexOf(row, false, trueIndex + 1);
             if(falseIndex < 0) {
-                return runLengths[0] == (row.length - trueIndex);
+                return runLengths[0] == (row.length - trueIndex) && runLengths.length == 1;
+            } else if(runLengths[0] == (falseIndex - trueIndex)) {
+                if(hasMultipleRunLengths(runLengths)) {
+                    return matchesSpecification(falseIndex + 1, Arrays.copyOfRange(runLengths, 1, runLengths.length));
+                } else {
+                    return findIndexOf(row, true, falseIndex + 1) < 0;
+                }
+            } else {
+                return false;
             }
-            return true;
         } else {
             return runLengths[0] == 0;
         }
