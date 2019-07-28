@@ -55,12 +55,7 @@ public class NonogramRow {
             rows.add(makeRow(nonogramSize));
             return rows;
         } else {
-            int occupiedSpots = 0;
-            if(runLengths.length > 1) {
-                occupiedSpots = runLengths[1] + 1;
-            }
-
-            List<NonogramRow> prefixRows = findPrefixRows(nonogramSize, occupiedSpots, runLengths[0]);
+            List<NonogramRow> prefixRows = findPrefixRows(nonogramSize, getOccupiedSpots(runLengths), runLengths[0]);
 
             if(runLengths.length > 1) {
                 List<NonogramRow> rows = new ArrayList<>();
@@ -76,6 +71,14 @@ public class NonogramRow {
             } else {
                 return prefixRows;
             }
+        }
+    }
+
+    private static int getOccupiedSpots(int[] runLengths) {
+        if(runLengths.length > 1) {
+            return runLengths[1] + 1;
+        } else {
+            return 0;
         }
     }
 
