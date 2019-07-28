@@ -5,7 +5,7 @@ import java.util.*;
 public class NonogramRow {
     public static final Comparator<? super NonogramRow> VALUE_COMPARATOR = Comparator.comparing(NonogramRow::getValue);
 
-    private Integer getValue() {
+    public Integer getValue() {
         int val = 0;
         for(int i = 0; i < row.length; i++) {
             if(row[i]) {
@@ -93,7 +93,7 @@ public class NonogramRow {
                 spots += runLengths[i] + 1;
             }
         }
-        System.out.println("spots=" + spots);
+//        System.out.println("spots=" + spots);
         return spots;
     }
 

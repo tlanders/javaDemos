@@ -7,12 +7,22 @@ import java.util.*;
 import static misc.codewars.nonogram.NonogramRow.findRows;
 import static misc.codewars.nonogram.NonogramRow.makeRow;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class NonogramTest {
     @Test
     public void testEvaluateRow() {
-        assertTrue(true);
+        assertTrue(evaluateRow(makeRow(true), 1));
+        assertFalse(evaluateRow(makeRow(false), 1));
+    }
+
+    public boolean evaluateRow(NonogramRow row, int... runLengths) {
+        if(row.getValue() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Test
