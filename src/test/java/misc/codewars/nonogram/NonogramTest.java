@@ -25,13 +25,25 @@ public class NonogramTest {
         assertTrue(makeRow(true, true, false).matchesSpecification(2));
         assertTrue(makeRow(false, true, true, false).matchesSpecification(2));
         assertTrue(makeRow(false, true, true, true, false).matchesSpecification(3));
+        assertTrue(makeRow(true, false, true).matchesSpecification(1, 1));
+        assertTrue(makeRow(true, false, true, false).matchesSpecification(1, 1));
+        assertTrue(makeRow(false, true, false, true).matchesSpecification(1, 1));
+        assertTrue(makeRow(false, true, true, false, true).matchesSpecification(2, 1));
+        assertTrue(makeRow(false, true, true, false, true, false).matchesSpecification(2, 1));
+        assertTrue(makeRow(false, true, false, false, true, false).matchesSpecification(1, 1));
+        assertTrue(makeRow(false, true, false, false, true, false, true, false).matchesSpecification(1, 1, 1));
+        assertTrue(makeRow(false, true, true, false, false, true, true, false, true, false, true, true, true).matchesSpecification(2, 2, 1, 3));
 
         assertFalse(makeRow(true).matchesSpecification(0));
         assertFalse(makeRow(false).matchesSpecification(1));
         assertFalse(makeRow(false, false).matchesSpecification(1));
         assertFalse(makeRow(true, true).matchesSpecification(1));
+        assertFalse(makeRow(true, true).matchesSpecification(1, 1));
         assertFalse(makeRow(true, true).matchesSpecification(3));
         assertFalse(makeRow(true, false, true).matchesSpecification(1));
+        assertFalse(makeRow(true, false, true, true).matchesSpecification(1, 1));
+        assertFalse(makeRow(true, false, false).matchesSpecification(1, 1));
+        assertFalse(makeRow(true, false, false).matchesSpecification(1, 1, 1));
     }
 
     @Test
