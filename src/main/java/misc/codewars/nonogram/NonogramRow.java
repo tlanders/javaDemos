@@ -62,7 +62,7 @@ public class NonogramRow {
                 for(NonogramRow prefixRow : prefixRows) {
                     NonogramRow trimmedRow = prefixRow.trim(false);
                     List<NonogramRow> suffixRows = new ArrayList<>();
-                    suffixRows.addAll(findRows(nonogramSize - trimmedRow.size() - 1, runLengths[1]));
+                    suffixRows.addAll(findRows(nonogramSize - trimmedRow.size() - 1, Arrays.copyOfRange(runLengths, 1, runLengths.length)));
                     for (NonogramRow suffixRow : suffixRows) {
                         rows.add(trimmedRow.mergeRow(false).mergeRow(suffixRow));
                     }
@@ -75,11 +75,14 @@ public class NonogramRow {
     }
 
     private static int getOccupiedSpots(int[] runLengths) {
+        int spots = 0;
         if(runLengths.length > 1) {
-            return runLengths[1] + 1;
-        } else {
-            return 0;
+            for (int i = 1; i < runLengths.length; i++) {
+                spots += runLengths[i] + 1;
+            }
         }
+        System.out.println("spots=" + spots);
+        return spots;
     }
 
     private static List<NonogramRow> findPrefixRows(int nonogramSize, int occupiedSpots, int runLength) {
