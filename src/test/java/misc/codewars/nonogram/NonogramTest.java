@@ -12,6 +12,31 @@ import static org.junit.Assert.assertTrue;
 
 public class NonogramTest {
     @Test
+    public void testSolve() {
+        assertTrue(solve(new int[][][] {
+                {
+                    {1}
+                }, {
+                    {1}
+                }
+        }));
+    }
+
+    public boolean solve(int [][][] gameSpecification) {
+        int [][] rowSpecs = gameSpecification[1];
+        System.out.println("row count=" + rowSpecs.length);
+
+        List<NonogramRow> potentialRows = new ArrayList<>();
+
+        for(int [] row : rowSpecs) {
+            System.out.println("row specs=" + Arrays.toString(row));
+            potentialRows.addAll(findRows(rowSpecs.length, row));
+        }
+        System.out.println("potential rows=" + potentialRows);
+        return true;
+    }
+
+    @Test
     public void testEvaluateRow() {
         assertTrue(makeRow(false).matchesSpecification(0));
         assertTrue(makeRow(false, false).matchesSpecification(0));
