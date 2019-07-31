@@ -13,27 +13,41 @@ import static org.junit.Assert.assertTrue;
 public class NonogramTest {
     @Test
     public void testSolve() {
-        assertTrue(Arrays.deepEquals(solve(makeGame(
-                makeColumns(new int [] {1}),
-                makeRows(new int [] {1}))),
+        assertTrue(Arrays.deepEquals(
+                solve(new NonogramSpecBuilder(1).addColumn(1).addRow(1).build()),
                 new int[][] {{1}}));
 
-        assertTrue(Arrays.deepEquals(solve(makeGame(
-                makeColumns(new int [] {0}),
-                makeRows(new int [] {0}))),
+        assertTrue(Arrays.deepEquals(
+                solve(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build()),
                 new int[][] {{0}}));
     }
 
-    private int [][] makeColumns(int [] columns) {
-        return new int [][] {columns};
-    }
+    @Test
+    public void testNonogramSpecBuilder() {
+        assertTrue(Arrays.deepEquals(
+                new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}},
+                new NonogramSpecBuilder(5)
+                        .addColumn(1,1).addColumn(4).addColumn(1,1,1).addColumn(3).addColumn(1)
+                        .addRow(1).addRow(2).addRow(3).addRow(2,1).addRow(4)
+                        .build()));
 
-    private int [][] makeRows(int [] rows) {
-        return makeColumns(rows);
-    }
+        assertTrue(Arrays.deepEquals(new int [][][] {{{1}, {0}}, {{1}, {0}}},
+                new NonogramSpecBuilder(2)
+                        .addColumn(1)
+                        .addColumn(0)
+                        .addRow(1)
+                        .addRow(0)
+                        .build()));
 
-    private int [][][] makeGame(int [][] columnSpecs, int [][] rowSpecs) {
-        return new int[][][] {columnSpecs, rowSpecs};
+        assertTrue(Arrays.deepEquals(new int [][][] {{{1}, {1,1}, {1}}, {{1}, {0}, {2}}},
+                new NonogramSpecBuilder(3)
+                        .addColumn(1)
+                        .addColumn(1,1)
+                        .addColumn(1)
+                        .addRow(1)
+                        .addRow(0)
+                        .addRow(2)
+                        .build()));
     }
 
     static public class Nonogram {
@@ -245,6 +259,56 @@ public class NonogramTest {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private static class NonogramSpecBuilder {
+        private int size;
+        private List<Integer []> colSpecList = new ArrayList<>();
+        private List<Integer []> rowSpecList = new ArrayList<>();
+
+        public NonogramSpecBuilder(int size) {
+            this.size = size;
+        }
+
+        public NonogramSpecBuilder addColumn(Integer... colSpec) {
+            colSpecList.add(colSpec);
+            return this;
+        }
+
+        public  NonogramSpecBuilder addRow(Integer... rowSpec) {
+            rowSpecList.add(rowSpec);
+            return this;
+        }
+
+        public int [][][] build() {
+            if(size != colSpecList.size()) {
+                throw new IllegalStateException("Some columns not specified, column size=" + colSpecList.size() + ", expected " + size);
+            }
+
+            if(size != rowSpecList.size()) {
+                throw new IllegalStateException("Some rows not specified, row size=" + rowSpecList.size() + ", expected " + size);
+            }
+
+            int [][][] gameSpec = new int[2][size][size];
+
+            for(int c = 0; c < colSpecList.size(); c++) {
+                gameSpec[0][c] = convertToIntArray(colSpecList.get(c));
+            }
+
+            for(int r = 0; r < rowSpecList.size(); r++) {
+                gameSpec[1][r] = convertToIntArray(rowSpecList.get(r));
+            }
+
+            return gameSpec;
+        }
+
+        private int[] convertToIntArray(Integer[] integers) {
+            int [] dest = new int[integers.length];
+            for(int i = 0; i < dest.length; i++) {
+                dest[i] = integers[i];
+            }
+            return dest;
         }
     }
 }
