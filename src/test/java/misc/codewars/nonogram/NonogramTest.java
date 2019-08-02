@@ -23,6 +23,19 @@ public class NonogramTest {
     }
 
     @Test
+    public void testBoardBuilder() {
+        assertTrue(Arrays.deepEquals(
+                new NonogramBoardBuilder(1).addRow(1).build(),
+                new int[][] {{1}}));
+        assertTrue(Arrays.deepEquals(
+                new NonogramBoardBuilder(1).addRow(0).build(),
+                new int[][] {{0}}));
+        assertTrue(Arrays.deepEquals(
+                new NonogramBoardBuilder(2).addRow(0,1).addRow(1,0).build(),
+                new int[][] {{0,1},{1,0}}));
+    }
+
+    @Test
     public void testNonogramSpecBuilder() {
         assertTrue(Arrays.deepEquals(
                 new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}},
@@ -259,6 +272,24 @@ public class NonogramTest {
             return true;
         } else {
             return false;
+        }
+    }
+
+    protected static class NonogramBoardBuilder {
+        private final int [][] board;
+        private int rowIndex = 0;
+
+        public NonogramBoardBuilder(int size) {
+            board = new int[size][size];
+        }
+
+        public NonogramBoardBuilder addRow(int... rowValues) {
+            board[rowIndex++] = rowValues;
+            return this;
+        }
+
+        public int [][] build() {
+            return board;
         }
     }
 
