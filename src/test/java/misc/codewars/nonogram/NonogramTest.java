@@ -16,10 +16,60 @@ public class NonogramTest {
         assertTrue(Arrays.deepEquals(
                 solve(new NonogramSpecBuilder(1).addColumn(1).addRow(1).build()),
                 new int[][] {{1}}));
-
         assertTrue(Arrays.deepEquals(
                 solve(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build()),
                 new int[][] {{0}}));
+        assertTrue(Arrays.deepEquals(
+                solve(new NonogramSpecBuilder(2).addColumn(0).addColumn(1).addRow(1).addRow(0).build()),
+                new NonogramBoardBuilder(2).addRow(0,1).addRow(0,0).build()));
+    }
+
+    public int [][] solve(int [][][] gameSpecification) {
+        Nonogram nonogram = new Nonogram(new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}});
+        System.out.println("nonogram=" + nonogram);
+
+        int [][] rowSpecs = gameSpecification[1];
+        System.out.println("row count=" + rowSpecs.length);
+
+        List<NonogramRow> potentialRows = new ArrayList<>();
+
+        for(int [] row : rowSpecs) {
+            System.out.println("row specs=" + Arrays.toString(row));
+            potentialRows.addAll(findRows(rowSpecs.length, row));
+        }
+        System.out.println("potential rows=" + potentialRows);
+
+        if(gameSpecification[0][0][0] == 0 && gameSpecification[1][0][0] == 0) {
+            return new int[][]{{0}};
+        } else {
+            return new int[][]{{1}};
+        }
+    }
+
+    static public class Nonogram {
+        public Nonogram(int [][][] gameSpec) {
+            columnCount = gameSpec[0].length;
+            rowCount = gameSpec[1].length;
+
+            columnRunLengths = gameSpec[0];
+            rowRunLengths = gameSpec[1];
+        }
+
+        private int [][] rowRunLengths;
+        private int [][] columnRunLengths;
+        //        private List<Integer []> columnRunLengths = new ArrayList<>();
+        private int rowCount;
+        private int columnCount;
+
+        @Override
+        public String toString() {
+            return "Nonogram{" +
+                    "rowRunLengths=" + Arrays.toString(rowRunLengths) +
+                    ", columnRunLengths=" + Arrays.toString(columnRunLengths) +
+                    ", rowCount=" + rowCount +
+                    ", columnCount=" + columnCount +
+                    '}';
+        }
     }
 
     @Test
@@ -33,6 +83,9 @@ public class NonogramTest {
         assertTrue(Arrays.deepEquals(
                 new NonogramBoardBuilder(2).addRow(0,1).addRow(1,0).build(),
                 new int[][] {{0,1},{1,0}}));
+        assertTrue(Arrays.deepEquals(
+                new NonogramBoardBuilder(3).addRow(0,1,1).addRow(1,0,0).addRow(1,1,1).build(),
+                new int[][] {{0,1,1},{1,0,0},{1,1,1}}));
     }
 
     @Test
@@ -61,54 +114,6 @@ public class NonogramTest {
                         .addRow(0)
                         .addRow(2)
                         .build()));
-    }
-
-    static public class Nonogram {
-        public Nonogram(int [][][] gameSpec) {
-            columnCount = gameSpec[0].length;
-            rowCount = gameSpec[1].length;
-
-            columnRunLengths = gameSpec[0];
-            rowRunLengths = gameSpec[1];
-        }
-
-        private int [][] rowRunLengths;
-        private int [][] columnRunLengths;
-//        private List<Integer []> columnRunLengths = new ArrayList<>();
-        private int rowCount;
-        private int columnCount;
-
-        @Override
-        public String toString() {
-            return "Nonogram{" +
-                    "rowRunLengths=" + Arrays.toString(rowRunLengths) +
-                    ", columnRunLengths=" + Arrays.toString(columnRunLengths) +
-                    ", rowCount=" + rowCount +
-                    ", columnCount=" + columnCount +
-                    '}';
-        }
-    }
-
-    public int [][] solve(int [][][] gameSpecification) {
-        Nonogram nonogram = new Nonogram(new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}});
-        System.out.println("nonogram=" + nonogram);
-
-        int [][] rowSpecs = gameSpecification[1];
-        System.out.println("row count=" + rowSpecs.length);
-
-        List<NonogramRow> potentialRows = new ArrayList<>();
-
-        for(int [] row : rowSpecs) {
-            System.out.println("row specs=" + Arrays.toString(row));
-            potentialRows.addAll(findRows(rowSpecs.length, row));
-        }
-        System.out.println("potential rows=" + potentialRows);
-
-        if(gameSpecification[0][0][0] == 0 && gameSpecification[1][0][0] == 0) {
-            return new int[][]{{0}};
-        } else {
-            return new int[][]{{1}};
-        }
     }
 
     @Test
