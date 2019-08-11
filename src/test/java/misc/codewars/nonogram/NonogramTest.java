@@ -90,6 +90,16 @@ public class NonogramTest {
         n.addRow(makeRow(true, false, true, false, true));
     }
 
+    @Test
+    public void testNonogramIsSolution() {
+        assertTrue(new Nonogram(new NonogramSpecBuilder(1).addColumn(1).addRow(1).build())
+                .addRow(makeRow(true))
+                .isSolution());
+        assertTrue(new Nonogram(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build())
+                .addRow(makeRow(false))
+                .isSolution());
+    }
+
     static public class Nonogram {
         public Nonogram(int [][][] gameSpec) {
             columnCount = gameSpec[0].length;
@@ -99,6 +109,10 @@ public class NonogramTest {
             rowRunLengths = gameSpec[1];
         }
 
+        public boolean isSolution() {
+            return true;
+        }
+
         private int [][] rowRunLengths;
         private int [][] columnRunLengths;
         private int rowCount;
@@ -106,7 +120,7 @@ public class NonogramTest {
 
         List<NonogramRow> rows = new ArrayList<>();
 
-        public void addRow(NonogramRow row) {
+        public Nonogram addRow(NonogramRow row) {
             if(row.size() != columnCount) {
                 throw new IllegalStateException("Incorrect number of columns in row, required columns=" + columnCount);
             }
@@ -115,6 +129,7 @@ public class NonogramTest {
             }
 
             rows.add(row);
+            return this;
         }
 
         public int getRowCount() {
