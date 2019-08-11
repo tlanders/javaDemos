@@ -25,8 +25,8 @@ public class NonogramTest {
     }
 
     public int [][] solve(int [][][] gameSpecification) {
-        Nonogram nonogram = new Nonogram(new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}});
-        System.out.println("nonogram=" + nonogram);
+//        Nonogram nonogram = new Nonogram(new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}});
+//        System.out.println("nonogram=" + nonogram);
 
         int [][] rowSpecs = gameSpecification[1];
         System.out.println("row count=" + rowSpecs.length);
@@ -71,6 +71,25 @@ public class NonogramTest {
         return null;
     }
 
+    @Test
+    public void testNonogram() {
+        Nonogram n = new Nonogram(new NonogramSpecBuilder(1).addColumn(1).addRow(1).build());
+        assertEquals(1, n.getColumnCount());
+        assertEquals(1, n.getRowCount());
+
+        n.addRow(makeRow(true));
+
+        n = new Nonogram(new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}});
+        assertEquals(5, n.getColumnCount());
+        assertEquals(5, n.getRowCount());
+
+        n.addRow(makeRow(true, false, true, false, true));
+        n.addRow(makeRow(true, false, true, false, true));
+        n.addRow(makeRow(true, false, true, false, true));
+        n.addRow(makeRow(true, false, true, false, true));
+        n.addRow(makeRow(true, false, true, false, true));
+    }
+
     static public class Nonogram {
         public Nonogram(int [][][] gameSpec) {
             columnCount = gameSpec[0].length;
@@ -82,9 +101,29 @@ public class NonogramTest {
 
         private int [][] rowRunLengths;
         private int [][] columnRunLengths;
-        //        private List<Integer []> columnRunLengths = new ArrayList<>();
         private int rowCount;
         private int columnCount;
+
+        List<NonogramRow> rows = new ArrayList<>();
+
+        public void addRow(NonogramRow row) {
+            if(row.size() != columnCount) {
+                throw new IllegalStateException("Incorrect number of columns in row, required columns=" + columnCount);
+            }
+            if((rows.size() + 1) > rowCount) {
+                throw new IllegalStateException("Too many rows added to nonogram, required rows=" + rowCount);
+            }
+
+            rows.add(row);
+        }
+
+        public int getRowCount() {
+            return rowCount;
+        }
+
+        public int getColumnCount() {
+            return columnCount;
+        }
 
         @Override
         public String toString() {
