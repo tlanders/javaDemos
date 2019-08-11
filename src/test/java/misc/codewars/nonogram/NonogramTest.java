@@ -31,19 +31,44 @@ public class NonogramTest {
         int [][] rowSpecs = gameSpecification[1];
         System.out.println("row count=" + rowSpecs.length);
 
-        List<NonogramRow> potentialRows = new ArrayList<>();
+        List<List<NonogramRow>> rows = new ArrayList<>();
 
         for(int [] row : rowSpecs) {
+            List<NonogramRow> potentialRows = new ArrayList<>();
+            rows.add(potentialRows);
             System.out.println("row specs=" + Arrays.toString(row));
             potentialRows.addAll(findRows(rowSpecs.length, row));
+            System.out.println("potential rows=" + potentialRows);
         }
-        System.out.println("potential rows=" + potentialRows);
+        System.out.println("all rows=" + rows);
+
+        List<List<NonogramRow>> allPossibleSolutions = findAllPossibleSolutions(rows);
 
         if(gameSpecification[0][0][0] == 0 && gameSpecification[1][0][0] == 0) {
             return new int[][]{{0}};
         } else {
             return new int[][]{{1}};
         }
+    }
+
+    @Test
+    public void testFindAllPossibleSolutions() {
+        List<List<NonogramRow>> simpleOneRow = new ArrayList<>();
+        List<NonogramRow> row1Solutions = new ArrayList<>();
+        NonogramRow onlyPossibleSolution = NonogramRow.makeRow(false);
+        row1Solutions.add(onlyPossibleSolution);
+        simpleOneRow.add(row1Solutions);
+
+        assertTrue(simpleOneRow.equals(findAllPossibleSolutions(simpleOneRow)));
+        System.out.println(simpleOneRow);
+    }
+
+    public List<List<NonogramRow>> findAllPossibleSolutions(List<List<NonogramRow>> rows) {
+        for(List<NonogramRow> currentRow : rows) {
+
+        }
+
+        return null;
     }
 
     static public class Nonogram {
