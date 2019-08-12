@@ -98,6 +98,12 @@ public class NonogramTest {
         assertTrue(new Nonogram(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build())
                 .addRow(makeRow(false))
                 .isSolution());
+        assertFalse(new Nonogram(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build())
+                .addRow(makeRow(true))
+                .isSolution());
+        assertFalse(new Nonogram(new NonogramSpecBuilder(1).addColumn(1).addRow(1).build())
+                .addRow(makeRow(false))
+                .isSolution());
     }
 
     static public class Nonogram {
@@ -110,7 +116,8 @@ public class NonogramTest {
         }
 
         public boolean isSolution() {
-            return true;
+            return columnRunLengths[0][0] == 1 && rows.get(0).equals(makeRow(true))
+                    || columnRunLengths[0][0] == 0 && rows.get(0).equals(makeRow(false));
         }
 
         private int [][] rowRunLengths;
