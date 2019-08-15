@@ -98,14 +98,38 @@ public class NonogramTest {
         assertTrue(new Nonogram(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build())
                 .addRow(makeRow(false))
                 .isSolution());
+
         assertFalse(new Nonogram(new NonogramSpecBuilder(1).addColumn(0).addRow(0).build())
                 .addRow(makeRow(true))
                 .isSolution());
         assertFalse(new Nonogram(new NonogramSpecBuilder(1).addColumn(1).addRow(1).build())
                 .addRow(makeRow(false))
                 .isSolution());
+
         assertTrue(new Nonogram(new NonogramSpecBuilder(2).addColumn(0).addColumn(0).addRow(0).addRow(0).build())
                 .addRow(makeRow(false,false)).addRow(makeRow(false,false))
+                .isSolution());
+        assertTrue(new Nonogram(new NonogramSpecBuilder(2).addColumn(1).addColumn(0).addRow(1).addRow(0).build())
+                .addRow(makeRow(true,false)).addRow(makeRow(false,false))
+                .isSolution());
+        assertTrue(new Nonogram(new NonogramSpecBuilder(2).addColumn(0).addColumn(1).addRow(1).addRow(0).build())
+                .addRow(makeRow(false,true)).addRow(makeRow(false,false))
+                .isSolution());
+        assertTrue(new Nonogram(new NonogramSpecBuilder(2).addColumn(2).addColumn(0).addRow(1).addRow(1).build())
+                .addRow(makeRow(true,false)).addRow(makeRow(true,false))
+                .isSolution());
+        assertTrue(new Nonogram(new NonogramSpecBuilder(2).addColumn(2).addColumn(1).addRow(2).addRow(1).build())
+                .addRow(makeRow(true,true)).addRow(makeRow(true,false))
+                .isSolution());
+        assertTrue(new Nonogram(new NonogramSpecBuilder(2).addColumn(2).addColumn(2).addRow(2).addRow(2).build())
+                .addRow(makeRow(true,true)).addRow(makeRow(true,true))
+                .isSolution());
+
+        assertFalse(new Nonogram(new NonogramSpecBuilder(2).addColumn(1).addColumn(1).addRow(1).addRow(1).build())
+                .addRow(makeRow(false,true)).addRow(makeRow(false,true))
+                .isSolution());
+        assertFalse(new Nonogram(new NonogramSpecBuilder(2).addColumn(2).addColumn(1).addRow(2).addRow(1).build())
+                .addRow(makeRow(true,true)).addRow(makeRow(false,true))
                 .isSolution());
     }
 
@@ -119,15 +143,31 @@ public class NonogramTest {
         }
 
         public boolean isSolution() {
-            for(int i = 0; i < rows.size(); i++) {
-                NonogramRow row = rows.get(i);
-                if(!row.matchesSpecification(rowRunLengths[i])) {
-                    System.out.println("row index=" + i + ", does not match spec=" + Arrays.toString(rowRunLengths[0]));
+            for(int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
+                NonogramRow row = rows.get(rowIndex);
+                if(!row.matchesSpecification(rowRunLengths[rowIndex])) {
+                    System.out.println("row index=" + rowIndex + ", does not match spec=" + Arrays.toString(rowRunLengths[0]));
+                    return false;
+                }
+            }
+
+            for(int colIndex = 0; colIndex < rows.size(); colIndex++) {
+                NonogramRow reallyAColumn = makeRowFromColumn(colIndex);
+                if(!reallyAColumn.matchesSpecification(columnRunLengths[colIndex])) {
+                    System.out.println("col index=" + colIndex + ", does not match spec=" + Arrays.toString(columnRunLengths[0]));
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private NonogramRow makeRowFromColumn(int colIndex) {
+            boolean [] colValues = new boolean[rows.size()];
+            for(int i = 0; i < rows.size(); i++) {
+                colValues[i] = rows.get(i).getCell(colIndex);
+            }
+            return makeRow(colValues);
         }
 
         private int [][] rowRunLengths;
