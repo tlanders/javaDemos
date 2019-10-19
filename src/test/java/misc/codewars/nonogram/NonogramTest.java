@@ -24,6 +24,12 @@ public class NonogramTest {
                 new NonogramBoardBuilder(2).addRow(0,1).addRow(0,0).build()));
     }
 
+    /**
+     * Generates all possible solutions given the game spec. Then walks through the possible solutions
+     * until one is found.
+     * @param gameSpecification
+     * @return  Board spec of solution, or null if no solution is found.
+     */
     public int [][] solve(int [][][] gameSpecification) {
 //        Nonogram nonogram = new Nonogram(new int [][][] {{{1, 1}, {4}, {1, 1, 1}, {3}, {1}}, {{1}, {2}, {3}, {2, 1}, {4}}});
 //        System.out.println("nonogram=" + nonogram);
@@ -42,7 +48,7 @@ public class NonogramTest {
         }
         System.out.println("all rows=" + rows);
 
-        List<List<NonogramRow>> allPossibleSolutions = findAllPossibleSolutions(rows);
+//        List<List<NonogramRow>> allPossibleSolutions = findAllPossibleSolutions(gameSpecification, rows);
 
         if(gameSpecification[0][0][0] == 0 && gameSpecification[1][0][0] == 0) {
             return new int[][]{{0}};
@@ -59,16 +65,40 @@ public class NonogramTest {
         row1Solutions.add(onlyPossibleSolution);
         simpleOneRow.add(row1Solutions);
 
+//        assertTrue(simpleOneRow.equals(findAllPossibleSolutions(simpleOneRow)));
+        System.out.println(simpleOneRow);
+/*
+        List<List<NonogramRow>> simpleOneRow = new ArrayList<>();
+        List<NonogramRow> row1Solutions = new ArrayList<>();
+        NonogramRow onlyPossibleSolution = NonogramRow.makeRow(true);
+        row1Solutions.add(onlyPossibleSolution);
+        simpleOneRow.add(row1Solutions);
+
         assertTrue(simpleOneRow.equals(findAllPossibleSolutions(simpleOneRow)));
         System.out.println(simpleOneRow);
+*/
     }
 
-    public List<List<NonogramRow>> findAllPossibleSolutions(List<List<NonogramRow>> rows) {
-        for(List<NonogramRow> currentRow : rows) {
+    public List<Nonogram> findAllPossibleSolutions(int[][][] gameSpec, List<List<NonogramRow>> rows) {
+        List<Nonogram> possibleNonograms = new ArrayList<>();
 
+        List<NonogramRow> currentRowList = rows.get(0);
+        if(rows.size() > 1) {
+            List<List<NonogramRow>> remainingRows = rows.subList(1, rows.size());
+        } else {
+            for(NonogramRow row : currentRowList) {
+                Nonogram nonogram = new Nonogram(gameSpec);
+                nonogram.addRow(row);
+                possibleNonograms.add(nonogram);
+            }
         }
+//        for(List<NonogramRow> currentRow : rows) {
+//            Nonogram aNonogram = new Nonogram(gameSpec);
+//            aNonogram.addRow(currentRow);
+//
+//        }
 
-        return null;
+        return possibleNonograms;
     }
 
     @Test
