@@ -43,6 +43,10 @@ public class NonogramRow {
         }
     }
 
+    protected boolean getCell(int cellIndex) {
+        return row[cellIndex];
+    }
+
     public int size() {
         return row.length;
     }
