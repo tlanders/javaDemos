@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class HeapSortTests {
@@ -60,6 +58,21 @@ public class HeapSortTests {
         Assert.assertArrayEquals(new Integer[]{1, 2, 4, 5, 3}, heapSortInt.heapify(new Integer[]{5, 4, 3, 2, 1}));
         Assert.assertArrayEquals(new Integer[]{1, 2, 3, 5, 4}, heapSortInt.heapify(new Integer[]{3, 5, 1, 4, 2}));
         Assert.assertArrayEquals(new Integer[]{1, 12, 17, 21, 16, 37, 99, 63, 33, 29}, heapSortInt.heapify(new Integer[]{63, 21, 37, 16, 29, 17, 99, 1, 33, 12}));
+
+        // heapify with a start index
+        Assert.assertArrayEquals(new Integer[]{}, heapSortInt.heapify(new Integer[]{}, 1));
+        Assert.assertArrayEquals(new Integer[]{1}, heapSortInt.heapify(new Integer[]{1}, 1));
+        Assert.assertArrayEquals(new Integer[]{1, 1}, heapSortInt.heapify(new Integer[]{1, 1}, 1));
+        Assert.assertArrayEquals(new Integer[]{1, 2}, heapSortInt.heapify(new Integer[]{1, 2}, 1));
+        Assert.assertArrayEquals(new Integer[]{1, 1, 1}, heapSortInt.heapify(new Integer[]{1, 1, 1}, 1));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3}, heapSortInt.heapify(new Integer[]{1, 2, 3}, 2));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4}, heapSortInt.heapify(new Integer[]{1, 2, 3, 4}, 2));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4, 5}, heapSortInt.heapify(new Integer[]{1, 2, 3, 4, 5}, 3));
+        Assert.assertArrayEquals(new Integer[]{2, 1, 3, 4, 5}, heapSortInt.heapify(new Integer[]{2, 1, 3, 4, 5}, 3));
+        Assert.assertArrayEquals(new Integer[]{99, 98, 3, 4, 5}, heapSortInt.heapify(new Integer[]{99, 98, 3, 4, 5}, 3));
+        Assert.assertArrayEquals(new Integer[]{99, 98, 1, 2, 3, 5, 4}, heapSortInt.heapify(new Integer[]{99, 98, 3, 5, 1, 4, 2}, 2));
+        Assert.assertArrayEquals(new Integer[]{1003, 1002, 1001, 1, 12, 17, 21, 16, 37, 99, 63, 33, 29},
+                heapSortInt.heapify(new Integer[]{1003, 1002, 1001, 63, 21, 37, 16, 29, 17, 99, 1, 33, 12}, 3));
     }
 
     @Test
