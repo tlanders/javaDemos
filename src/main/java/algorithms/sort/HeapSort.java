@@ -22,8 +22,15 @@ public class HeapSort<T extends Comparable> {
 
     protected T[] heapify(T[] items) {
         for(int index = 1; index < items.length; index++) {
-            if(items[index].compareTo(items[parentIndex(index)]) < 0) {
-                exchange(items, index, parentIndex(index));
+            int heapifyIndex = index;
+            while(heapifyIndex > 0) {
+                int parentIndex = parentIndex(heapifyIndex);
+                if (items[heapifyIndex].compareTo(items[parentIndex]) < 0) {
+                    exchange(items, heapifyIndex, parentIndex);
+                    heapifyIndex = parentIndex;
+                } else {
+                    break;
+                }
             }
         }
         return items;
