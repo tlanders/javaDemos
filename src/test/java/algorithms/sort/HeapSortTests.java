@@ -1,6 +1,5 @@
 package algorithms.sort;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,18 +31,16 @@ public class HeapSortTests {
 
     @Test
     public void testExchange() {
-        assertEquals(true, Arrays.deepEquals(new Integer[]{1}, heapSortInt.exchange(new Integer[]{1}, 0, 0)));
-        assertEquals(true, Arrays.deepEquals(new Integer[]{2, 1}, heapSortInt.exchange(new Integer[]{1, 2}, 0, 1)));
-        assertEquals(true, Arrays.deepEquals(new Integer[]{2, 1, 3}, heapSortInt.exchange(new Integer[]{1, 2, 3}, 0, 1)));
-        assertEquals(true, Arrays.deepEquals(new Integer[]{1, 3, 2}, heapSortInt.exchange(new Integer[]{1, 2, 3}, 1, 2)));
-        assertEquals(true, Arrays.deepEquals(new Integer[]{1, 2, 3}, heapSortInt.exchange(new Integer[]{1, 2, 3}, 1, 1)));
+        assertTrue(Arrays.deepEquals(new Integer[]{1}, heapSortInt.exchange(new Integer[]{1}, 0, 0)));
+        assertTrue(Arrays.deepEquals(new Integer[]{2, 1}, heapSortInt.exchange(new Integer[]{1, 2}, 0, 1)));
+        assertTrue(Arrays.deepEquals(new Integer[]{2, 1, 3}, heapSortInt.exchange(new Integer[]{1, 2, 3}, 0, 1)));
+        assertTrue(Arrays.deepEquals(new Integer[]{1, 3, 2}, heapSortInt.exchange(new Integer[]{1, 2, 3}, 1, 2)));
+        assertTrue(Arrays.deepEquals(new Integer[]{1, 2, 3}, heapSortInt.exchange(new Integer[]{1, 2, 3}, 1, 1)));
     }
 
     @Test
     public void testBasic() {
-        Integer[] empty = {};
-
-
-        new HeapSort<Integer>().sort(empty);
+        assertTrue(Arrays.deepEquals(new Integer[]{}, heapSortInt.sort(new Integer[]{})));
+        assertTrue(Arrays.deepEquals(new Integer[]{1}, heapSortInt.sort(new Integer[]{1})));
     }
 }

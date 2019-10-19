@@ -5,8 +5,9 @@ package algorithms.sort;
  * @param <T>
  */
 public class HeapSort<T extends Comparable> {
-    public void sort(T[] items) {
+    public T[] sort(T[] items) {
         heapify(items);
+        return items;
 //        for(int i = 0; i < items.length - 1; i++) {
 //            int low = i;
 //            for(int j = i + 1; j < items.length - 1; j++) {
