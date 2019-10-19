@@ -39,7 +39,13 @@ public class HeapSortTests {
     }
 
     @Test
-    public void testBasic() {
+    public void testHeapify() {
+        assertTrue(Arrays.deepEquals(new Integer[]{}, heapSortInt.heapify(new Integer[]{})));
+        assertTrue(Arrays.deepEquals(new Integer[]{1}, heapSortInt.heapify(new Integer[]{1})));
+    }
+
+    @Test
+    public void testSort() {
         assertTrue(Arrays.deepEquals(new Integer[]{}, heapSortInt.sort(new Integer[]{})));
         assertTrue(Arrays.deepEquals(new Integer[]{1}, heapSortInt.sort(new Integer[]{1})));
     }

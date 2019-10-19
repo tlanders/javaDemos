@@ -20,12 +20,13 @@ public class HeapSort<T extends Comparable> {
 //        assert isSorted(items);
     }
 
-    protected void heapify(T[] items) {
+    protected T[] heapify(T[] items) {
         for(int index = 1; index < items.length; index++) {
             if(items[index].compareTo(items[parentIndex(index)]) < 0) {
                 exchange(items, index, parentIndex(index));
             }
         }
+        return items;
     }
 
     protected T[] exchange(T[] items, int index1, int index2) {
