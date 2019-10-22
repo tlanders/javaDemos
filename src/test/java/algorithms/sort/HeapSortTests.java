@@ -90,6 +90,8 @@ public class HeapSortTests {
         Assert.assertArrayEquals(new Integer[]{4, 2, 3}, heapSortInt.siftdown(new Integer[]{2, 4, 3}));
 
         Assert.assertArrayEquals(new Integer[]{15, 7, 9, 2}, heapSortInt.siftdown(new Integer[]{2, 15, 9, 7}));
+        Assert.assertArrayEquals(new Integer[]{19, 15, 8, 7, 11, 2}, heapSortInt.siftdown(new Integer[]{2, 15, 19, 7, 11, 8}));
+        Assert.assertArrayEquals(new Integer[]{19, 15, 10, 7, 11, 8, 2}, heapSortInt.siftdown(new Integer[]{2, 15, 19, 7, 11, 8, 10}));
     }
 
     @Test
