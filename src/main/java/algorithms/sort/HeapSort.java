@@ -9,6 +9,12 @@ package algorithms.sort;
 public class HeapSort<T extends Comparable> {
     public T[] sort(T[] items) {
         heapify(items);
+
+        // swap top of heap with bottom of unsorted heap. then sift down item moved to top.
+        for(int i = 0; i < items.length - 1; i++) {
+            exchange(items, 0, items.length - 1 - i);
+            siftdown(items, 0, items.length - i);
+        }
         return items;
 //        for(int i = 0; i < items.length - 1; i++) {
 //            int low = i;
@@ -20,6 +26,21 @@ public class HeapSort<T extends Comparable> {
 //            exchange(items, i, low);
 //        }
 //        assert isSorted(items);
+    }
+
+    protected T[] siftdown(T[] items, int startIndex, int lastIndex) {
+        if(startIndex < lastIndex) {
+            int leftChildIndex = startIndex * 2 + 1;
+            int rightChildIndex = startIndex * 2 + 2;
+            if(rightChildIndex <= lastIndex) {
+
+            } else {
+                if(items[startIndex].compareTo(items[leftChildIndex]) < 0) {
+                    exchange(items, startIndex, leftChildIndex);
+                }
+            }
+        }
+        return items;
     }
 
     protected T[] heapify(T[] items) {

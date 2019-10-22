@@ -76,6 +76,19 @@ public class HeapSortTests {
     }
 
     @Test
+    public void testSiftdown() {
+        Assert.assertArrayEquals(new Integer[]{}, heapSortInt.siftdown(new Integer[]{}, 0, 0));
+        Assert.assertArrayEquals(new Integer[]{1}, heapSortInt.siftdown(new Integer[]{1}, 0, 1));
+        Assert.assertArrayEquals(new Integer[]{1, 1}, heapSortInt.siftdown(new Integer[]{1, 1}, 0, 2));
+        Assert.assertArrayEquals(new Integer[]{2, 1}, heapSortInt.siftdown(new Integer[]{2, 1}, 0, 2));
+        Assert.assertArrayEquals(new Integer[]{1, 1, 1}, heapSortInt.siftdown(new Integer[]{1, 1, 1}, 0, 3));
+        Assert.assertArrayEquals(new Integer[]{3, 2, 1}, heapSortInt.siftdown(new Integer[]{3, 2, 1}, 0, 3));
+        Assert.assertArrayEquals(new Integer[]{4, 3, 2, 1}, heapSortInt.siftdown(new Integer[]{4, 3, 2, 1}, 0, 4));
+
+        Assert.assertArrayEquals(new Integer[]{2, 1}, heapSortInt.siftdown(new Integer[]{1, 2}, 0, 1));
+    }
+
+    @Test
     public void testSort() {
         Assert.assertArrayEquals(new Integer[]{}, heapSortInt.sort(new Integer[]{}));
         Assert.assertArrayEquals(new Integer[]{1}, heapSortInt.sort(new Integer[]{1}));
