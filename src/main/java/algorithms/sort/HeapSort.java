@@ -1,7 +1,9 @@
 package algorithms.sort;
 
 /**
- * Start with unsorted array. First build a min-heap, then pop from heap to create sorted array.
+ * Start with unsorted array. First build a max-heap, then swap max element with end of array
+ * and siftdown the element moved to the top.
+ *
  * @param <T>
  */
 public class HeapSort<T extends Comparable> {
@@ -29,7 +31,7 @@ public class HeapSort<T extends Comparable> {
             int heapifyIndex = index;
             while(heapifyIndex > startIndex) {
                 int parentIndex = parentIndex(heapifyIndex - startIndex) + startIndex;
-                if (items[heapifyIndex].compareTo(items[parentIndex]) < 0) {
+                if (items[heapifyIndex].compareTo(items[parentIndex]) > 0) {
                     exchange(items, heapifyIndex, parentIndex);
                     heapifyIndex = parentIndex;
                 } else {
