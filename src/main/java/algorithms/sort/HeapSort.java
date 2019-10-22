@@ -28,20 +28,38 @@ public class HeapSort<T extends Comparable> {
 //        assert isSorted(items);
     }
 
+    protected T[] siftdown(T[] items) {
+        return siftdown(items, 0, items.length - 1);
+    }
+
+    protected T[] siftdown(T[] items, int startIndex) {
+        return siftdown(items, startIndex, items.length - 1);
+    }
+
     protected T[] siftdown(T[] items, int startIndex, int lastIndex) {
-        if(startIndex < lastIndex) {
-            int leftChildIndex = startIndex * 2 + 1;
-            int rightChildIndex = startIndex * 2 + 2;
+        int currentIndex = startIndex;
+        while(currentIndex < lastIndex) {
+            int leftChildIndex = currentIndex * 2 + 1;
+            int rightChildIndex = currentIndex * 2 + 2;
             if(rightChildIndex <= lastIndex) {
-                if(items[leftChildIndex].compareTo(items[rightChildIndex]) < 0 && items[startIndex].compareTo(items[rightChildIndex]) < 0) {
-                    exchange(items, startIndex, rightChildIndex);
-                } else if(items[startIndex].compareTo(items[leftChildIndex]) < 0){
-                    exchange(items, startIndex, leftChildIndex);
+                if(items[currentIndex].compareTo(items[rightChildIndex]) < 0 && items[leftChildIndex].compareTo(items[rightChildIndex]) < 0) {
+                    exchange(items, currentIndex, rightChildIndex);
+                    currentIndex = rightChildIndex;
+                } else if(items[currentIndex].compareTo(items[leftChildIndex]) < 0){
+                    exchange(items, currentIndex, leftChildIndex);
+                    currentIndex = leftChildIndex;
+                } else {
+                    break;
+                }
+            } else if(leftChildIndex <= lastIndex) {
+                if(items[currentIndex].compareTo(items[leftChildIndex]) < 0) {
+                    exchange(items, currentIndex, leftChildIndex);
+                    currentIndex = leftChildIndex;
+                } else {
+                    break;
                 }
             } else {
-                if(items[startIndex].compareTo(items[leftChildIndex]) < 0) {
-                    exchange(items, startIndex, leftChildIndex);
-                }
+                break;
             }
         }
         return items;
