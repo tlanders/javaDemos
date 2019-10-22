@@ -33,7 +33,11 @@ public class HeapSort<T extends Comparable> {
             int leftChildIndex = startIndex * 2 + 1;
             int rightChildIndex = startIndex * 2 + 2;
             if(rightChildIndex <= lastIndex) {
-
+                if(items[leftChildIndex].compareTo(items[rightChildIndex]) < 0 && items[startIndex].compareTo(items[rightChildIndex]) < 0) {
+                    exchange(items, startIndex, rightChildIndex);
+                } else if(items[startIndex].compareTo(items[leftChildIndex]) < 0){
+                    exchange(items, startIndex, leftChildIndex);
+                }
             } else {
                 if(items[startIndex].compareTo(items[leftChildIndex]) < 0) {
                     exchange(items, startIndex, leftChildIndex);
