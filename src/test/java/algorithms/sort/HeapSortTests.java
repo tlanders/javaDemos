@@ -98,5 +98,12 @@ public class HeapSortTests {
     public void testSort() {
         Assert.assertArrayEquals(new Integer[]{}, heapSortInt.sort(new Integer[]{}));
         Assert.assertArrayEquals(new Integer[]{1}, heapSortInt.sort(new Integer[]{1}));
+        Assert.assertArrayEquals(new Integer[]{1, 2}, heapSortInt.sort(new Integer[]{1, 2}));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3}, heapSortInt.sort(new Integer[]{1, 2, 3}));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4}, heapSortInt.sort(new Integer[]{1, 2, 3, 4}));
+        Assert.assertArrayEquals(new Integer[]{1, 2}, heapSortInt.sort(new Integer[]{2, 1}));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3}, heapSortInt.sort(new Integer[]{3, 2, 1}));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4}, heapSortInt.sort(new Integer[]{3, 4, 2, 1}));
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, heapSortInt.sort(new Integer[]{3, 10, 5, 4, 9, 7, 2, 1, 8, 6}));
     }
 }

@@ -13,19 +13,9 @@ public class HeapSort<T extends Comparable> {
         // swap top of heap with bottom of unsorted heap. then sift down item moved to top.
         for(int i = 0; i < items.length - 1; i++) {
             exchange(items, 0, items.length - 1 - i);
-            siftdown(items, 0, items.length - i);
+            siftdown(items, 0, items.length - i - 2);
         }
         return items;
-//        for(int i = 0; i < items.length - 1; i++) {
-//            int low = i;
-//            for(int j = i + 1; j < items.length - 1; j++) {
-//                if(less(items[j], items[low])) {
-//                    low = j;
-//                }
-//            }
-//            exchange(items, i, low);
-//        }
-//        assert isSorted(items);
     }
 
     protected T[] siftdown(T[] items) {
