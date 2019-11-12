@@ -27,6 +27,10 @@ public class QuickSortTests {
         Assert.assertArrayEquals(new Integer[]{1,2,3,4}, quickSortInt.sort(new Integer[]{1,2,3,4}));
         Assert.assertArrayEquals(new Integer[]{1,2,3,4}, quickSortInt.sort(new Integer[]{4,3,2,1}));
         Assert.assertArrayEquals(new Integer[]{1,2,3,4}, quickSortInt.sort(new Integer[]{3,1,4,2}));
+        Assert.assertArrayEquals(new Integer[]{1,2,3,4,5}, quickSortInt.sort(new Integer[]{1,2,3,4,5}));
+        Assert.assertArrayEquals(new Integer[]{1,2,3,4,5}, quickSortInt.sort(new Integer[]{3,1,4,2,5}));
+        Assert.assertArrayEquals(new Integer[]{1,2,3,4,5}, quickSortInt.sort(new Integer[]{5,1,4,2,3}));
+        Assert.assertArrayEquals(new Integer[]{1,2,3,4,5}, quickSortInt.sort(new Integer[]{5,4,3,2,1}));
     }
 
     @Test
