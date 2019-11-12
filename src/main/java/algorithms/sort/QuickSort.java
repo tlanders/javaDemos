@@ -21,6 +21,31 @@ public class QuickSort<T extends Comparable> {
 //        assert isSorted(items);
     }
 
+    protected T[] partition(T[] items, int startIndex, int endIndex) {
+        if(endIndex - startIndex <= 1) {
+            return items;
+        } else {
+            int pivotIndex = endIndex;
+            int bigIndex = -1;
+            for(int index = startIndex; index < endIndex; index++) {
+                if(items[index].compareTo(items[endIndex]) > 0) {
+                    if(bigIndex < 0) {
+                        bigIndex = index;
+                    }
+                } else {
+                    if(bigIndex >= 0) {
+                        exchange(items, bigIndex, index);
+                        bigIndex++;
+                    }
+                }
+            }
+            if(bigIndex >= 0) {
+                exchange(items, pivotIndex, bigIndex);
+            }
+            return items;
+        }
+    }
+
     protected T[] exchange(T[] items, int index1, int index2) {
         T temp = items[index1];
         items[index1] = items[index2];
