@@ -7,6 +7,10 @@ package algorithms.sort;
  * @param <T>
  */
 public class QuickSort<T extends Comparable> {
+    public T[] sort(T[] items) {
+        return sort(items, 0, items.length - 1);
+    }
+
     public T[] sort(T[] items, int startIndex, int endIndex) {
         int len = endIndex - startIndex + 1;
         if(len > 2) {
