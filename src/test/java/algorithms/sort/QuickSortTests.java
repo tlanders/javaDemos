@@ -20,7 +20,7 @@ public class QuickSortTests {
         Assert.assertArrayEquals(new Integer[]{1}, quickSortInt.sort(new Integer[]{1}, 0, 0));
         Assert.assertArrayEquals(new Integer[]{1,1}, quickSortInt.sort(new Integer[]{1,1}, 0, 1));
         Assert.assertArrayEquals(new Integer[]{1,2}, quickSortInt.sort(new Integer[]{1,2}, 0, 1));
-//        Assert.assertArrayEquals(new Integer[]{1,2}, quickSortInt.sort(new Integer[]{2,1}, 0, 1));
+        Assert.assertArrayEquals(new Integer[]{1,2}, quickSortInt.sort(new Integer[]{2,1}, 0, 1));
     }
 
     @Test
@@ -29,6 +29,7 @@ public class QuickSortTests {
         assertPartition(new Integer[]{1}, new Integer[]{1});
         assertPartition(new Integer[]{1,1}, new Integer[]{1,1});
         assertPartition(new Integer[]{1,2}, new Integer[]{1,2});
+        assertPartition(new Integer[]{1,2}, new Integer[]{2,1});
         assertPartition(new Integer[]{1,2,3}, new Integer[]{1,2,3});
         assertPartition(new Integer[]{1,2,3}, new Integer[]{1,3,2});
         assertPartition(new Integer[]{1,2,3}, new Integer[]{3, 1, 2});

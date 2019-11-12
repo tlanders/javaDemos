@@ -8,18 +8,21 @@ package algorithms.sort;
  */
 public class QuickSort<T extends Comparable> {
     public T[] sort(T[] items, int startIndex, int endIndex) {
-        if(items.length > 2) {
+        int len = endIndex - startIndex + 1;
+        if(len > 2) {
             int partitionIndex = partition(items, startIndex, endIndex);
             sort(items, startIndex, partitionIndex);
             sort(items, partitionIndex + 1, endIndex);
+        } else if(len == 2) {
+            partition(items, startIndex, endIndex);
         }
 //        assert isSorted(items);
         return items;
     }
 
     protected int partition(T[] items, int startIndex, int endIndex) {
-        if(endIndex - startIndex <= 1) {
-            return startIndex;
+        if(endIndex - startIndex <= 0) {
+            return endIndex;
         } else {
             int pivotIndex = endIndex;
             int bigIndex = -1;
@@ -37,8 +40,10 @@ public class QuickSort<T extends Comparable> {
             }
             if(bigIndex >= 0) {
                 exchange(items, pivotIndex, bigIndex);
+                return bigIndex;
+            } else {
+                return  endIndex;
             }
-            return bigIndex;
         }
     }
 
