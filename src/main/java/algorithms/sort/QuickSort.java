@@ -7,23 +7,19 @@ package algorithms.sort;
  * @param <T>
  */
 public class QuickSort<T extends Comparable> {
-    public T[] sort(T[] items) {
-        return items;
-//        for(int i = 0; i < items.length - 1; i++) {
-//            int low = i;
-//            for(int j = i + 1; j < items.length - 1; j++) {
-//                if(less(items[j], items[low])) {
-//                    low = j;
-//                }
-//            }
-//            exchange(items, i, low);
-//        }
+    public T[] sort(T[] items, int startIndex, int endIndex) {
+        if(items.length > 2) {
+            int partitionIndex = partition(items, startIndex, endIndex);
+            sort(items, startIndex, partitionIndex);
+            sort(items, partitionIndex + 1, endIndex);
+        }
 //        assert isSorted(items);
+        return items;
     }
 
-    protected T[] partition(T[] items, int startIndex, int endIndex) {
+    protected int partition(T[] items, int startIndex, int endIndex) {
         if(endIndex - startIndex <= 1) {
-            return items;
+            return startIndex;
         } else {
             int pivotIndex = endIndex;
             int bigIndex = -1;
@@ -42,7 +38,7 @@ public class QuickSort<T extends Comparable> {
             if(bigIndex >= 0) {
                 exchange(items, pivotIndex, bigIndex);
             }
-            return items;
+            return bigIndex;
         }
     }
 
