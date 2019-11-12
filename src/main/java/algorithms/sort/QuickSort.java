@@ -15,8 +15,12 @@ public class QuickSort<T extends Comparable> {
         int len = endIndex - startIndex + 1;
         if(len > 2) {
             int partitionIndex = partition(items, startIndex, endIndex);
-            sort(items, startIndex, partitionIndex);
-            sort(items, partitionIndex + 1, endIndex);
+            if(partitionIndex > startIndex) {
+                sort(items, startIndex, partitionIndex - 1);
+            }
+            if(partitionIndex < endIndex) {
+                sort(items, partitionIndex + 1, endIndex);
+            }
         } else if(len == 2) {
             partition(items, startIndex, endIndex);
         }
