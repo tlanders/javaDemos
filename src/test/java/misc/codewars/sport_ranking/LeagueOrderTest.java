@@ -9,6 +9,8 @@ public class LeagueOrderTest {
     @Test
     public void basicTest() {
         assertArrayEquals(new int[]{1, 2}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 1, 0}}));
+        assertArrayEquals(new int[]{2, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 1}}));
+        assertArrayEquals(new int[]{1, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 0}}));
     }
 
     @Test

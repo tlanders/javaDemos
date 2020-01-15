@@ -35,12 +35,12 @@ public class LeagueOrder {
                 .collect(Collectors.toList());
 
         int place = 1;
-        int lastPoints = teamResultArray[0].getPoints();
-        int lastDiff = teamResultArray[0].getScoreDifferential();
-        int lastGoals = teamResultArray[0].getGoalsScored();
+        int lastPoints = teamRanks.get(0).getPoints();
+        int lastDiff = teamRanks.get(0).getScoreDifferential();
+        int lastGoals = teamRanks.get(0).getGoalsScored();
 
         for(int i = 0; i < number; i++) {
-            TeamResult currentTeam = teamResultArray[i];
+            TeamResult currentTeam = teamRanks.get(i);
             if(currentTeam.getPoints() != lastPoints || currentTeam.getScoreDifferential() != lastDiff || currentTeam.getGoalsScored() != lastGoals) {
                 currentTeam.setPlace(++place);
                 lastPoints = currentTeam.getPoints();
@@ -55,10 +55,9 @@ public class LeagueOrder {
         System.out.println(Arrays.toString(teamResultArray));
         System.out.println("ranks: " + teamRanks);
 
-        // your solution
-
-
-        return null;
+        return Stream.of(teamResultArray)
+                .mapToInt(TeamResult::getPlace)
+                .toArray();
     }
 
     private static class TeamResult {
@@ -91,6 +90,10 @@ public class LeagueOrder {
                     ", goalsScored=" + goalsScored +
                     ", points=" + getPoints() +
                     '}';
+        }
+
+        public int getPlace() {
+            return place;
         }
 
         public void setPlace(int p) {
