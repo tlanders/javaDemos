@@ -17,7 +17,13 @@ public class LeagueOrder {
                         ))
                 .flatMap(Function.identity())
                 .collect(() -> new TeamResult[number],
-                        (arr, tr) -> arr[tr.getTeam()] = tr,
+                        (arr, tr) -> {
+                            if(arr[tr.getTeam()] != null) {
+                                arr[tr.getTeam()].add(tr);
+                            } else {
+                                arr[tr.getTeam()] = tr;
+                            }
+                        },
                         (t1, t2) -> {
                             for(int i = 0; i < number; i++) {
                                 if(t1[i] != null) {
@@ -104,6 +110,9 @@ public class LeagueOrder {
             if(t != null) {
                 wins += t.wins;
                 losses += t.losses;
+                draws += t.draws;
+                scoreDifferential += t.scoreDifferential;
+                goalsScored += t.goalsScored;
             }
         }
 

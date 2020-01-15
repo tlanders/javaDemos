@@ -11,6 +11,14 @@ public class LeagueOrderTest {
         assertArrayEquals(new int[]{1, 2}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 1, 0}}));
         assertArrayEquals(new int[]{2, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 1}}));
         assertArrayEquals(new int[]{1, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 0}}));
+        assertArrayEquals(new int[]{1, 1, 1}, LeagueOrder.computeRanks(3, new int[][]{
+                {0, 1, 1, 0},
+                {0, 1, 0, 1},
+                {1, 2, 1, 0},
+                {1, 2, 0, 1},
+                {0, 2, 0, 1},
+                {0, 2, 1, 0}
+        }));
     }
 
     @Test
