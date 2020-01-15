@@ -1,6 +1,8 @@
 package misc.codewars.sport_ranking;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +18,13 @@ public class LeagueOrder {
                             new TeamResult(result[1], result[3], result[2])
                         ))
                 .flatMap(Function.identity())
-                .collect(() -> new TeamResult[number],
+                .collect(() -> {
+                            TeamResult[] tra = new TeamResult[number];
+                            for(int i = 0; i < tra.length; i++) {
+                                tra[i] = new TeamResult(i);
+                            }
+                            return tra;
+                        },
                         (arr, tr) -> {
                             if(arr[tr.getTeam()] != null) {
                                 arr[tr.getTeam()].add(tr);
@@ -74,6 +82,15 @@ public class LeagueOrder {
         private int scoreDifferential;
         private int goalsScored;
         private int place = -1;
+
+        public TeamResult(int team) {
+            this.team = team;
+            this.wins = 0;
+            this.losses = 0;
+            this.draws = 0;
+            this.scoreDifferential = 0;
+            this.goalsScored = 0;
+        }
 
         public TeamResult(int team, int teamScore, int opponentScore) {
             this.team = team;
