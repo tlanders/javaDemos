@@ -1,22 +1,29 @@
 package misc.codewars.sport_ranking;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 //import org.junit.runners.*;
 
 public class LeagueOrderTest {
 
     @Test
-    public void basicTest() {
-        assertArrayEquals(new int[]{1, 2}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 1, 0}}));
-        assertArrayEquals(new int[]{2, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 1}}));
-        assertArrayEquals(new int[]{1, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 0}}));
-        assertArrayEquals(new int[]{1, 1, 1}, LeagueOrder.computeRanks(3, new int[][]{
+    public void myTests() {
+        assertArrayEquals("Team 0 should be first", new int[]{1, 2}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 1, 0}}));
+        assertArrayEquals("Team 1 should be first", new int[]{2, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 1}}));
+        assertArrayEquals("Teams should be tied", new int[]{1, 1}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 0, 0}}));
+        assertArrayEquals("3 teams should be tied", new int[]{1, 1, 1}, LeagueOrder.computeRanks(3, new int[][]{
                 {0, 1, 1, 0},
                 {0, 1, 0, 1},
                 {1, 2, 1, 0},
                 {1, 2, 0, 1},
                 {0, 2, 0, 1},
+                {0, 2, 1, 0}
+        }));
+        assertArrayEquals("Team 2 ahead of team 1 because of goals", new int[]{1, 3, 2, 4}, LeagueOrder.computeRanks(4, new int[][]{
+                {0, 3, 3, 0},
+                {1, 3, 1, 0},
+                {2, 3, 2, 0},
                 {0, 2, 1, 0}
         }));
     }
@@ -66,7 +73,7 @@ public class LeagueOrderTest {
 
     @Test
     public void exampleOneGame() {
-        assertArrayEquals(new int[]{1,2,2,2,2,2,2,8},
+        assertArrayEquals("Team 0 is first, Team 7 is last, the rest are tied for second", new int[]{1,2,2,2,2,2,2,8},
                 LeagueOrder.computeRanks(8, new int[][]{{0, 7, 2, 0}}));
     }
 

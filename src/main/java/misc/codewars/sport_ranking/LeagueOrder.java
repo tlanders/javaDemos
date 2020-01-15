@@ -12,43 +12,60 @@ import java.util.stream.Stream;
  */
 public class LeagueOrder {
     public static int[] computeRanks(int number, int[][] games) {
-        TeamResult[] teamResultArray = Arrays.stream(games)
-                .map(result -> Stream.of(
-                            new TeamResult(result[0], result[2], result[3]),
-                            new TeamResult(result[1], result[3], result[2])
-                        ))
-                .flatMap(Function.identity())
-                .collect(() -> {
-                            TeamResult[] tra = new TeamResult[number];
-                            for(int i = 0; i < tra.length; i++) {
-                                tra[i] = new TeamResult(i);
-                            }
-                            return tra;
-                        },
-                        (arr, tr) -> {
-                            if(arr[tr.getTeam()] != null) {
-                                arr[tr.getTeam()].add(tr);
-                            } else {
-                                arr[tr.getTeam()] = tr;
-                            }
-                        },
-                        (t1, t2) -> {
-                            for(int i = 0; i < number; i++) {
-                                if(t1[i] != null) {
-                                    t1[i].add(t2[i]);
-                                } else {
-                                    t1[i] = t2[i];
+        TeamResult[] teamResultArray = computeTeamResults(number, games);
+        List<TeamResult> teamRanks = rankTeams(teamResultArray);
+
+        assignPlaces(number, teamRanks);
+//        printTeams(teamResultArray, teamRanks);
+
+        return Stream.of(teamResultArray)
+                .mapToInt(TeamResult::getPlace)
+                .peek(System.out::println)
+                .toArray();
+    }
+
+    private static List<TeamResult> rankTeams(TeamResult[] teamResultArray) {
+        return Arrays.stream(teamResultArray)
+                    .sorted(Comparator.comparingInt(TeamResult::getPoints)
+                            .thenComparingInt(TeamResult::getScoreDifferential)
+                            .thenComparingInt(TeamResult::getGoalsScored).reversed())
+                    .collect(Collectors.toList());
+    }
+
+    private static TeamResult[] computeTeamResults(int number, int[][] games) {
+        return Arrays.stream(games)
+                    .map(result -> Stream.of(
+                                new TeamResult(result[0], result[2], result[3]),
+                                new TeamResult(result[1], result[3], result[2])
+                            ))
+                    .flatMap(Function.identity())
+                    .collect(() -> {
+                                TeamResult[] tra = new TeamResult[number];
+                                for(int i = 0; i < tra.length; i++) {
+                                    tra[i] = new TeamResult(i);
                                 }
-                            }
-                        });
+                                return tra;
+                            },
+                            (arr, tr) -> {
+                                if(arr[tr.getTeam()] != null) {
+                                    arr[tr.getTeam()].add(tr);
+                                } else {
+                                    arr[tr.getTeam()] = tr;
+                                }
+                            },
+                            (t1, t2) -> {
+                                for(int i = 0; i < number; i++) {
+                                    if(t1[i] != null) {
+                                        t1[i].add(t2[i]);
+                                    } else {
+                                        t1[i] = t2[i];
+                                    }
+                                }
+                            });
+    }
 
-        List<TeamResult> teamRanks = Arrays.stream(teamResultArray)
-                .sorted(Comparator.comparingInt(TeamResult::getPoints).reversed()
-                        .thenComparingInt(TeamResult::getScoreDifferential).reversed()
-                        .thenComparingInt(TeamResult::getGoalsScored).reversed())
-                .collect(Collectors.toList());
-
-        int place = 1;
+    private static void assignPlaces(int number, List<TeamResult> teamRanks) {
+        int lastPlace = 1;
         int lastPoints = teamRanks.get(0).getPoints();
         int lastDiff = teamRanks.get(0).getScoreDifferential();
         int lastGoals = teamRanks.get(0).getGoalsScored();
@@ -56,22 +73,27 @@ public class LeagueOrder {
         for(int i = 0; i < number; i++) {
             TeamResult currentTeam = teamRanks.get(i);
             if(currentTeam.getPoints() != lastPoints || currentTeam.getScoreDifferential() != lastDiff || currentTeam.getGoalsScored() != lastGoals) {
-                currentTeam.setPlace(++place);
+                currentTeam.setPlace(i + 1);
+                lastPlace = i + 1;
                 lastPoints = currentTeam.getPoints();
                 lastDiff = currentTeam.getScoreDifferential();
                 lastGoals = currentTeam.getGoalsScored();
             } else {
-                currentTeam.setPlace(place);
+                currentTeam.setPlace(lastPlace);
             }
         }
+    }
 
+    private static void printTeams(TeamResult[] teamResultArray, List<TeamResult> teamRanks) {
         System.out.println("teams: " + teamResultArray.length);
-        System.out.println(Arrays.toString(teamResultArray));
-        System.out.println("ranks: " + teamRanks);
+        for(TeamResult tr : teamResultArray) {
+            System.out.println("  " + tr);
+        }
 
-        return Stream.of(teamResultArray)
-                .mapToInt(TeamResult::getPlace)
-                .toArray();
+        System.out.println("ranks:");
+        for(TeamResult tr : teamRanks) {
+            System.out.println("  " + tr);
+        }
     }
 
     private static class TeamResult {
