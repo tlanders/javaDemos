@@ -7,6 +7,11 @@ import static org.junit.Assert.*;
 public class LeagueOrderTest {
 
     @Test
+    public void basicTest() {
+        assertArrayEquals(new int[]{1, 2}, LeagueOrder.computeRanks(2, new int[][]{{0, 1, 1, 0}}));
+    }
+
+    @Test
     public void example1() {
         assertArrayEquals(new int[]{4,4,6,3,1,2},
                 LeagueOrder.computeRanks(6, new int[][]
