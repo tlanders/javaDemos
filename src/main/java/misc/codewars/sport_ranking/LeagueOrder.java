@@ -3,7 +3,9 @@ package misc.codewars.sport_ranking;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,11 +18,9 @@ public class LeagueOrder {
         List<TeamResult> teamRanks = rankTeams(teamResultArray);
 
         assignPlaces(number, teamRanks);
-//        printTeams(teamResultArray, teamRanks);
 
         return Stream.of(teamResultArray)
                 .mapToInt(TeamResult::getPlace)
-                .peek(System.out::println)
                 .toArray();
     }
 
@@ -39,29 +39,41 @@ public class LeagueOrder {
                                 new TeamResult(result[1], result[3], result[2])
                             ))
                     .flatMap(Function.identity())
-                    .collect(() -> {
-                                TeamResult[] tra = new TeamResult[number];
-                                for(int i = 0; i < tra.length; i++) {
-                                    tra[i] = new TeamResult(i);
-                                }
-                                return tra;
-                            },
-                            (arr, tr) -> {
-                                if(arr[tr.getTeam()] != null) {
-                                    arr[tr.getTeam()].add(tr);
-                                } else {
-                                    arr[tr.getTeam()] = tr;
-                                }
-                            },
-                            (t1, t2) -> {
-                                for(int i = 0; i < number; i++) {
-                                    if(t1[i] != null) {
-                                        t1[i].add(t2[i]);
-                                    } else {
-                                        t1[i] = t2[i];
-                                    }
-                                }
-                            });
+                    .collect(initializeTeamResults(number),
+                            accumulateTeamResults(),
+                            combineTeamResults(number));
+    }
+
+    private static BiConsumer<TeamResult[], TeamResult> accumulateTeamResults() {
+        return (arr, tr) -> {
+            if(arr[tr.getTeam()] != null) {
+                arr[tr.getTeam()].add(tr);
+            } else {
+                arr[tr.getTeam()] = tr;
+            }
+        };
+    }
+
+    private static Supplier<TeamResult[]> initializeTeamResults(int number) {
+        return () -> {
+            TeamResult[] tra = new TeamResult[number];
+            for(int i = 0; i < tra.length; i++) {
+                tra[i] = new TeamResult(i);
+            }
+            return tra;
+        };
+    }
+
+    private static BiConsumer<TeamResult[], TeamResult[]> combineTeamResults(int number) {
+        return (t1, t2) -> {
+            for(int i = 0; i < number; i++) {
+                if(t1[i] != null) {
+                    t1[i].add(t2[i]);
+                } else {
+                    t1[i] = t2[i];
+                }
+            }
+        };
     }
 
     private static void assignPlaces(int number, List<TeamResult> teamRanks) {
