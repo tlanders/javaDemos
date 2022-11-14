@@ -14,7 +14,7 @@ public class WanderingGeneratorTests {
         WanderingGenerator gen = new WanderingGenerator("trt", 3);
         assertTrue("incorrectly found 0 sequences", gen.getSequences().size() > 0);
 
-        gen = new WanderingGenerator("qwertyuytresdftyuioknn", 5);
-        assertTrue("incorrectly found 0 sequences", gen.getSequences().size() > 0);
+//        gen = new WanderingGenerator("qwertyuytresdftyuioknn", 5);
+//        assertTrue("incorrectly found 0 sequences", gen.getSequences().size() > 0);
     }
 }
