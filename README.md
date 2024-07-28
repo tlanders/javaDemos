@@ -1,4 +1,4 @@
-javase8
+javaDemos
 =======
 
-Java SE 8 sample code and exercises
+Java demos, sample code, and exercises

@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>biz.lci</groupId>
-  <artifactId>javase8</artifactId>
+  <artifactId>javaDemos</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>javase8</name>
+  <name>javaDemos</name>
   <url>http://maven.apache.org</url>
   <dependencies>
   
@@ -40,6 +40,12 @@
         <artifactId>jackson-databind</artifactId>
         <version>2.13.4.1</version>
       </dependency>
+      <dependency>
+          <groupId>org.apache.groovy</groupId>
+          <artifactId>groovy-all</artifactId>
+          <version>4.0.22</version>
+          <type>pom</type> <!-- required JUST since Groovy 2.5.0 -->
+      </dependency>
   </dependencies>
   
      <build>
@@ -50,14 +56,33 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>2.3.2</version>
             <configuration>
-               <source>11</source>
-               <target>11</target>
+               <source>21</source>
+               <target>21</target>
             </configuration>
          </plugin>
+          <plugin>
+              <groupId>org.codehaus.gmavenplus</groupId>
+              <artifactId>gmavenplus-plugin</artifactId>
+              <version>1.13.1</version>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>addSources</goal>
+                          <goal>addTestSources</goal>
+                          <goal>generateStubs</goal>
+                          <goal>compile</goal>
+                          <goal>generateTestStubs</goal>
+                          <goal>compileTests</goal>
+                          <goal>removeStubs</goal>
+                          <goal>removeTestStubs</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
       </plugins>
    </build>
      <properties>
-     	<jar.final.name>javase8</jar.final.name>
+     	<jar.final.name>javaDemos</jar.final.name>
      	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
      	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
      </properties>
